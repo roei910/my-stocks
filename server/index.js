@@ -1,5 +1,5 @@
 const express = require("express"); //run local server
-const axios = require("axios"); //remote rest-apis
+const axios = require("axios"); //remote rest-api
 const mongoose = require("mongoose"); //mongodb
 const ejs = require("ejs"); //render client pages
 
