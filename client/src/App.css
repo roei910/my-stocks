@@ -1,24 +1,25 @@
-body{
-    margin: 0px;
+body {
+  margin: 0px;
 }
 
 header {
   padding: 20px 10px;
-  background-color: aliceblue;
+  border-bottom: 1px solid #00000060;
+  border-top: 1px solid #00000060;
 }
 
-footer{
-    background-color: antiquewhite;
-    padding: 10px 10px;
+footer {
+  padding: 10px 10px;
+  border-top: 1px solid #00000060;
 }
 
-.main-content{
-    padding: 30px 10px;
+.main-content {
+  padding: 0px 10px;
+  min-height: 70vh;
 }
 
 .navbar-item {
   text-decoration: none;
-  color: black;
 }
 
 .navbar {
@@ -30,13 +31,7 @@ footer{
 }
 
 .navbar li {
-  background-color: gray;
+  background-color: #00000040;
   border-radius: 3px;
   padding: 4px;
-}
-
-
-.bg-body{
-    background-color: gray;
-    border-radius: 2px;
 }

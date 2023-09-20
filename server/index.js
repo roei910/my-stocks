@@ -1,7 +1,6 @@
 const express = require("express"); //run local server
 const axios = require("axios"); //remote rest-api
 const mongoose = require("mongoose"); //mongodb
-const ejs = require("ejs"); //render client pages
 
 //server constants
 const app = express();
@@ -19,6 +18,9 @@ app.use(function (req, res, next) {
   next();
 });
 
+//view engine
+app.set('view engine', 'ejs');
+
 //constants
 const users = [];
 const stocks = [
@@ -35,26 +37,18 @@ function userExists(newUser) {
 
 //routes
 app.get("/", (req, res) => {
-  res.json(users);
+  // res.json(users);
+  res.render('index');
 });
 
 //users routes
-app.get("/users/:id", (req, res) => {
-  const userId = req.params.id;
-  res.json(users[userId]);
+app.get("/users/all", (req, res) => {
+  res.json(users);
 });
 
-app.patch("/users/:id/:symbol", (req, res) => {
-  const userId = req.params.id;
-  const stockSymbol = req.params.symbol;
-  const found = users[userId].stockSymbols.find(
-    (symbol) => stockSymbol === symbol
-  );
-  if (!found) {
-    users[userId].stockSymbols.push(stockSymbol);
-    res.json({ message: "stock symbol was successfully added to your list" });
-  }
-  res.json({ message: "stock symbol was already in your list" });
+app.delete("/users/all", (req, res) => {
+  users.splice(0, users.length);
+  res.json({ message: "all users deleted" });
 });
 
 app.post("/users/register", (req, res) => {
@@ -72,9 +66,22 @@ app.post("/users/register", (req, res) => {
   }
 });
 
-app.delete("/users/all", (req, res) => {
-  users.splice(0, users.length);
-  res.json({ message: "all users deleted" });
+app.get("/users/:id", (req, res) => {
+  const userId = req.params.id;
+  res.json(users[userId]);
+});
+
+app.patch("/users/:id/:symbol", (req, res) => {
+  const userId = req.params.id;
+  const stockSymbol = req.params.symbol;
+  const found = users[userId].stockSymbols.find(
+    (symbol) => stockSymbol === symbol
+  );
+  if (!found) {
+    users[userId].stockSymbols.push(stockSymbol);
+    res.json({ message: "stock symbol was successfully added to your list" });
+  }
+  res.json({ message: "stock symbol was already in your list" });
 });
 
 //stocks route

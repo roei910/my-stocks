@@ -1,11 +1,11 @@
 import React from "react";
 
-const NoPage = () => {
+const LoginPage = () => {
   return (
     <div className="main-content">
-      <h1>404</h1>
+      <h1>this is the login page</h1>
     </div>
   );
 };
 
-export default NoPage;
+export default LoginPage;

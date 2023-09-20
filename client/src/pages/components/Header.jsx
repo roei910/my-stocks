@@ -6,6 +6,7 @@ function Header() {
     <header>
       <nav>
         <ul className="navbar">
+          <li>My Broker</li>
           <li className="navbar-item">
             <Link to="/">Home</Link>
           </li>
@@ -15,6 +16,9 @@ function Header() {
           <li className="navbar-item">
             <Link to="/stocks/search">Search Stocks</Link>
           </li>
+          <li className="navbar-item">
+            <Link to="/login">Login</Link>
+          </li>          
         </ul>
       </nav>
     </header>

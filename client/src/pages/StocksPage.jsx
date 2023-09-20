@@ -30,7 +30,7 @@ function StocksPage() {
   }
 
   return (
-    <div className="main-content bg-body">
+    <div className="main-content">
       <h1>Welcome Roei!</h1>
       <h2>showing your list of stocks below</h2>
       <table className="bg-table">
