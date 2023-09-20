@@ -1,15 +1,24 @@
-import './App.css';
-import Header from './Header';
-import Footer from './Footer';
-import Body from './Body';
+import "./App.css";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./pages/components/Layout";
+import Home from "./pages/Home";
+import StocksPage from "./pages/StocksPage";
+import SearchStocksPage from "./pages/SearchStocksPage";
+import NoPage from "./pages/NoPage";
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Body />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="stocks" element={<StocksPage />} />
+          <Route path="stocks/search" element={<SearchStocksPage />} />
+          <Route path="*" element={<NoPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
