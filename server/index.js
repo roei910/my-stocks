@@ -175,7 +175,10 @@ app.post("/login", (req, res) => {
       res.json(err);
     } else {
       passport.authenticate("local")(req, res, () => {
-        res.sendStatus(200)
+        // res.sendStatus(200);
+        res.json(req.sessionStore);
+
+        // res.send(res.cookie);
       });
     }
   })

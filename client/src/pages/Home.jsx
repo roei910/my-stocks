@@ -1,6 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// import passport from "passport";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    //need to authenticate user
+
+    // // To store data
+    // localStorage.setItem('data', data);
+
+    // // To retrieve data
+    // localStorage.getItem('data');
+
+    // // To clear a specific item
+    // localStorage.removeItem('data');
+
+    // // To clear the whole data stored in localStorage
+    // localStorage.clear();
+
+    setIsLoggedIn(false);
+    
+    if (isLoggedIn) {
+      navigate('/stocks');
+    }
+  }, [navigate, isLoggedIn]);
+
   return (
     <div className="main-content center">
       <h1>Welcome to My-Broker</h1>

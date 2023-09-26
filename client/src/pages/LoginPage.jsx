@@ -33,6 +33,7 @@ const LoginPage = () => {
       .then((response) => {
         // console.log(response.status === 200); //user authorized
         alert('connected successfully');
+        console.log(response.data);
       })
       .catch((error) => {
         // console.log(error.response.status === 401); // user unauthorized, username or password incorrect
