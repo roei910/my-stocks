@@ -128,7 +128,6 @@ app.post("/users/register", async (req, res) => {
     );
     // save user token
     user.token = token;
-    console.log(user);
 
     // return new user
     res.status(201).json(user);
@@ -151,7 +150,7 @@ app.post('/users/authentication', function (req, res) {
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }
-  res.status(200).send("working");
+  res.sendStatus(200);
 });
 
 app.patch("/users/:id/:symbol", (req, res) => {

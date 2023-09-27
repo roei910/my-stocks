@@ -1,32 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// import passport from "passport";
+import axios from "axios";
+import { getConnectionToken } from '../utils/cookies';
 
 const Home = () => {
   const navigate = useNavigate();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    //need to authenticate user
-
-    // // To store data
-    // localStorage.setItem('data', data);
-
-    // // To retrieve data
-    // localStorage.getItem('data');
-
-    // // To clear a specific item
-    // localStorage.removeItem('data');
-
-    // // To clear the whole data stored in localStorage
-    // localStorage.clear();
-
-    setIsLoggedIn(false);
-    
-    if (isLoggedIn) {
-      navigate('/stocks');
-    }
-  }, [navigate, isLoggedIn]);
+    getConnectionToken().then((token) => {
+      axios
+        .post(`http://localhost:8000/users/authentication`,
+          {
+            token: token
+          }, {
+          headers: {
+            'content-type': 'application/json;charset=utf-8'
+          }
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            navigate('/stocks');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+  }, []);
 
   return (
     <div className="main-content center">

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { setConnectionCookie } from "../utils/cookies";
 
 const LoginPage = () => {
   const [signUp, setSignUp] = useState(false);
-  const [userInformation, setUserInformation] = useState({ username: '', password: '' });
-  const [userRegister, setUserRegister] = useState({ username: '', email: '', password: '', confirmPassword: '' });
+  const [userInformation, setUserInformation] = useState({ email: '', password: '' });
+  const [userRegister, setUserRegister] = useState({ email: '', password: '', confirmPassword: '' });
+  const [cookie, setCookie] = useState('');
 
   function signUpClick() {
     setSignUp(true);
@@ -13,13 +15,15 @@ const LoginPage = () => {
   function registerUser(event) {
     event.preventDefault();
     axios
-      .post(`http://localhost:8000/register`, userRegister, {
+      .post(`http://localhost:8000/users/register`, userRegister, {
         headers: {
           'content-type': 'application/json;charset=utf-8'
         }
       })
       .then((response) => {
         response.data.message ? alert(response.data.message) : alert(`New user successfully registered with the name ${response.data.user.username}`);
+        // localStorage.setItem('connection.token', response.data.token);
+        setConnectionCookie(response.data.token);
       })
       .catch((error) => {
         console.log(error);
@@ -29,35 +33,29 @@ const LoginPage = () => {
   function connectUser(event) {
     event.preventDefault();
     axios
-      .post(`http://localhost:8000/login`, userInformation)
+      .post(`http://localhost:8000/users/login`, userInformation)
       .then((response) => {
-        // console.log(response.status === 200); //user authorized
-        alert('connected successfully');
-        console.log(response.data);
+        if (response.status === 200) {
+          alert('connected successfully');
+          localStorage.setItem('connection.token', response.data.token);
+          setConnectionCookie(response.data.token);
+        } else {
+          alert('connection error');
+        }
       })
       .catch((error) => {
-        // console.log(error.response.status === 401); // user unauthorized, username or password incorrect
-        alert('incorrect username or password');
+        if(error.response.status === 401){
+          alert('incorrect username or password');
+        } else {
+          alert('something went wrong, please try again');
+        }
       });
-
-
-    //delete all users from db
-    // axios
-    //   .delete(`http://localhost:8000/users/all`)
-    //   .then((response) => {
-    //     // console.log(response.status === 200); //user authorized
-    //     alert('connected successfully');
-    //   })
-    //   .catch((error) => {
-    //     // console.log(error.response.status === 401); // user unauthorized, username or password incorrect
-    //     alert('incorrect username or password');
-    //   });
   }
 
   function onChangeSignInformation(event) {
     const { value, name } = event.target;
-    if (name === 'username') {
-      setUserInformation((old) => { return { ...old, username: value } });
+    if (name === 'email') {
+      setUserInformation((old) => { return { ...old, email: value } });
     } else {
       setUserInformation((old) => { return { ...old, password: value } });
     }
@@ -65,8 +63,8 @@ const LoginPage = () => {
 
   function onChangeRegister(event) {
     const { value, name } = event.target;
-    if (name === 'username') {
-      setUserRegister((old) => { return { ...old, username: value } });
+    if (name === 'email') {
+      setUserRegister((old) => { return { ...old, email: value } });
     } else if (name === 'email') {
       setUserRegister((old) => { return { ...old, email: value } });
     } else if (name === 'password') {
@@ -80,8 +78,8 @@ const LoginPage = () => {
     <div className="main-content center">
       <h1>Please login here:</h1>
       <form onSubmit={connectUser}>
-        <label>Username</label>
-        <input type="text" name="username" id="userName" value={userInformation.username} onChange={onChangeSignInformation} />
+        <label>Email</label>
+        <input type="text" name="email" id="userName" value={userInformation.email} onChange={onChangeSignInformation} />
         <br />
         <label>Password</label>
         <input type="password" name="password" value={userInformation.password} onChange={onChangeSignInformation} />
@@ -90,9 +88,6 @@ const LoginPage = () => {
       </form>
       <h2>If you dont have an account yet, <button className="btn-style-rm" onClick={signUpClick}>click here</button></h2>
       {signUp && <form onSubmit={registerUser}>
-        <label>Username</label>
-        <input type="text" name="username" value={userRegister.username} onChange={onChangeRegister} />
-        <br />
         <label>Email address</label>
         <input type="email" name="email" value={userRegister.email} onChange={onChangeRegister} />
         <br />
