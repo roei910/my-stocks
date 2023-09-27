@@ -5,9 +5,11 @@ import { getConnectionToken } from '../utils/cookies';
 
 const Home = () => {
   const navigate = useNavigate();
+  useEffect(checkToken, [navigate]);
 
-  useEffect(() => {
+  function checkToken(){
     getConnectionToken().then((token) => {
+      if(token === 'null') return;
       axios
         .post(`http://localhost:8000/users/authentication`,
           {
@@ -26,7 +28,7 @@ const Home = () => {
           console.log(error);
         });
     });
-  }, []);
+  }
 
   return (
     <div className="main-content center">

@@ -12,7 +12,11 @@ async function getConnectionToken() {
     return cookies.find((cookie) => cookie.startsWith('connection.token')).split('=')[1];    
 }
 
-export { setConnectionCookie, getConnectionToken }
+async function removeConnectionToken(){
+    document.cookie = 'connection.token=null';
+}
+
+export { setConnectionCookie, getConnectionToken, removeConnectionToken }
 
 
 

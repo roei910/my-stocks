@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { setConnectionCookie } from "../utils/cookies";
-
 const LoginPage = () => {
   const [signUp, setSignUp] = useState(false);
   const [userInformation, setUserInformation] = useState({ email: '', password: '' });
   const [userRegister, setUserRegister] = useState({ email: '', password: '', confirmPassword: '' });
-  const [cookie, setCookie] = useState('');
 
   function signUpClick() {
     setSignUp(true);
@@ -22,7 +20,6 @@ const LoginPage = () => {
       })
       .then((response) => {
         response.data.message ? alert(response.data.message) : alert(`New user successfully registered with the name ${response.data.user.username}`);
-        // localStorage.setItem('connection.token', response.data.token);
         setConnectionCookie(response.data.token);
       })
       .catch((error) => {
@@ -37,7 +34,6 @@ const LoginPage = () => {
       .then((response) => {
         if (response.status === 200) {
           alert('connected successfully');
-          localStorage.setItem('connection.token', response.data.token);
           setConnectionCookie(response.data.token);
         } else {
           alert('connection error');

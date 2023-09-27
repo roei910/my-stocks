@@ -63,8 +63,8 @@ userSchema.plugin(findOrCreatePlugin);
 const User = mongoose.model("User", userSchema);
 
 passport.use(User.createStrategy());
-passport.serializeUser(function(user, cb) {
-  process.nextTick(function() {
+passport.serializeUser(function (user, cb) {
+  process.nextTick(function () {
     return cb(null, {
       id: user.id,
       username: user.username,
@@ -72,8 +72,8 @@ passport.serializeUser(function(user, cb) {
   });
 });
 
-passport.deserializeUser(function(user, cb) {
-  process.nextTick(function() {
+passport.deserializeUser(function (user, cb) {
+  process.nextTick(function () {
     return cb(null, user);
   });
 });
@@ -161,7 +161,6 @@ app.get('/stocks/symbol/:symbol', (req, res) => {
 app.get('/stocks/name/:name', (req, res) => {
   const stockName = req.params.name;
   const found = stocks.filter((stk) => stk.name.toLowerCase().includes(stockName.toLowerCase()));
-  // console.log(found)
   res.json({ stocks: found });
 })
 

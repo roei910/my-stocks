@@ -6,6 +6,7 @@ const express = require("express"); //run local server
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
+const axios = require("axios");
 
 //server constants
 const app = express();
@@ -50,18 +51,53 @@ app.delete("/users/all", (req, res) => {
 
 //stocks route
 app.get("/stocks/all", (req, res) => {
-  res.json({ stocks: stocks });
+  Stock.find({})
+    .then((result) => {
+      res.json({ stocks: result });
+    })
+    .catch(err => res.statusCode(400));
 });
 
 app.get('/stocks/symbol/:symbol', (req, res) => {
   const stockSymbol = req.params.symbol;
+  Stock.findOne({ symbol: stockSymbol })
+    .then((found) => {
+      if (!found) {
+        getStockDataBySymbol(stockSymbol);
+        getStockNameBySymbol(stockSymbol);
+        //create a new stock object and save to mongo db using mongoose
+      }
+    })
   res.json({ stock: stocks.find((stk) => stk.symbol === stockSymbol) });
 })
 
 app.get('/stocks/name/:name', (req, res) => {
   const stockName = req.params.name;
-  const found = stocks.filter((stk) => stk.name.toLowerCase().includes(stockName.toLowerCase()));
-  res.json({ stocks: found });
+
+  const options = {
+    method: 'GET',
+    url: 'https://alpha-vantage.p.rapidapi.com/query',
+    params: {
+      keywords: stockName,
+      function: 'SYMBOL_SEARCH',
+      datatype: 'json'
+    },
+    headers: {
+      'X-RapidAPI-Key': '3cfd02f090msh4bd229c6a961da5p100578jsne25c8024ccee',
+      'X-RapidAPI-Host': 'alpha-vantage.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options)
+    .then((response) => {
+      res.status(200).json(response.data.bestMatches);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+
+  // res.json({ stocks: found });
 })
 
 //users routes
@@ -169,3 +205,42 @@ app.patch("/users/:id/:symbol", (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
+
+function getStockNameBySymbol(stockSymbol){
+  const options = {
+    method: 'GET',
+    url: 'https://twelve-data1.p.rapidapi.com/stocks',
+    params: {
+      exchange: 'NASDAQ',
+      symbol: stockSymbol,
+      format: 'json'
+    },
+    headers: {
+      'X-RapidAPI-Key': '3cfd02f090msh4bd229c6a961da5p100578jsne25c8024ccee',
+      'X-RapidAPI-Host': 'twelve-data1.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options)
+  .then((response) => {
+    console.log(response)
+  })
+  .catch(err => {console.log(err)});
+}
+
+function getStockDataBySymbol(stockSymbol){
+  const options = {
+    method: 'GET',
+    url: `https://yahoo-finance15.p.rapidapi.com/api/yahoo/qu/quote/${stockSymbol}/financial-data`,
+    headers: {
+      'X-RapidAPI-Key': '3cfd02f090msh4bd229c6a961da5p100578jsne25c8024ccee',
+      'X-RapidAPI-Host': 'yahoo-finance15.p.rapidapi.com'
+    }
+  };
+
+  axios.request(options)
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => { console.log(error) });
+}
