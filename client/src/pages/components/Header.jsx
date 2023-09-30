@@ -12,7 +12,7 @@ function Header() {
         <NavLink className={classNameFunc} to="/stocks">Stocks</NavLink>
         <NavLink className={classNameFunc} to="/stocks-search">Search Stocks</NavLink>
         <NavLink className={classNameFunc} to="/login">Login</NavLink>
-        <Link className="navbar-item" to='/' onClick={() => removeConnectionToken()}>Dissconnect</Link>
+        <Link className="navbar-item" to='/' onClick={() => removeConnectionToken()}>Disconnect</Link>
       </nav>
     </header>
   );

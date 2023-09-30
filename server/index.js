@@ -115,7 +115,6 @@ app.post("/users/register", async (req, res) => {
 
 //run every request to check user token for authentication
 app.use((req, res, next) => {
-  console.log("checking the request authentication");
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
@@ -125,7 +124,6 @@ app.use((req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
     req.user = decoded;
-    console.log(req.user);
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }
@@ -134,18 +132,27 @@ app.use((req, res, next) => {
 
 //delete all users from db
 app.delete("/users/all", (req, res) => {
-  User.deleteMany({})
-    .then((response) => console.log(response))
-    .catch(err => console.log(err));
+  // User.deleteMany({})
+  //   .then((response) => console.log(response))
+  //   .catch(err => console.log(err));
 });
 
 //stocks route
 app.get("/stocks/all", (req, res) => {
-  Stock.find({})
+  // Stock.find({})
+  //   .then((result) => {
+  //     res.json({ stocks: result });
+  //   })
+  //   .catch(err => res.statusCode(400));
+  User.findOne({ _id: req.user.user_id })
     .then((result) => {
-      res.json({ stocks: result });
+      console.log(result);
+      res.json({ stocks: result.stocks });
     })
-    .catch(err => res.statusCode(400));
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500)
+    });
 });
 
 app.get('/stocks/symbol/:symbol', (req, res) => {
@@ -204,17 +211,25 @@ app.post('/users/authentication', function (req, res) {
   res.sendStatus(200);
 });
 
-app.patch("/users/:id/:symbol", (req, res) => {
-  const userId = req.params.id;
+app.patch("/users/:symbol", (req, res) => {
   const stockSymbol = req.params.symbol;
-  const found = users[userId].stockSymbols.find(
-    (symbol) => stockSymbol === symbol
-  );
-  if (!found) {
-    users[userId].stockSymbols.push(stockSymbol);
-    res.json({ message: "stock symbol was successfully added to your list" });
-  }
-  res.json({ message: "stock symbol was already in your list" });
+  User.findOne({ _id: req.user.user_id })
+    .then((result) => {
+      console.log(result);
+      if (result.stocks.find((element) => element === stockSymbol) !== undefined) {
+        res.json({ message: "stock symbol already exists" });
+      } else {
+        result.stocks = [...result.stocks, stockSymbol];
+        result.save()
+          .then(() => res.json({ message: "stock symbol was successfully" }))
+          .catch(() => res.json({ message: "error saving stock symbol" }));
+      }
+
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500)
+    });
 });
 
 app.listen(port, () => {
