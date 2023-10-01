@@ -68,8 +68,8 @@ app.post("/users/login", async (req, res) => {
 
 app.post("/users/register", async (req, res) => {
   try {
-    const { username, password, email } = req.body;
-    if (!(email && password && username)) {
+    const { email, password } = req.body;
+    if (!(email && password)) {
       return res.status(400).send("Missing input for user registration");
     }
 
@@ -81,7 +81,6 @@ app.post("/users/register", async (req, res) => {
     const encryptedPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
-      username: username,
       email: email.toLowerCase(),
       password: encryptedPassword,
     });
