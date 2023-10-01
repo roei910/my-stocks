@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <h1>showing all routes for the api</h1>
@@ -14,16 +14,51 @@
     </ul>
     <h2>Users</h2>
     <ul>
-      <li>GET: /users/all</li>
-      <li>DELETE: /users/all</li>
-      <li>POST: /users/register</li>
-      <li>GET: /users/:id</li>
-      <li>GET: /users/:id/:symbol</li>
+      <li>
+        GET: /users/all
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
+      <li>
+        DELETE: /users/all
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
+      <li>POST: /users/login
+        <ul>
+          <li>body: {email, password}</li>
+        </ul>
+      </li>
+      <li>POST: /users/register
+        <ul>
+          <li>body: {email, username, password}</li>
+        </ul>
+      </li>
+      <li>GET: /users/:id
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
+      <li>GET: /users/:id/:symbol
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
     </ul>
     <h2>Stocks</h2>
     <ul>
-      <li>GET: /stocks/all</li>
-      <li>GET: /stocks/:symbol</li>
+      <li>GET: /stocks/all
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
+      <li>GET: /stocks/:symbol
+        <ul>
+          <li>token required</li>
+        </ul>
+      </li>
     </ul>
   </body>
 </html>
