@@ -38,7 +38,6 @@ const stocks = [
 
 //routes
 app.get("/", (req, res) => {
-  // res.json(users);
   res.render('index');
 });
 
@@ -79,7 +78,7 @@ app.post("/users/register", async (req, res) => {
   try {
     const { username, password, email } = req.body;
     if (!(email && password && username)) {
-      res.status(400).send("Missing input for user registration");
+      return res.status(400).send("Missing input for user registration");
     }
 
     const oldUser = await User.findOne({ email: email });
