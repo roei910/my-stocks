@@ -26,7 +26,7 @@ const LoginPage = () => {
         response.data.message
           ? alert(response.data.message)
           : alert(
-              `New user successfully registered with the name ${response.data.user.username}`
+              `New user successfully registered with the email ${response.data.email}`
             );
         setConnectionCookie(response.data.token);
         document.location.replace("/");
@@ -74,10 +74,6 @@ const LoginPage = () => {
   function onChangeRegister(event) {
     const { value, name } = event.target;
     if (name === "email") {
-      setUserRegister((old) => {
-        return { ...old, email: value };
-      });
-    } else if (name === "email") {
       setUserRegister((old) => {
         return { ...old, email: value };
       });
