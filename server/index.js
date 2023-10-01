@@ -1,5 +1,3 @@
-//website for help with jwt token
-//https://www.section.io/engineering-education/how-to-build-authentication-api-with-jwt-token-in-nodejs/
 require("dotenv").config();
 require("./config/database").connectDB();
 const express = require("express"); //run local server
@@ -23,20 +21,12 @@ app.use(
   })
 );
 
-// app.use(require('./config/middleware')); //not working yet
-
 //view engine
 app.set("view engine", "ejs");
 
 //importing db modules
 const User = require("./models/user");
 const Stock = require("./models/stock");
-
-//constants
-const stocks = [
-  { id: 1, name: "Apple", symbol: "AAPL", price: "85.00" },
-  { id: 2, name: "Taboola", symbol: "TBLA", price: "3.81" },
-];
 
 //routes
 app.get("/", (req, res) => {
@@ -139,11 +129,6 @@ app.delete("/users/all", (req, res) => {
 
 //stocks route
 app.get("/stocks/all", (req, res) => {
-  // Stock.find({})
-  //   .then((result) => {
-  //     res.json({ stocks: result });
-  //   })
-  //   .catch(err => res.statusCode(400));
   User.findOne({ _id: req.user.user_id })
     .then((result) => {
       console.log(result);
@@ -159,8 +144,8 @@ app.get("/stocks/symbol/:symbol", (req, res) => {
   const stockSymbol = req.params.symbol;
   Stock.findOne({ symbol: stockSymbol }).then((found) => {
     if (!found) {
-      getStockDataBySymbol(stockSymbol);
-      getStockNameBySymbol(stockSymbol);
+      // let name = getStockNameBySymbol(stockSymbol).name;
+      // getStockDataBySymbol(stockSymbol);
       //create a new stock object and save to mongo db using mongoose
     }
   });
@@ -257,7 +242,12 @@ function getStockNameBySymbol(stockSymbol) {
   axios
     .request(options)
     .then((response) => {
-      console.log(response);
+      if(response.data.data.length > 0) {
+      console.log(response.data.data[0]);
+        return response.data.data[0];
+      } else {
+        return [];
+      }
     })
     .catch((err) => {
       console.log(err);
