@@ -7,7 +7,7 @@ function setConnectionCookie(token) {
 
 async function getConnectionToken() {
     if(document.cookie === '')
-        return false
+        return null;
     let cookies = document.cookie.split(';');
     return cookies.find((cookie) => cookie.startsWith('connection.token')).split('=')[1];    
 }

@@ -1,34 +1,34 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { getConnectionToken } from '../utils/cookies';
+import React from "react";
+// import { useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import { getConnectionToken } from '../utils/cookies';
 
 const Home = () => {
-  const navigate = useNavigate();
-  useEffect(checkToken, [navigate]);
+  // const navigate = useNavigate();
+  // useEffect(checkToken, [navigate]);
 
-  function checkToken(){
-    getConnectionToken().then((token) => {
-      if(token === 'null') return;
-      axios
-        .post(`http://localhost:8000/users/authentication`,
-          {
-            token: token
-          }, {
-          headers: {
-            'content-type': 'application/json;charset=utf-8'
-          }
-        })
-        .then((response) => {
-          if (response.status === 200) {
-            navigate('/stocks');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    });
-  }
+  // function checkToken(){
+  //   getConnectionToken().then((token) => {
+  //     if(token === 'null') return;
+  //     axios
+  //       .post(`http://localhost:8000/users/authentication`,
+  //         {
+  //           token: token
+  //         }, {
+  //         headers: {
+  //           'content-type': 'application/json;charset=utf-8'
+  //         }
+  //       })
+  //       .then((response) => {
+  //         if (response.status === 200) {
+  //           navigate('/stocks');
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   });
+  // }
 
   return (
     <div className="main-content center">

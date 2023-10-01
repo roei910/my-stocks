@@ -106,7 +106,7 @@ app.post("/users/register", async (req, res) => {
     user.token = token;
 
     // return new user
-    res.status(201).json(user);
+    return res.status(201).json(user);
   } catch (err) {
     console.log(err);
   }
@@ -147,7 +147,7 @@ app.get("/stocks/all", (req, res) => {
   User.findOne({ _id: req.user.user_id })
     .then((result) => {
       console.log(result);
-      res.json({ stocks: result.stocks });
+      res.json({ stocks: result.stocks, email: result.email });
     })
     .catch(err => {
       console.log(err);

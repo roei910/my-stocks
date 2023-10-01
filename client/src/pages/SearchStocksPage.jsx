@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { getConnectionToken } from "../utils/cookies";
 
 const SearchStocksPage = () => {
   const [stocksList, setStocksList] = useState([]);
 
   function searchStock(event) {
     const searchValue = event.target[0].value;
-    axios
-      .get(`http://localhost:8000/stocks/name/${searchValue}`)
+    getConnectionToken().then((token) => {
+      if (token === null) return;
+      axios
+      .get(`http://localhost:8000/stocks/name/${searchValue}`, {headers: {
+        "content-type": "application/json;charset=utf-8",
+        "x-access-token": token,
+      }})
       .then((response) => {
-        const stocksList = response.data.stocks;
-        setStocksList([...stocksList]);
+        const data = response.data;
+        setStocksList([...data]);
       })
       .catch((error) => {
         console.log(error);
       });
+    });    
     event.preventDefault();
   }
-
+  
   return (
     <div className="main-content">
       <h1>Allowing you to search stocks and add them to your list</h1>
@@ -29,7 +36,7 @@ const SearchStocksPage = () => {
         </svg></button>
       </form>
       {stocksList.length === 0 ? <h2>please enter a search term</h2> : <h2>your search result:</h2>}
-      {stocksList.map((stk) => <p>{stk.name}, {stk.symbol}, {stk.price}</p>)}
+      {stocksList.map((stk, index) => <p key={index}>{stk['1. symbol']}, {stk['2. name']}</p>)}
     </div>
   );
 };

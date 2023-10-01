@@ -1,21 +1,39 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { getConnectionToken } from "../utils/cookies";
 
 function StocksPage() {
-  //original list before using state
-  // const stocksList = [{ id: 1, name: "Apple", symbol: "AAPL", price: "85.00" }]; 
   const [stocksList, setStocksList] = useState([]);
+  const [email, setEmail] = useState("");
 
-  useEffect(() => {
-    axios
-    .get("http://localhost:8000/stocks/all")
-    .then((response) => {
-      setStocksList([...response.data.stocks]);
-    })
-    .catch((error) => {
-      console.log(error);
+  useEffect(checkTokenAndGetStocks, [setStocksList]);
+
+  function checkTokenAndGetStocks() {
+    getConnectionToken().then((token) => {
+      if (token === null) return;
+      axios
+        .get(`http://localhost:8000/stocks/all`, {
+          headers: {
+            "content-type": "application/json;charset=utf-8",
+            "x-access-token": token,
+          },
+        })
+        .then((response) => {
+          if (response.status === 200) {
+            setStocksList(
+              response.data.stocks.map((stock, index) => {
+                return { id: index+1, symbol: stock };
+              })
+            );
+            // setStocksList([...response.data.stocks]);
+            setEmail(response.data.email);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     });
-  }, []);
+  }
 
   function createRow(item, index) {
     return (
@@ -31,7 +49,7 @@ function StocksPage() {
 
   return (
     <div className="main-content">
-      <h1>Welcome Roei!</h1>
+      <h1>Welcome {email}!</h1>
       <h2>showing your list of stocks below</h2>
       <table className="bg-table">
         <thead>
