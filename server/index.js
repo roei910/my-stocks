@@ -103,7 +103,7 @@ app.post("/users/register", async (req, res) => {
   }
 });
 
-//run every request to check user token for authentication
+//token authentication middleware
 app.use((req, res, next) => {
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
