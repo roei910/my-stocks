@@ -25,10 +25,9 @@ function Header(props) {
         {props.connected && (
           <Link
             className="navbar-item"
-            to="/"
             onClick={() => {
               removeConnectionToken();
-              document.location.reload(false);
+              document.location.replace('/');
             }}
           >
             Disconnect
