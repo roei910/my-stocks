@@ -26,8 +26,11 @@ function Header(props) {
           <Link
             className="navbar-item"
             onClick={() => {
-              removeConnectionToken();
-              document.location.replace('/');
+              let ans = window.confirm('are you sure you want to disconnect?');
+              if(ans){
+                removeConnectionToken();
+                document.location.replace('/');
+              }
             }}
           >
             Disconnect
