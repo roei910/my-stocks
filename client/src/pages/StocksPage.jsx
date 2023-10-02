@@ -25,7 +25,7 @@ function StocksPage() {
                 return { id: index+1, symbol: stock };
               })
             );
-            // setStocksList([...response.data.stocks]);
+            setStocksList([...response.data.stocks]);
             setEmail(response.data.email);
           }
         })
