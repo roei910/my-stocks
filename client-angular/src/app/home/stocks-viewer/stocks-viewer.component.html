@@ -1,0 +1,26 @@
+<div *ngIf="IsConnected">
+  <table>
+    <thead>
+      <tr>
+        <th>header1</th>
+        <th>header2</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>first data</td>
+        <td>second data</td>
+      </tr>
+      <tr>
+        <td>first data</td>
+        <td>second data</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div *ngIf="!IsConnected">
+    <p>you are welcome to connect to your account, 
+        if you dont have an account yet be sure to create one!</p>
+    <a routerLink="/users/connect">connect</a>
+    <a routerLink="/users/register">register</a>
+</div>
