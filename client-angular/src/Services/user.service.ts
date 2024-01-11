@@ -4,13 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
-
-  user: string = "roei daniel";
+  User: any = {
+    name: "roei daniel",
+    email: "roei910@gmail.com"
+  }
 
   constructor() { }
 
   GetUser(){
-    return this.user;
+    return this.User;
   }
   
 }
