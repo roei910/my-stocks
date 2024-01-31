@@ -23,3 +23,6 @@ ENV NAME my-app
 # Run app.py when the container launches
 # CMD ["python3", "app.py"]
 CMD 'bash'
+
+# need to run:
+# docker run -it -p 3000:3000 image_name 
