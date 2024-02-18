@@ -80,6 +80,7 @@ router.get("/", (req, res) => {
     //TODO: return the user information
 });
 
+//after authenctication
 router.delete("/all", authenticate, (req, res) => {
   // User.deleteMany({})
   //   .then((response) => console.log(response))
