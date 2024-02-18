@@ -5,6 +5,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const axios = require("axios");
+const { JSDOM } = require('jsdom');
 
 //server constants
 const app = express();
@@ -30,11 +31,13 @@ const Stock = require("./models/stock");
 
 //routes
 app.get("/", (req, res) => {
+  fetchStockBySymbol("AAPL");
+
   res.render("index");
 });
 
 //users routes
-app.post("/users/login", async (req, res) => {
+app.post("/user/login", async (req, res) => {
   try {
     // Get user input
     const { email, password } = req.body;
@@ -66,7 +69,7 @@ app.post("/users/login", async (req, res) => {
   }
 });
 
-app.post("/users/register", async (req, res) => {
+app.post("/user/register", async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!(email && password)) {
@@ -120,38 +123,27 @@ app.use((req, res, next) => {
 });
 
 //delete all users from db
-app.delete("/users/all", (req, res) => {
+app.delete("/user/all", (req, res) => {
   // User.deleteMany({})
   //   .then((response) => console.log(response))
   //   .catch(err => console.log(err));
 });
 
 //stocks route
-app.get("/stocks/all", (req, res) => {
-  User.findOne({ _id: req.user.user_id })
-    .then((result) => {
-      console.log(result);
-      res.json({ stocks: result.stocks, email: result.email });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.sendStatus(500);
-    });
-});
-
-app.get("/stocks/symbol/:symbol", (req, res) => {
+app.get("/stock/symbol/:symbol", (req, res) => {
   const stockSymbol = req.params.symbol;
   Stock.findOne({ symbol: stockSymbol }).then((found) => {
     if (!found) {
-      // let name = getStockNameBySymbol(stockSymbol).name;
+      let stock = getStockNameBySymbol(stockSymbol);
+      res.send(stock);
       // getStockDataBySymbol(stockSymbol);
       //create a new stock object and save to mongo db using mongoose
     }
   });
-  res.json({ stock: stocks.find((stk) => stk.symbol === stockSymbol) });
+  // res.json({ stock: stocks.find((stk) => stk.symbol === stockSymbol) });
 });
 
-app.get("/stocks/name/:name", (req, res) => {
+app.get("/stock/name/:name", (req, res) => {
   const stockName = req.params.name;
 
   const options = {
@@ -179,7 +171,20 @@ app.get("/stocks/name/:name", (req, res) => {
     });
 });
 
-app.post("/users/authentication", function (req, res) {
+//users routes
+app.get("/user/stock/all", (req, res) => {
+  User.findOne({ _id: req.user.user_id })
+    .then((result) => {
+      console.log(result);
+      res.json({ stocks: result.stocks, email: result.email });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.sendStatus(500);
+    });
+});
+
+app.post("/user/authentication", function (req, res) {
   const token =
     req.body.token || req.query.token || req.headers["x-access-token"];
 
@@ -190,13 +195,14 @@ app.post("/users/authentication", function (req, res) {
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_KEY);
     req.user = decoded;
-    res.sendStatus(200);
+    console.log(req.user);
+    res.status(200).send("Valid Token");
   } catch (err) {
     return res.status(401).send("Invalid Token");
   }
 });
 
-app.patch("/users/:symbol", (req, res) => {
+app.patch("/user/:symbol", (req, res) => {
   const stockSymbol = req.params.symbol;
   User.findOne({ _id: req.user.user_id })
     .then((result) => {
@@ -271,4 +277,29 @@ function getStockDataBySymbol(stockSymbol) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+
+async function fetchStockBySymbol(symbol) {
+  try {
+      const response = await fetch('https://finance.yahoo.com/quote/' + symbol);
+      const html = await response.text();
+
+      const dom = new JSDOM(html);
+      const doc = dom.window.document;
+      
+      // Find the element containing the stock price
+      const priceElement = doc.querySelector('[data-test="OPEN-value"]');
+      if (priceElement) {
+          const stockPrice = priceElement.textContent.trim();
+          console.log(`${symbol} stock price:`, stockPrice);
+          return stockPrice;
+      } else {
+          console.error('Failed to find AAPL stock price element');
+          return null;
+      }
+  } catch (error) {
+      console.error('Error fetching AAPL stock price:', error);
+      return null;
+  }
 }
