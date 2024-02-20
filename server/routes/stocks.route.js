@@ -18,8 +18,11 @@ router.get("/symbol/:symbol", async (req, res) => {
   await Stock.findOne({ symbol: stockSymbol })
     .then(async (stock) => {
       if(!stock){
+        console.log("here");
         let stockInfo = await getStockFromYahoo(stockSymbol);
-        await Stock.create(stockInfo).then((stock) => console.log(`stock created successfully, ${stock.name}`));
+        console.log("here");
+        await Stock.create(stockInfo).then((createdStock) => console.log(`stock created successfully, ${createdStock.name}`));
+        console.log("here");
         res.status(201).json(stockInfo); //TODO: change to correct status, created new stock
       }
       else
