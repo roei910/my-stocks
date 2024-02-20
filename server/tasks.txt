@@ -1,0 +1,4 @@
+1. create docker file for the deployment
+2. use reverse proxy
+3. maybe use rabbitmq service
+4. better handle response time
