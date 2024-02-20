@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm i && npm audit fix",
+    "build": "npm i",
     "start": "node index.js",
     "startDev": "nodemon index.js"
   },
