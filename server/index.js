@@ -1,25 +1,16 @@
 require("dotenv").config();
 require("./config/database").connectDB();
-const express = require("express"); //run local server
-const cors = require("cors");
-const axios = require("axios");
+const express = require("express");
 const userRoutes = require('./routes/users.route');
 const stockRoutes = require('./routes/stocks.route');
+const setupMiddlewares = require('./config/middleware');
 
 //server constants
 const app = express();
 const port = process.env.PORT || 8000;
 
 //middleware
-app.use(express.static("public"));
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "DELETE", "PATCH"],
-  })
-);
+setupMiddlewares(app);
 
 //view engine
 app.set("view engine", "ejs");
@@ -31,7 +22,7 @@ app.get("/", (req, res) => {
 
 app.use('/users', userRoutes);
 
-app.use('/symbols', stockRoutes);
+app.use('/stocks', stockRoutes);
 
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
