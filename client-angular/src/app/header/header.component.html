@@ -1,5 +1,18 @@
-<a routerLink="">Home</a>
-<a routerLink="/stocks">My Stocks</a>
-<a routerLink="/user">User Information</a>
-<a routerLink="/user/login">Login</a>
-<a routerLink="/user/register">Sign Up</a>
+<header>
+    <nav>
+        <div class="logo">Stock Collection</div>
+        <div class="nav-links">
+            <a routerLink="">Home</a>
+            <a routerLink="/stocks/search">Search</a>
+            <ng-container *ngIf="isConnected; else elseTemplate">
+                <a routerLink="/user/stocks">My Stocks</a>
+                <a routerLink="/user/information">User Information</a>
+                <!-- TODO -->
+                <!-- <a routerLink="/register">Insights</a> -->
+            </ng-container>
+            <ng-template #elseTemplate>
+                <a routerLink="/login">Login</a>
+            </ng-template>
+        </div>
+    </nav>
+</header>
