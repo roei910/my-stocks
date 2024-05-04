@@ -13,6 +13,8 @@ import { UserRegisterComponent } from './home/user-register/user-register.compon
 import { UserInformationComponent } from './home/user-information/user-information.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
 
+import { ChartModule } from 'primeng/chart';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,7 +30,8 @@ import { StocksSearchComponent } from './home/stocks-search/stocks-search.compon
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
