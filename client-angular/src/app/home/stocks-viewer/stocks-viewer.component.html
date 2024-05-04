@@ -1,33 +1,42 @@
 <div *ngIf="IsConnected">
-  <div>
-    <p>Your Stocks</p>
-    <table>
+  <div class="stock-list-container">
+    <h2>My Stocks</h2>
+    <table id="stockTable">
       <thead>
         <tr>
-          <th>Stock Symbol</th>
+          <th>Name</th>
+          <th>Symbol</th>
           <th>Price</th>
+          <th>Prediction (1 year)</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let stk of Stocks.stocksSymbol">
-          <td>{{ stk }}</td>
+      <tbody id="stockList">
+        <tr class="stock-card" *ngFor="let stock of UserStocks">
+          <td>{{stock.name}}</td>
+          <td>Symbol: {{stock.symbol}}</td>
+          <td>Price: {{stock.price.toFixed(2)}}</td>
+          <td>Prediction (1 year): {{stock.prediction}}</td>
         </tr>
       </tbody>
     </table>
   </div>
-
-  <div>
-    <p>Watching Stocks</p>
-    <table>
+  <div class="stock-list-container">
+    <h2>Watching</h2>
+    <table id="stockTable">
       <thead>
         <tr>
-          <th>Stock Symbol</th>
+          <th>Name</th>
+          <th>Symbol</th>
           <th>Price</th>
+          <th>Prediction (1 year)</th>
         </tr>
       </thead>
-      <tbody>
-        <tr *ngFor="let stk of Stocks.watchingStocksSymbol">
-            <td>{{ stk }}</td>
+      <tbody id="stockList">
+        <tr class="stock-card" *ngFor="let stock of Stocks.watchingStocksSymbol">
+          <td>{{stock}}</td>
+          <td>Symbol: {{stock.symbol}}</td>
+          <td>Price: {{stock.price.toFixed(2)}}</td>
+          <td>Prediction (1 year): {{stock.prediction}}</td>
         </tr>
       </tbody>
     </table>
@@ -38,6 +47,6 @@
     you are welcome to connect to your account, if you dont have an account yet
     be sure to create one!
   </p>
-  <a routerLink="/users/connect">connect</a>
-  <a routerLink="/users/register">register</a>
+  <a routerLink="/connect">connect</a>
+  <a routerLink="/register">register</a>
 </div>

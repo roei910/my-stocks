@@ -11,6 +11,32 @@ export class StocksViewerComponent implements OnInit{
   IsConnected : boolean = true;
   Stocks!: any;
   User!: any;
+  UserStocks = [
+    {
+        symbol: 'AAPL',
+        name: 'Apple Inc.',
+        price: 125.75,
+        prediction: '+10%'
+    },
+    {
+        symbol: 'GOOGL',
+        name: 'Alphabet Inc.',
+        price: 2325.12,
+        prediction: '+15%'
+    },
+    {
+        symbol: 'MSFT',
+        name: 'Microsoft Corporation',
+        price: 285.45,
+        prediction: '+8%'
+    },
+    {
+        symbol: 'AMZN',
+        name: 'Amazon.com, Inc.',
+        price: 3275.89,
+        prediction: '+12%'
+    }
+];
 
   constructor(private db: DatabaseService, private userService: UserService){}
 
