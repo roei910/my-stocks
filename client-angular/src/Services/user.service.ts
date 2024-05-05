@@ -14,5 +14,4 @@ export class UserService {
   GetUser(){
     return this.User;
   }
-  
 }
