@@ -7,16 +7,11 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class UserService {
-  User: any = {
-    name: "roei daniel",
-    email: "roei910@gmail.com"
-  }
-
   constructor(private cookieService: CookiesService,
     private router: Router
   ) { }
 
-  GetUser(){
+  GetUser() {
     var user = this.cookieService.getCookie("email");
 
     return user;
@@ -25,29 +20,29 @@ export class UserService {
   DisconnectUser() {
     this.cookieService.deleteCookie("email");
   }
-  
-  isUserConnected() : boolean{
+
+  isUserConnected(): boolean {
     var user = this.cookieService.getCookie("email");
-    
-    if(!user || user == "")
+
+    if (!user || user == "")
       return false;
 
     return true;
   }
 
-  TryConnect(email: string, password: string): boolean {
-    axios.get("https://localhost:7173/User/email?email=" + email)
-    .then(res => {
-      if(res.status == 200){
-        this.cookieService.setCookie("email", res.data.email, 1);
-        this.router.navigate(['/']);
+  async TryConnect(email: string, password: string): Promise<boolean> {
+    var isConnected = await axios.get("https://localhost:7173/User/email?email=" + email)
+      .then(res => {
+        if (res.status == 200) {
+          this.cookieService.setCookie("email", res.data.email, 1);
+          this.router.navigate(['/']);
 
-        return true;
-      }
+          return true;
+        }
 
-      return false;
-    });
+        return false;
+      });
 
-    return false;
+    return isConnected;
   }
 }

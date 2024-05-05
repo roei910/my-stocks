@@ -7,14 +7,14 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent {
+await: any;
   constructor(private userService: UserService){
 
   }
 
-  SignIn(event: Event, email: string,password: string) {
+  async SignIn(event: Event, email: string,password: string) {
     event.preventDefault();
-    
-    var isConnected = this.userService.TryConnect(email, password); 
+    var isConnected = await this.userService.TryConnect(email, password); 
 
     if(!isConnected)
       alert("username or password was incorrect");
