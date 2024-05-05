@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { UserService } from 'src/Services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -6,9 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  isConnected: boolean = true;
+  constructor(private userService: UserService,
+    private router: Router
+  ){
+
+  }
+
+  IsConnected(): boolean{
+    return this.userService.isUserConnected();
+  }
 
   SignOut(){
-    
+    this.userService.DisconnectUser();
+    this.router.navigate(['/']);
   }
 }

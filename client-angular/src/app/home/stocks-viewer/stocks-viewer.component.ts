@@ -8,41 +8,13 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./stocks-viewer.component.css']
 })
 export class StocksViewerComponent implements OnInit{
-  IsConnected : boolean = true;
   Stocks!: any;
-  User!: any;
-  UserStocks = [
-    {
-        symbol: 'AAPL',
-        name: 'Apple Inc.',
-        price: 125.75,
-        prediction: '+10%'
-    },
-    {
-        symbol: 'GOOGL',
-        name: 'Alphabet Inc.',
-        price: 2325.12,
-        prediction: '+15%'
-    },
-    {
-        symbol: 'MSFT',
-        name: 'Microsoft Corporation',
-        price: 285.45,
-        prediction: '+8%'
-    },
-    {
-        symbol: 'AMZN',
-        name: 'Amazon.com, Inc.',
-        price: 3275.89,
-        prediction: '+12%'
-    }
-];
+  UserEmail!: any;
 
   constructor(private db: DatabaseService, private userService: UserService){}
 
   ngOnInit(): void {
-    this.User = this.userService.GetUser();
-    this.Stocks = this.db.GetStocks(this.User.email);
-    // console.log(this.Stocks);
+    this.UserEmail = this.userService.GetUser();
+    this.Stocks = this.db.GetStocks(this.UserEmail);
   }
 }

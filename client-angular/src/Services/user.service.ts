@@ -1,21 +1,53 @@
 import { Injectable } from '@angular/core';
+import { CookiesService } from './cookies.service';
+import axios from 'axios';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  isUserConnected() : boolean{
-    return true;
-  }
-
   User: any = {
     name: "roei daniel",
     email: "roei910@gmail.com"
   }
 
-  constructor() { }
+  constructor(private cookieService: CookiesService,
+    private router: Router
+  ) { }
 
   GetUser(){
-    return this.User;
+    var user = this.cookieService.getCookie("email");
+
+    return user;
+  }
+
+  DisconnectUser() {
+    this.cookieService.deleteCookie("email");
+  }
+  
+  isUserConnected() : boolean{
+    var user = this.cookieService.getCookie("email");
+    
+    if(!user || user == "")
+      return false;
+
+    return true;
+  }
+
+  TryConnect(email: string, password: string): boolean {
+    axios.get("https://localhost:7173/User/email?email=" + email)
+    .then(res => {
+      if(res.status == 200){
+        this.cookieService.setCookie("email", res.data.email, 1);
+        this.router.navigate(['/']);
+
+        return true;
+      }
+
+      return false;
+    });
+
+    return false;
   }
 }
