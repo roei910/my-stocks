@@ -9,11 +9,24 @@
             <p>No stocks found.</p>
         </ng-container>
         <ng-template #elseTemplate>
-            <div *ngFor="let stock of stocksList" class="stock-card">
-                <h3>{{stock.name}}</h3>
-                <p>Symbol: {{stock.symbol}}</p>
-                <p>Price: {{stock.price.toFixed(2)}}</p>
-            </div>
+            <table id="stockTable">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Symbol</th>
+                    <th>Price</th>
+                    <th>Information</th>
+                  </tr>
+                </thead>
+                <tbody id="stockList">
+                  <tr class="stock-card" *ngFor="let stock of stocksList">
+                    <td>{{stock.name}}</td>
+                    <td>Symbol: {{stock.symbol}}</td>
+                    <td>Price: {{stock.price.toFixed(2)}}</td>
+                    <td><button>+</button></td>
+                  </tr>
+                </tbody>
+              </table>
         </ng-template>
     </div>
 </div>
