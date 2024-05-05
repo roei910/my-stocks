@@ -7,6 +7,7 @@ import { UserRegisterComponent } from './home/user-register/user-register.compon
 import { UserInformationComponent } from './home/user-information/user-information.component';
 import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
+import { connectedUserGuard } from 'src/RouteGuards/connected-user.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
       { path: 'stocks', component: StocksViewerComponent },
       { path: 'information', component: UserInformationComponent },
     ],
+    canActivateChild: [connectedUserGuard]
   },
   { path: '**', component: NotFoundComponent },
 ];
