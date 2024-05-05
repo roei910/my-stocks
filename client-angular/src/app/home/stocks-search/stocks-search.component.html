@@ -4,29 +4,31 @@
         <input type="text" placeholder="Enter stock name" id="searchInput">
         <button id="searchBtn" (click)="SearchResults('apple')">Search</button>
     </div>
-    <div *ngIf="stocksList is not null" class="search-results" id="searchResults">
-        <ng-container *ngIf="stocksList.length == 0; else elseTemplate">
-            <p>No stocks found.</p>
-        </ng-container>
-        <ng-template #elseTemplate>
-            <table id="stockTable">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Symbol</th>
-                    <th>Price</th>
-                    <th>Information</th>
-                  </tr>
-                </thead>
-                <tbody id="stockList">
-                  <tr class="stock-card" *ngFor="let stock of stocksList">
-                    <td>{{stock.name}}</td>
-                    <td>Symbol: {{stock.symbol}}</td>
-                    <td>Price: {{stock.price.toFixed(2)}}</td>
-                    <td><button>+</button></td>
-                  </tr>
-                </tbody>
-              </table>
-        </ng-template>
+    <div *ngIf="stocksList is not null">
+        <div class="search-results" id="searchResults">
+            <div *ngIf="stocksList.length == 0; else elseTemplate">
+                <p>No stocks found.</p>
+            </div>
+            <ng-template #elseTemplate>
+                <table id="stockTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Symbol</th>
+                            <th>Price</th>
+                            <th>Information</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stockList">
+                        <tr class="stock-card" *ngFor="let stock of stocksList">
+                            <td>{{stock.name}}</td>
+                            <td>Symbol: {{stock.symbol}}</td>
+                            <td>Price: {{stock.price.toFixed(2)}}</td>
+                            <td><button>+</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+        </div>
     </div>
 </div>
