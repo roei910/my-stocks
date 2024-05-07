@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DatabaseService } from 'src/Services/database.service';
 
 @Component({
   selector: 'app-stocks-search',
@@ -6,16 +7,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./stocks-search.component.css']
 })
 export class StocksSearchComponent {
-  // stocksList: any[] = [];
-  // stocksList: any = null;
-  stocksList: any[] = [
-    { symbol: 'AAPL', name: 'Apple Inc.', price: 125.75 },
-    { symbol: 'GOOGL', name: 'Alphabet Inc.', price: 2325.12 },
-    { symbol: 'MSFT', name: 'Microsoft Corporation', price: 285.45 },
-    { symbol: 'AMZN', name: 'Amazon.com, Inc.', price: 3275.89 },
-  ];
+  stocksList: any = null;
 
-  SearchResults(stockName: string){
+  constructor(private database: DatabaseService) { }
 
+  async SearchResults(searchTerm: string) {
+    this.stocksList = await this.database.FindStocksBySearchTerm(searchTerm);
   }
 }
