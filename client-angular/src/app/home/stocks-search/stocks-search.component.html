@@ -1,8 +1,8 @@
 <div class="search-container">
     <h2>Search Stocks</h2>
     <div class="search-box">
-        <input type="text" placeholder="Enter stock name" id="searchInput">
-        <button id="searchBtn" (click)="SearchResults('apple')">Search</button>
+        <input type="text" placeholder="Enter stock name" id="searchInput" #searchTerm>
+        <button id="searchBtn" (click)="SearchResults(searchTerm.value)">Search</button>
     </div>
     <div *ngIf="stocksList is not null">
         <div class="search-results" id="searchResults">
@@ -15,15 +15,13 @@
                         <tr>
                             <th>Name</th>
                             <th>Symbol</th>
-                            <th>Price</th>
                             <th>Information</th>
                         </tr>
                     </thead>
                     <tbody id="stockList">
                         <tr class="stock-card" *ngFor="let stock of stocksList">
                             <td>{{stock.name}}</td>
-                            <td>Symbol: {{stock.symbol}}</td>
-                            <td>Price: {{stock.price.toFixed(2)}}</td>
+                            <td>{{stock.symbol}}</td>
                             <td><button>+</button></td>
                         </tr>
                     </tbody>

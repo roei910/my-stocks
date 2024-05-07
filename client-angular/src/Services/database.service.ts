@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import axios from 'axios';
 
 @Injectable({
   providedIn: 'root',
@@ -49,5 +50,12 @@ export class DatabaseService {
     var found = this.Stocks.find((stk: any) => stk.email === email);
 
     return found;
+  }
+
+  async FindStocksBySearchTerm(searchTerm: string){
+    var data = await axios.get(`https://localhost:7173/Stock/find/name/${searchTerm}`)
+    .then(res => res.data);
+
+    return data;
   }
 }
