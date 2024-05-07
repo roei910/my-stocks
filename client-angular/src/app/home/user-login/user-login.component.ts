@@ -20,3 +20,5 @@ await: any;
       alert("username or password was incorrect");
   }
 }
+
+// TODO: need to handle wrong email or password. right now tested and not working
