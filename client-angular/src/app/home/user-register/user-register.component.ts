@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from '../../../Models/user';
 import axios from 'axios';
 import { Router } from '@angular/router';
+import { UserService } from 'src/Services/user.service';
 
 @Component({
   selector: 'app-user-register',
@@ -9,25 +10,19 @@ import { Router } from '@angular/router';
   styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent {
-  user?: User;
-  
-  constructor(private router: Router){ }
+  constructor(private router: Router,
+    private userService: UserService
+  ){ }
 
-  CreateUser(event: Event, name: string, email: string, password: string){
+  async CreateUser(event: Event, name: string, email: string, password: string){
     event?.preventDefault();
 
-    this.user = {
+    const user = {
       Name: name,
       Password: password,
       Email: email
     };
 
-    axios
-    .post("https://localhost:7173/User", this.user)
-    .then(res => {
-      if(res.status == 201){
-        this.router.navigate(['/']);
-      }
-    });
+    await this.userService.CreateUser(user);
   }
 }
