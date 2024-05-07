@@ -4,7 +4,7 @@
         <input type="text" placeholder="Enter stock name" id="searchInput" #searchTerm>
         <button id="searchBtn" (click)="SearchResults(searchTerm.value)">Search</button>
     </div>
-    <div *ngIf="stocksList is not null">
+    <div *ngIf="stocksList">
         <div class="search-results" id="searchResults">
             <div *ngIf="stocksList.length == 0; else elseTemplate">
                 <p>No stocks found.</p>
