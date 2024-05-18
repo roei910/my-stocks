@@ -19,14 +19,23 @@
             <th>Symbol</th>
             <th>Price</th>
             <th>Prediction (1 year)</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody id="stockList">
           <tr class="stock-card" *ngFor="let stock of Stocks.stocks">
-            <td>{{stock.name}}</td>
-            <td>Symbol: {{stock.symbol}}</td>
-            <td>Price: {{stock.price.toFixed(2)}}</td>
-            <td>Prediction (1 year): {{stock.prediction}}</td>
+            <td><a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: stock.symbol }">{{stock.name}}</a></td>
+            <td>{{stock.symbol}}</td>
+            <td>{{stock.price.toFixed(2)}}</td>
+            <td>{{stock.prediction}}</td>
+            <td>
+              <ng-container *ngIf="!stock.note; else elseTemplate">
+                <button>+</button>
+              </ng-container>
+              <ng-template #elseTemplate>
+                {{stock.note}}
+              </ng-template>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -39,15 +48,25 @@
             <th>Name</th>
             <th>Symbol</th>
             <th>Price</th>
-            <th>Prediction (1 year)</th>
+            <th>One year estimate (1 year)</th>
+            <th>Note</th>
           </tr>
         </thead>
         <tbody id="stockList">
           <tr class="stock-card" *ngFor="let stock of Stocks.watchingStocksSymbol">
-            <td>{{stock}}</td>
-            <td>Symbol: {{stock.symbol}}</td>
-            <td>Price: {{stock.price}}</td>
-            <td>Prediction (1 year): {{stock.prediction}}</td>
+            <td><a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: stock.symbol }">{{stock.name}}</a></td>
+            <td>{{stock.symbol}}</td>
+            <td>{{stock.price}}</td>
+            <td>{{stock.oneYearEstimate}}</td>
+            <!-- <td>{{stock.note}}</td> -->
+            <td>
+              <ng-container *ngIf="!stock.note; else elseTemplate">
+                <button>+</button>
+              </ng-container>
+              <ng-template #elseTemplate>
+                {{stock.note}}
+              </ng-template>
+            </td>
           </tr>
         </tbody>
       </table>
