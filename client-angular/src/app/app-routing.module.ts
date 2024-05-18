@@ -8,6 +8,7 @@ import { UserInformationComponent } from './home/user-information/user-informati
 import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
 import { connectedUserGuard } from 'src/RouteGuards/connected-user.guard';
+import { StockInformationComponent } from './home/stock-information/stock-information.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
     path: 'stocks',
     children: [
       { path: 'search', component: StocksSearchComponent },
+      { path: 'information', component: StockInformationComponent }
     ],
   },
   {

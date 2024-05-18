@@ -1,0 +1,9 @@
+<div class="stock-details-container">
+    <h2>Stock Details</h2>
+    <div id="stockDetails">
+        <h3>{{stockData.name}}</h3>
+        <p>current price: {{stockData.price}}</p>
+        <p>one year estimate: {{stockData.oneYearEstimate}}</p>
+        <p-chart type="bar" [data]="data" height="400" width="400"></p-chart>
+    </div>
+</div>
