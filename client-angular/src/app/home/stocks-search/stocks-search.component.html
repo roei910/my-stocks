@@ -22,7 +22,7 @@
                         <tr class="stock-card" *ngFor="let stock of stocksList">
                             <td>{{stock.name}}</td>
                             <td>{{stock.symbol}}</td>
-                            <td><button>+</button></td>
+                            <td><button (click)="NavigateStockInformation(stock.symbol)">+</button></td>
                         </tr>
                     </tbody>
                 </table>
