@@ -14,6 +14,7 @@ import { UserInformationComponent } from './home/user-information/user-informati
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
 
 import { ChartModule } from 'primeng/chart';
+import { StockInformationComponent } from './home/stock-information/stock-information.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { ChartModule } from 'primeng/chart';
     UserLoginComponent,
     UserRegisterComponent,
     UserInformationComponent,
-    StocksSearchComponent
+    StocksSearchComponent,
+    StockInformationComponent
   ],
   imports: [
     BrowserModule,
