@@ -1,36 +1,33 @@
-<div class="stock-list-container">
-    <h2>{{title}}</h2>
-    <table id="stockTable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Symbol</th>
-          <th>Price</th>
-          <th>Prediction (1 year)</th>
-          <th>Note</th>
-        </tr>
-      </thead>
-      <tbody id="stockList">
-        <tr class="stock-card" *ngFor="let stock of stocks">
-          <td>
-            <a 
-            [routerLink]="['/', 'stocks', 'information']" 
-            [queryParams]="{ stockSymbol: stock.symbol }">
-              {{stocksDictionary[stock.symbol].name}}
-            </a>
-          </td>
-          <td>{{stock.symbol}}</td>
-          <td>{{stocksDictionary[stock.symbol].price}}</td>
-          <td>{{stocksDictionary[stock.symbol].oneYearEstimate}}</td>
-          <td>
-            <ng-container *ngIf="!stocksDictionary[stock.symbol].note; else elseTemplate">
-              <button>+</button>
-            </ng-container>
-            <ng-template #elseTemplate>
-              {{stocksDictionary[stock.symbol].note}}
-            </ng-template>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<table id="stockTable">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Symbol</th>
+      <th>Price</th>
+      <th>Prediction (1 year)</th>
+      <th>Note</th>
+    </tr>
+  </thead>
+  <tbody id="stockList">
+    <tr class="stock-card" *ngFor="let stock of stocks">
+      <td>
+        <a 
+        [routerLink]="['/', 'stocks', 'information']" 
+        [queryParams]="{ stockSymbol: stock.symbol }">
+          {{stocksDictionary[stock.symbol].name}}
+        </a>
+      </td>
+      <td>{{stock.symbol}}</td>
+      <td>{{stocksDictionary[stock.symbol].price}}</td>
+      <td>{{stocksDictionary[stock.symbol].oneYearEstimate}}</td>
+      <td>
+        <ng-container *ngIf="!stock.note; else elseTemplate">
+          <button>+</button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          {{stock.note}}
+        </ng-template>
+      </td>
+    </tr>
+  </tbody>
+</table>

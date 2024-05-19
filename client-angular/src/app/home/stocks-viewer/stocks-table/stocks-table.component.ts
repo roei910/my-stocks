@@ -9,9 +9,6 @@ export class StocksTableComponent {
   @Input('stocks')
   stocks: any;
 
-  @Input('tableTitle')
-  title: any;
-
   @Input('stocksDictionary')
   stocksDictionary: any;
 }

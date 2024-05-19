@@ -19,11 +19,3 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
-
-.stock-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2rem;
-    padding: 2rem;
-}

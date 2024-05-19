@@ -10,15 +10,19 @@
 </ng-container>
 <ng-template #elseTemplate>
   <div>
-    <app-stocks-table 
-      tableTitle="My Stocks" 
-      [stocks]="Stocks.stocks"
-      [stocksDictionary]="Stocks.stocksDictionary">
-    </app-stocks-table>
-    <app-stocks-table 
-      tableTitle="Watching" 
+    <div class="stock-list-container">
+      <h2>My Stocks</h2>
+      <app-stocks-table 
+        [stocks]="Stocks.stocks"
+        [stocksDictionary]="Stocks.stocksDictionary">
+      </app-stocks-table>
+    </div>
+    <div class="stock-list-container">
+      <h2>Watching</h2>
+      <app-stocks-table 
       [stocks]="Stocks.watchingStocksSymbol"
       [stocksDictionary]="Stocks.stocksDictionary">
     </app-stocks-table>
+    </div>
   </div>
 </ng-template>
