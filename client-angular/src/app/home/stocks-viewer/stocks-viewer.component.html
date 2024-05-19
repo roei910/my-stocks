@@ -10,66 +10,15 @@
 </ng-container>
 <ng-template #elseTemplate>
   <div>
-    <div class="stock-list-container">
-      <h2>My Stocks</h2>
-      <table id="stockTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Symbol</th>
-            <th>Price</th>
-            <th>Prediction (1 year)</th>
-            <th>Note</th>
-          </tr>
-        </thead>
-        <tbody id="stockList">
-          <tr class="stock-card" *ngFor="let stock of Stocks.stocks">
-            <td><a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: stock.symbol }">{{stock.name}}</a></td>
-            <td>{{stock.symbol}}</td>
-            <td>{{stock.price.toFixed(2)}}</td>
-            <td>{{stock.prediction}}</td>
-            <td>
-              <ng-container *ngIf="!stock.note; else elseTemplate">
-                <button>+</button>
-              </ng-container>
-              <ng-template #elseTemplate>
-                {{stock.note}}
-              </ng-template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="stock-list-container">
-      <h2>Watching</h2>
-      <table id="stockTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Symbol</th>
-            <th>Price</th>
-            <th>One year estimate (1 year)</th>
-            <th>Note</th>
-          </tr>
-        </thead>
-        <tbody id="stockList">
-          <tr class="stock-card" *ngFor="let stock of Stocks.watchingStocksSymbol">
-            <td><a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: stock.symbol }">{{stock.name}}</a></td>
-            <td>{{stock.symbol}}</td>
-            <td>{{stock.price}}</td>
-            <td>{{stock.oneYearEstimate}}</td>
-            <!-- <td>{{stock.note}}</td> -->
-            <td>
-              <ng-container *ngIf="!stock.note; else elseTemplate">
-                <button>+</button>
-              </ng-container>
-              <ng-template #elseTemplate>
-                {{stock.note}}
-              </ng-template>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <app-stocks-table 
+      tableTitle="My Stocks" 
+      [stocks]="Stocks.stocks"
+      [stocksDictionary]="Stocks.stocksDictionary">
+    </app-stocks-table>
+    <app-stocks-table 
+      tableTitle="Watching" 
+      [stocks]="Stocks.watchingStocksSymbol"
+      [stocksDictionary]="Stocks.stocksDictionary">
+    </app-stocks-table>
   </div>
 </ng-template>

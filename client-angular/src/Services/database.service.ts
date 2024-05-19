@@ -12,51 +12,66 @@ export class DatabaseService {
       stocksSymbol: ['AAPL'],
       watchingStocksSymbol: [
         {
-          name: "Alibaba",
           symbol: "BABA",
-          price: "80.99",
-          oneYearEstimate: "106.13",
           note: "buy when lower than 80"
         }
       ],
       stocks: [
         {
-            symbol: 'AAPL',
-            name: 'Apple Inc.',
-            price: 125.75,
-            oneYearEstimate: '130.5'
+          symbol: 'AAPL',
         },
         {
-            symbol: 'GOOGL',
-            name: 'Alphabet Inc.',
-            price: 2325.12,
-            oneYearEstimate: '2500'
+          symbol: 'GOOGL',
         },
         {
-            symbol: 'MSFT',
-            name: 'Microsoft Corporation',
-            price: 285.45,
-            oneYearEstimate: '300'
+          symbol: 'MSFT',
         },
         {
-            symbol: 'AMZN',
-            name: 'Amazon.com, Inc.',
-            price: 3275.89,
-            oneYearEstimate: '4000'
+          symbol: 'AMZN',
+        },
+        {
+          symbol: "BABA",
         }
-    ]
+      ],
+      stocksDictionary: {
+        "BABA": {
+          name: "Alibaba",
+          price: "80.99",
+          oneYearEstimate: "106.13",
+        },
+        "AMZN": {
+          name: 'Amazon.com, Inc.',
+          price: 3275.89,
+          oneYearEstimate: '4000'
+        },
+        "MSFT": {
+          name: 'Microsoft Corporation',
+          price: 285.45,
+          oneYearEstimate: '300'
+        },
+        "GOOGL": {
+          name: 'Alphabet Inc.',
+          price: 2325.12,
+          oneYearEstimate: '2500'
+        },
+        "AAPL": {
+          name: 'Apple Inc.',
+          price: 125.75,
+          oneYearEstimate: '130.5'
+        }
+      }
     },
   ];
 
-  constructor() {}
+  constructor() { }
 
-  GetStocks(email: string){
+  GetStocks(email: string) {
     var found = this.Stocks.find((stk: any) => stk.email === email);
 
     return found;
   }
 
-  async FindStocksBySearchTerm(searchTerm: string){
+  async FindStocksBySearchTerm(searchTerm: string) {
     // var data = await axios.get(`https://localhost:7173/Stock/find/name/${searchTerm}`)
     // .then(res => res.data);
     var data = [

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CookiesService } from './cookies.service';
-import axios from 'axios';
 import { Router } from '@angular/router';
 
 @Injectable({
