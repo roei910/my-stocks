@@ -10,21 +10,13 @@
 </ng-container>
 <ng-template #elseTemplate>
   <div>
-    <div class="stock-list-container">
+    <div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
       <h2>My Stocks</h2>
       <app-stocks-table 
-        typeOfStocks="owned"
-        [stocks]="Stocks.stocks"
-        [stocksDictionary]="Stocks.stocksDictionary">
+        [typeOfStocks]="key"
+        [stocks]="this.User.lists[key]"
+        [stocksDictionary]="StocksDictionary">
       </app-stocks-table>
-    </div>
-    <div class="stock-list-container">
-      <h2>Watching</h2>
-      <app-stocks-table 
-      typeOfStocks="watching"
-      [stocks]="Stocks.watchingStocksSymbol"
-      [stocksDictionary]="Stocks.stocksDictionary">
-    </app-stocks-table>
     </div>
   </div>
 </ng-template>

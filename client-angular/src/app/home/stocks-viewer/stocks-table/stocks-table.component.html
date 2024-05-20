@@ -9,23 +9,23 @@
     </tr>
   </thead>
   <tbody id="stockList">
-    <tr class="stock-card" *ngFor="let stock of stocks">
+    <tr class="stock-card" *ngFor="let symbol of GetKeys(stocks)">
       <td>
         <a 
         [routerLink]="['/', 'stocks', 'information']" 
-        [queryParams]="{ stockSymbol: stock.symbol }">
-          {{stocksDictionary[stock.symbol].name}}
+        [queryParams]="{ stockSymbol: symbol }">
+          {{stocksDictionary[symbol].name}}
         </a>
       </td>
-      <td>{{stock.symbol}}</td>
-      <td>{{stocksDictionary[stock.symbol].price}}</td>
-      <td>{{stocksDictionary[stock.symbol].oneYearEstimate}}</td>
+      <td>{{symbol}}</td>
+      <td>{{stocksDictionary[symbol].price}}</td>
+      <td>{{stocksDictionary[symbol].oneYearEstimate}}</td>
       <td>
-        <ng-container *ngIf="!stock.note; else elseTemplate">
-          <button (click)="CreateStockNote(stock.symbol)">+</button>
+        <ng-container *ngIf="!stocks[symbol]; else elseTemplate">
+          <button (click)="CreateStockNote(symbol)">+</button>
         </ng-container>
         <ng-template #elseTemplate>
-          <p (click)="DeleteNote(stock.symbol)">{{stock.note}}</p>
+          <p (click)="DeleteNote(symbol)">{{stocks[symbol]}}</p>
         </ng-template>
       </td>
     </tr>

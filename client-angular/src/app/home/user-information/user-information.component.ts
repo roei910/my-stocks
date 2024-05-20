@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 
 @Component({
@@ -6,10 +7,15 @@ import { UserService } from 'src/Services/user.service';
   templateUrl: './user-information.component.html',
   styleUrls: ['./user-information.component.css']
 })
-export class UserInformationComponent implements OnInit, AfterViewInit{
+export class UserInformationComponent{
   data: any;
+  user: any;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private database: DatabaseService) {
+    let userEmail = this.userService.GetUser();
+    // this.user = this.userService.GetUser();
+    this.user = this.database.Stocks.find((user: any) => user.email == userEmail);
+    
     const tempData = [30, 25, 20, 15, 10];
 
     this.data = {
@@ -24,16 +30,6 @@ export class UserInformationComponent implements OnInit, AfterViewInit{
         }
       ]
     };
-  }
-
-  ngOnInit(): void {
-  }
-
-  ngAfterViewInit(): void {
-  }
-
-  GetUser() {
-    return this.userService.GetUser();
   }
 
   getRandomColors(count: number): string[] {

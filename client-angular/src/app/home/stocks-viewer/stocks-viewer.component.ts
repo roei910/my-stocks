@@ -8,13 +8,19 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./stocks-viewer.component.css']
 })
 export class StocksViewerComponent implements OnInit{
-  Stocks!: any;
+  User!: any;
   UserEmail!: any;
+  StocksDictionary!: any;
 
   constructor(private db: DatabaseService, private userService: UserService){}
 
   ngOnInit(): void {
     this.UserEmail = this.userService.GetUser();
-    this.Stocks = this.db.GetStocks(this.UserEmail);
+    this.User = this.db.GetUser(this.UserEmail);
+    this.StocksDictionary = this.db.stocksDictionary;
+  }
+
+  GetKeys(dictionary: any){
+    return Object.keys(dictionary);
   }
 }

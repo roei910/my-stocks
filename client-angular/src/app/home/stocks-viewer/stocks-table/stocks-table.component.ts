@@ -25,7 +25,7 @@ export class StocksTableComponent {
 
   async CreateStockNote(symbol: string){
     let note = prompt("please enter a note");
-    
+
     await this.database.AddStockNote(this.stocksType, this.email, symbol, note);
   }
 
@@ -34,5 +34,9 @@ export class StocksTableComponent {
 
     if(confirmDelete)
       await this.database.RemoveStockNote(this.stocksType, this.email, symbol);
+  }
+
+  GetKeys(dictionary: any){
+    return Object.keys(dictionary);
   }
 }
