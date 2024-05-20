@@ -13,9 +13,8 @@ export class UserInformationComponent{
 
   constructor(private userService: UserService, private database: DatabaseService) {
     let userEmail = this.userService.GetUser();
-    // this.user = this.userService.GetUser();
     this.user = this.database.Stocks.find((user: any) => user.email == userEmail);
-    
+
     const tempData = [30, 25, 20, 15, 10];
 
     this.data = {
