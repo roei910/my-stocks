@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { Share } from 'src/Models/share';
 import { Stock } from 'src/Models/stock';
 import { User } from 'src/Models/user';
 
@@ -46,7 +47,7 @@ export class DatabaseService {
             shares: [
               {
                 amount: 10,
-                averagePrice: 0
+                averagePrice: 3
               }
             ]
           }
@@ -57,11 +58,11 @@ export class DatabaseService {
             shares: [
               {
                 amount: 10,
-                averagePrice: 0
+                averagePrice: 3
               },
               {
                 amount: 10,
-                averagePrice: 0
+                averagePrice: 5
               }
             ]
           },
@@ -79,7 +80,12 @@ export class DatabaseService {
           },
           "BABA": {
             note: "",
-            shares: []
+            shares: [
+              {
+                amount: 20,
+                averagePrice: 10
+              }
+            ]
           }
         },
         "list2": {
@@ -148,5 +154,18 @@ export class DatabaseService {
       return;
     
     user.lists[stocksType!][symbol].note = "";
+  }
+
+  AddShare(email: string, listName: string, symbol: string, amount: number, avgPrice: number) {
+    let user = this.Users.find((user: User) => user.email == email);
+
+    let shares = user?.lists[listName][symbol].shares;
+    let share: Share = {
+      amount: amount, averagePrice: avgPrice
+    }
+    if(shares == undefined)
+      shares = [share];
+    else
+      shares.push(share)
   }
 }
