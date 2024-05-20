@@ -5,6 +5,7 @@
       <th>Symbol</th>
       <th>Price</th>
       <th>Prediction (1 year)</th>
+      <th>Shares</th>
       <th>Note</th>
     </tr>
   </thead>
@@ -20,12 +21,13 @@
       <td>{{symbol}}</td>
       <td>{{stocksDictionary[symbol].price}}</td>
       <td>{{stocksDictionary[symbol].oneYearEstimate}}</td>
+      <td>{{CountShares(stocks[symbol].shares)}}</td>
       <td>
-        <ng-container *ngIf="!stocks[symbol]; else elseTemplate">
+        <ng-container *ngIf="!stocks[symbol].note; else elseTemplate">
           <button (click)="CreateStockNote(symbol)">+</button>
         </ng-container>
         <ng-template #elseTemplate>
-          <p (click)="DeleteNote(symbol)">{{stocks[symbol]}}</p>
+          <p (click)="DeleteNote(symbol)">{{stocks[symbol].note}}</p>
         </ng-template>
       </td>
     </tr>
