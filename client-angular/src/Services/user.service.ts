@@ -11,7 +11,7 @@ export class UserService {
     private router: Router
   ) { }
 
-  GetUser() {
+  GetUserEmail() {
     var user = this.cookieService.getCookie("email");
 
     return user;
