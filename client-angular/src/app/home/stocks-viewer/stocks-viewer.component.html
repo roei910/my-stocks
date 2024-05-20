@@ -11,10 +11,10 @@
 <ng-template #elseTemplate>
   <div>
     <div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
-      <h2>My Stocks</h2>
+      <h2>{{key}}</h2>
       <app-stocks-table 
         [typeOfStocks]="key"
-        [stocks]="this.User.lists[key]"
+        [stocksList]="this.User.lists[key]"
         [stocksDictionary]="StocksDictionary">
       </app-stocks-table>
     </div>

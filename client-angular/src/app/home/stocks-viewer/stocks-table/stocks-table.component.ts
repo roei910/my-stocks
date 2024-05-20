@@ -8,7 +8,7 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./stocks-table.component.css']
 })
 export class StocksTableComponent {
-  @Input('stocks')
+  @Input('stocksList')
   stocks: any;
 
   @Input('stocksDictionary')
