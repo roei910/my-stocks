@@ -47,6 +47,9 @@ export class DatabaseService {
           "MSFT": "",
           "AMZN": "",
           "BABA": ""
+        },
+        "list2": {
+          "AMZN": ""
         }
       },
     },
@@ -93,32 +96,12 @@ export class DatabaseService {
   }
 
   async AddStockNote(stocksType: string | undefined, email: string | null, symbol: string, note: string | null) {
-    let found = this.Stocks.lists[stocksType!]
-    .find((stock: any) => stock.symbol == symbol);
-    found.note = note;
-
-    // if(stocksType == "owned"){
-    //   let found = this.Stocks[0].stocks
-    //   .find((stock: any) => stock.symbol == symbol);
-    //   found.note = note;
-    // } else if(stocksType == "watching"){
-    //   let found = this.Stocks[0].watchingStocksSymbol
-    //   .find((stock: any) => stock.symbol == symbol);
-    //   found.note = note
-    // }
+    let user = this.Stocks.find((user: any) => user.email == email);
+    user.lists[stocksType!][symbol] = note;
   }
 
   async RemoveStockNote(stocksType: string | undefined, email: string | null, symbol: string){
     let user = this.Stocks.find((user: any) => user.email == email);
-
-    if(stocksType == "owned"){
-      let found = user.stocks
-      .find((stock: any) => stock.symbol == symbol);
-      delete found.note;
-    } else if(stocksType == "watching"){
-      let found = user.watchingStocksSymbol
-      .find((stock: any) => stock.symbol == symbol);
-      delete found.note;
-    }
+    user.lists[stocksType!][symbol] = "";
   }
 }
