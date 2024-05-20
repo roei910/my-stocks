@@ -16,6 +16,7 @@ import { StocksSearchComponent } from './home/stocks-search/stocks-search.compon
 import { ChartModule } from 'primeng/chart';
 import { StockInformationComponent } from './home/stock-information/stock-information.component';
 import { StocksTableComponent } from './home/stocks-viewer/stocks-table/stocks-table.component';
+import { StockSharesComponent } from './home/stock-shares/stock-shares.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { StocksTableComponent } from './home/stocks-viewer/stocks-table/stocks-t
     UserInformationComponent,
     StocksSearchComponent,
     StockInformationComponent,
-    StocksTableComponent
+    StocksTableComponent,
+    StockSharesComponent
   ],
   imports: [
     BrowserModule,
