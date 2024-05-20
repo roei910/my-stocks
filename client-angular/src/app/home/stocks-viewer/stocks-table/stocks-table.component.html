@@ -21,7 +21,7 @@
       <td>{{symbol}}</td>
       <td>{{stocksDictionary[symbol].price}}</td>
       <td>{{stocksDictionary[symbol].oneYearEstimate}}</td>
-      <td>{{CountShares(stocks[symbol].shares)}}</td>
+      <td><p (click)="RedirectToSharesScreen(symbol)">{{CountShares(stocks[symbol].shares)}}</p></td>
       <td>
         <ng-container *ngIf="!stocks[symbol].note; else elseTemplate">
           <button (click)="CreateStockNote(symbol)">+</button>
