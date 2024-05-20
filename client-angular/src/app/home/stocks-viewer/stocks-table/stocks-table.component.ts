@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
@@ -15,13 +16,16 @@ export class StocksTableComponent {
   @Input('stocksDictionary')
   stocksDictionary: any;
 
-  @Input('typeOfStocks')
-  stocksType?: string;
+  @Input('listName')
+  listName?: string;
 
   email: any;
 
-  constructor(private database: DatabaseService, private userService: UserService){
-    this.email = this.userService.GetUser();
+  constructor(private database: DatabaseService, 
+    private userService: UserService,
+    private router: Router
+  ){
+    this.email = this.userService.GetUserEmail();
   }
 
   async CreateStockNote(symbol: string){
@@ -30,14 +34,14 @@ export class StocksTableComponent {
     if(!note)
       return;
     
-    await this.database.AddStockNote(this.stocksType, this.email, symbol, note);
+    await this.database.AddStockNote(this.listName, this.email, symbol, note);
   }
 
   async DeleteNote(symbol: string){
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
     if(confirmDelete)
-      await this.database.RemoveStockNote(this.stocksType, this.email, symbol);
+      await this.database.RemoveStockNote(this.listName, this.email, symbol);
   }
 
   GetKeys(dictionary: any){
@@ -50,5 +54,13 @@ export class StocksTableComponent {
     sharesList.forEach((share: any) => sum += share.amount);
 
     return sum
+  }
+
+  RedirectToSharesScreen(stockSymbol: string) {
+    var confirmRedirect = confirm("redirecting to shares screen, continue?");
+
+    if(confirmRedirect)
+      this.router.navigate([this.router.url, 'shares'], 
+        { queryParams: { stockSymbol: stockSymbol, listName: this.listName }});
   }
 }
