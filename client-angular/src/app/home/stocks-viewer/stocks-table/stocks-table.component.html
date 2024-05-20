@@ -22,10 +22,10 @@
       <td>{{stocksDictionary[stock.symbol].oneYearEstimate}}</td>
       <td>
         <ng-container *ngIf="!stock.note; else elseTemplate">
-          <button>+</button>
+          <button (click)="CreateStockNote(stock.symbol)">+</button>
         </ng-container>
         <ng-template #elseTemplate>
-          {{stock.note}}
+          <p (click)="DeleteNote(stock.symbol)">{{stock.note}}</p>
         </ng-template>
       </td>
     </tr>

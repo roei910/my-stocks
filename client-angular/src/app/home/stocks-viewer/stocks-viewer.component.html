@@ -13,6 +13,7 @@
     <div class="stock-list-container">
       <h2>My Stocks</h2>
       <app-stocks-table 
+        typeOfStocks="owned"
         [stocks]="Stocks.stocks"
         [stocksDictionary]="Stocks.stocksDictionary">
       </app-stocks-table>
@@ -20,6 +21,7 @@
     <div class="stock-list-container">
       <h2>Watching</h2>
       <app-stocks-table 
+      typeOfStocks="watching"
       [stocks]="Stocks.watchingStocksSymbol"
       [stocksDictionary]="Stocks.stocksDictionary">
     </app-stocks-table>
