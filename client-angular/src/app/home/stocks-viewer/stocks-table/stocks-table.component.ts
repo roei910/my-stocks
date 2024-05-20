@@ -1,4 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 
@@ -26,6 +27,9 @@ export class StocksTableComponent {
   async CreateStockNote(symbol: string){
     let note = prompt("please enter a note");
 
+    if(!note)
+      return;
+    
     await this.database.AddStockNote(this.stocksType, this.email, symbol, note);
   }
 
@@ -38,5 +42,13 @@ export class StocksTableComponent {
 
   GetKeys(dictionary: any){
     return Object.keys(dictionary);
+  }
+
+  CountShares(sharesList: any){
+    var sum = 0;
+
+    sharesList.forEach((share: any) => sum += share.amount);
+
+    return sum
   }
 }
