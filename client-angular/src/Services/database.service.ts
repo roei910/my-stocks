@@ -1,55 +1,92 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
+import { Stock } from 'src/Models/stock';
+import { User } from 'src/Models/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseService {
-  stocksDictionary: any = {
+  stocksDictionary: { [stockSymbol: string] : Stock} = {
     "BABA": {
       name: "Alibaba",
-      price: "80.99",
-      oneYearEstimate: "106.13",
+      price: 80.99,
+      oneYearEstimate: 106.13,
     },
     "AMZN": {
       name: 'Amazon.com, Inc.',
       price: 3275.89,
-      oneYearEstimate: '4000'
+      oneYearEstimate: 4000
     },
     "MSFT": {
       name: 'Microsoft Corporation',
       price: 285.45,
-      oneYearEstimate: '300'
+      oneYearEstimate: 300
     },
     "GOOGL": {
       name: 'Alphabet Inc.',
       price: 2325.12,
-      oneYearEstimate: '2500'
+      oneYearEstimate: 2500
     },
     "AAPL": {
       name: 'Apple Inc.',
       price: 125.75,
-      oneYearEstimate: '130.5'
+      oneYearEstimate: 130.5
     }
   }
 
-  Stocks: any = [
+  Users: User[] = [
     {
       email: 'roei910@gmail.com',
       name: "roei daniel",
       lists: {
         "watching": {
-          "BABA": "buy when lower than 80"
+          "BABA": {
+            note: "buy when lower than 80",
+            shares: [
+              {
+                amount: 10,
+                averagePrice: 0
+              }
+            ]
+          }
         },
         "owned": {
-          "AAPL": "",
-          "GOOGL": "",
-          "MSFT": "",
-          "AMZN": "",
-          "BABA": ""
+          "AAPL": {
+            note: "",
+            shares: [
+              {
+                amount: 10,
+                averagePrice: 0
+              },
+              {
+                amount: 10,
+                averagePrice: 0
+              }
+            ]
+          },
+          "GOOGL": {
+            note: "",
+            shares: []
+          },
+          "MSFT": {
+            note: "",
+            shares: []
+          },
+          "AMZN": {
+            note: "",
+            shares: []
+          },
+          "BABA": {
+            note: "",
+            shares: []
+          }
         },
         "list2": {
-          "AMZN": ""
+          "AMZN": {
+            note: "",
+            shares: []
+          }
         }
       },
     },
@@ -58,7 +95,7 @@ export class DatabaseService {
   constructor() { }
 
   GetUser(email: string) {
-    var found = this.Stocks.find((stk: any) => stk.email === email);
+    var found = this.Users.find((user: any) => user.email === email);
 
     return found;
   }
@@ -95,13 +132,21 @@ export class DatabaseService {
     return data;
   }
 
-  async AddStockNote(stocksType: string | undefined, email: string | null, symbol: string, note: string | null) {
-    let user = this.Stocks.find((user: any) => user.email == email);
-    user.lists[stocksType!][symbol] = note;
+  async AddStockNote(stocksType: string | undefined, email: string | null, symbol: string, note: string) {
+    let user = this.Users.find((user: any) => user.email == email);
+
+    if(user == undefined)
+      return;
+
+    user.lists[stocksType!][symbol].note = note;
   }
 
   async RemoveStockNote(stocksType: string | undefined, email: string | null, symbol: string){
-    let user = this.Stocks.find((user: any) => user.email == email);
-    user.lists[stocksType!][symbol] = "";
+    let user = this.Users.find((user: any) => user.email == email);
+
+    if(user == undefined)
+      return;
+    
+    user.lists[stocksType!][symbol].note = "";
   }
 }
