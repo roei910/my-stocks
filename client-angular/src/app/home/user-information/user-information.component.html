@@ -3,13 +3,13 @@
     <br>
     <div class="chart-container">
         <h3>General Information</h3>
-        <p><strong>Name:</strong> {{user.name}}</p>
-        <p><strong>Email:</strong> {{user.email}}</p>
+        <p><strong>Name:</strong> {{user?.name}}</p>
+        <p><strong>Email:</strong> {{user?.email}}</p>
     </div>
     <div class="chart-container">
         <h3>Stock Portfolio</h3>
-        <p><strong>Total Gains:</strong> $25,000</p>
-        <p><strong>Number of Stocks:</strong></p>
+        <p><strong>Total Gain:</strong> {{GetTotalGain()}}$</p>
+        <p><strong>Number of Stocks:</strong> {{CountOwnedStocks()}}</p>
     </div>
     <div class="chart-container">
         <h3>Stock Distribution</h3>
