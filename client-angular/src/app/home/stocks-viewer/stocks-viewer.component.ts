@@ -15,7 +15,7 @@ export class StocksViewerComponent implements OnInit{
   constructor(private db: DatabaseService, private userService: UserService){}
 
   ngOnInit(): void {
-    this.UserEmail = this.userService.GetUser();
+    this.UserEmail = this.userService.GetUserEmail();
     this.User = this.db.GetUser(this.UserEmail);
     this.StocksDictionary = this.db.stocksDictionary;
   }
