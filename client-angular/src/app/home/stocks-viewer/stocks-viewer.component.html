@@ -13,7 +13,7 @@
     <div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
       <h2>{{key}}</h2>
       <app-stocks-table 
-        [typeOfStocks]="key"
+        [listName]="key"
         [stocksList]="this.User.lists[key]"
         [stocksDictionary]="StocksDictionary">
       </app-stocks-table>
