@@ -13,7 +13,7 @@ export class UserInformationComponent{
 
   constructor(private userService: UserService, private database: DatabaseService) {
     let userEmail = this.userService.GetUser();
-    this.user = this.database.Stocks.find((user: any) => user.email == userEmail);
+    this.user = this.database.Users.find((user: any) => user.email == userEmail);
 
     const tempData = [30, 25, 20, 15, 10];
 
