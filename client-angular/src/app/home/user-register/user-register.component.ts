@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { User } from '../../../Models/user';
-import axios from 'axios';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/Services/user.service';
 
@@ -10,19 +9,31 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./user-register.component.css']
 })
 export class UserRegisterComponent {
+  @ViewChild("registrationForm")
+  form!: NgForm;
+
   constructor(private router: Router,
     private userService: UserService
   ){ }
 
-  async CreateUser(event: Event, name: string, email: string, password: string){
-    event?.preventDefault();
+  async CreateUser(){
+    if(this.form.invalid){
+      alert("Please finish the form");
+
+      return;
+    }
 
     const user = {
-      Name: name,
-      Password: password,
-      Email: email
+      Name: this.form.value.name,
+      Password: this.form.value.password,
+      Email: this.form.value.email
     };
 
-    await this.userService.CreateUser(user);
+    var isCreated = await this.userService.CreateUser(user);
+
+    if(isCreated)
+      this.router.navigate(['/login']);
+    else
+      prompt("couldn't create the user.");
   }
 }
