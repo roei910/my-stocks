@@ -34,7 +34,7 @@ export class UserInformationComponent{
   InitializeChartData(){
     const ownedStockSymbols = Object.keys(this.ownedStocks);
     const tempData = ownedStockSymbols.map((symbol: string) => {
-      return this.ownedStocks[symbol].averagePrice * this.ownedStocks[symbol].amount;
+      return this.stocksDictionary[symbol].price * this.ownedStocks[symbol].amount;
     })
     // const tempData = [30, 25, 20, 15, 10];
 
