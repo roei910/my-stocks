@@ -1,7 +1,8 @@
 import { Share } from "./share";
 
 export class User {
-    name!: string;
+    firstName!: string;
+    lastName!: string;
     email!: string;
     password?: string;
     lists!: {

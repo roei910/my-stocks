@@ -25,7 +25,8 @@ export class UserRegisterComponent {
     }
 
     const user: User = {
-      name: this.form.value.name,
+      firstName: this.form.value.name,
+      lastName: "",
       password: this.form.value.password,
       email: this.form.value.email,
       lists: {}

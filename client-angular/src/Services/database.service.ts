@@ -39,7 +39,8 @@ export class DatabaseService {
   Users: User[] = [
     {
       email: 'roei910@gmail.com',
-      name: "roei daniel",
+      firstName: "roei",
+      lastName: "daniel",
       lists: {
         "watching": {
           "BABA": {
