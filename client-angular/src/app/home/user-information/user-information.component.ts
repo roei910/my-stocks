@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Share } from 'src/Models/share';
 import { Stock } from 'src/Models/stock';
