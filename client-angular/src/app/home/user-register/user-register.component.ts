@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { User } from 'src/Models/user';
 import { UserService } from 'src/Services/user.service';
 
 @Component({
@@ -23,10 +24,11 @@ export class UserRegisterComponent {
       return;
     }
 
-    const user = {
-      Name: this.form.value.name,
-      Password: this.form.value.password,
-      Email: this.form.value.email
+    const user: User = {
+      name: this.form.value.name,
+      password: this.form.value.password,
+      email: this.form.value.email,
+      lists: {}
     };
 
     var isCreated = await this.userService.CreateUser(user);
