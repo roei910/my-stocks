@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
 import { UserService } from 'src/Services/user.service';
 
 @Component({
@@ -7,18 +9,19 @@ import { UserService } from 'src/Services/user.service';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent {
-await: any;
-  constructor(private userService: UserService){
+  @ViewChild("connectionForm")
+  form!: NgForm;
 
-  }
+  constructor(private userService: UserService,
+    private router: Router
+  ){ }
 
-  async SignIn(event: Event, email: string,password: string) {
-    event.preventDefault();
-    var isConnected = await this.userService.TryConnect(email, password); 
+  async SignIn() {
+    var isConnected = await this.userService.TryConnect(this.form.value.email, this.form.value.password); 
 
     if(!isConnected)
       alert("username or password was incorrect");
+    else
+      this.router.navigate(['/']);
   }
 }
-
-// TODO: need to handle wrong email or password. right now tested and not working
