@@ -37,7 +37,8 @@ export class UserService {
     if(this.isMock)
       return this.TryConnectMock(email, password);
 
-    var isConnected = await axios.get("https://localhost:7173/User?email=" + email)
+    var isConnected = await axios.post("https://localhost:7173/User/connect-user", 
+      { email: email, password: password })
       .then(res => {
         if (res.status == 200) {
           this.cookieService.setCookie("email", res.data.email, 1);
