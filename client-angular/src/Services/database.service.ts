@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Share } from 'src/Models/share';
 import { Stock } from 'src/Models/stock';
 import { User } from 'src/Models/user';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -102,71 +103,71 @@ export class DatabaseService {
   constructor() { }
 
   GetUser(email: string) {
-    var found = this.Users.find((user: any) => user.email === email);
-
+    var found = this.Users.find((user: User) => user.email === email);
+    
     return found;
   }
 
   async FindStocksBySearchTerm(searchTerm: string) {
-    // var data = await axios.get(`https://localhost:7173/Stock/find/name/${searchTerm}`)
-    // .then(res => res.data);
-    var data = [
-      {
-        name: "apple",
-        symbol: "aapl",
-        price: 50,
-        oneYearEstimate: 100
-      },
-      {
-        name: "microsoft",
-        symbol: "msft",
-      }
-    ];
+    var data = await axios.get(`${environment.server_url}/Stock/find/name/${searchTerm}`)
+    .then(res => res.data);
+    // var data = [
+    //   {
+    //     name: "apple",
+    //     symbol: "aapl",
+    //     price: 50,
+    //     oneYearEstimate: 100
+    //   },
+    //   {
+    //     name: "microsoft",
+    //     symbol: "msft",
+    //   }
+    // ];
 
     return data;
   }
 
   async GetStockInformation(symbol: string | null | undefined) {
-    // var data = await axios.get(`https://localhost:7173/Stock/symbol/${symbol}`)
-    // .then(res => res.data);
-    var data = {
-      name: "apple",
-      symbol: "aapl",
-      price: 50,
-      oneYearEstimate: 100
-    };
+    var data = await axios.get(`${environment.server_url}/Stock/symbol/${symbol}`)
+    .then(res => res.data);
+    // var data = {
+    //   name: "apple",
+    //   symbol: "aapl",
+    //   price: 50,
+    //   oneYearEstimate: 100
+    // };
 
     return data;
   }
 
   async AddStockNote(stocksType: string | undefined, email: string | null, symbol: string, note: string) {
-    let user = this.Users.find((user: any) => user.email == email);
+    // let user = this.Users.find((user: any) => user.email == email);
 
-    if(user == undefined)
-      return;
+    // if(user == undefined)
+    //   return;
 
-    user.lists[stocksType!][symbol].note = note;
+    // user.lists[stocksType!][symbol].note = note;
   }
 
   async RemoveStockNote(stocksType: string | undefined, email: string | null, symbol: string){
-    let user = this.Users.find((user: any) => user.email == email);
+    // let user = this.Users.find((user: any) => user.email == email);
 
-    if(user == undefined)
-      return;
+    // if(user == undefined)
+    //   return;
     
-    user.lists[stocksType!][symbol].note = "";
+    // user.lists[stocksType!][symbol].note = "";
   }
 
   AddShare(email: string, listName: string, symbol: string, amount: number, avgPrice: number) {
-    let user = this.Users.find((user: User) => user.email == email);
+    // let user = this.Users.find((user: User) => user.email == email);
 
-    let shares = user?.lists[listName][symbol].shares;
-    let share: Share = {
-      amount: amount, averagePrice: avgPrice
-    }
-    if(shares == undefined)
-      shares = [share];
-    else
-      shares.push(share)
+    // let shares = user?.lists[listName][symbol].shares;
+    // let share: Share = {
+    //   amount: amount, averagePrice: avgPrice
+    // }
+    // if(shares == undefined)
+    //   shares = [share];
+    // else
+    //   shares.push(share)
   }
 }

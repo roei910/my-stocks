@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CookiesService } from './cookies.service';
 import axios from 'axios';
 import { User } from 'src/Models/user';
+import { Share } from 'src/Models/share';
+import { CookiesService } from './cookies.service';
+import { environment } from 'src/environments/environment';
 
 //TODO: create authentication service and move some functions from here to the auth service
 @Injectable({
@@ -34,14 +36,14 @@ export class UserService {
   }
 
   async TryConnect(email: string, password: string): Promise<boolean> {
-    if(this.isMock)
+    if (this.isMock)
       return this.TryConnectMock(email, password);
 
-    var isConnected = await axios.post("https://localhost:7173/User/connect-user", 
+    var isConnected = await axios.post(`${environment.server_url}/User/connect-user`,
       { email: email, password: password })
       .then(res => {
         if (res.status == 200) {
-          this.cookieService.setCookie("email", res.data.email, 1);
+          this.cookieService.setCookie("email", email, 1);
 
           return true;
         }
@@ -54,17 +56,17 @@ export class UserService {
         return false;
       });
 
-      return isConnected;
+    return isConnected;
   }
 
   async CreateUser(user: User): Promise<boolean> {
-    if(this.isMock)
+    if (this.isMock)
       return this.CreateUserMock(user);
 
     var res = await axios
-      .post("https://localhost:7173/User", user)
+      .post(`${environment.server_url}/User/register`, user)
       .then(res => {
-        if(res.status == 201){
+        if (res.status == 201) {
           return true;
         }
 
@@ -74,25 +76,46 @@ export class UserService {
     return res;
   }
 
-  CreateUserMock(user: User): boolean{
+  async AddUserShare(email: string, sharePurchase: Share): Promise<boolean> {
+    var res = await axios
+      .patch(`${environment.server_url}/User/add-share`, sharePurchase)
+      .then(res => res.status == 200);
+
+    return res
+  }
+
+  async RemoveUserShare(email: string, purchaseId: string){
+    var res = await axios
+      .patch(`${environment.server_url}/User/remove-share`, {
+        params: {
+          email: email
+        },
+        body: purchaseId
+      })
+      .then(res => res.status == 200);
+
+      return res;
+  }
+
+  CreateUserMock(user: User): boolean {
     var foundUser = this.users.find((existingUser: User) => existingUser.email == user.email);
 
-    if(!foundUser)
+    if (!foundUser)
       this.users.push(user);
-    
+
     return true;
   }
 
-  TryConnectMock(email: string, password: string): boolean{
+  TryConnectMock(email: string, password: string): boolean {
     var foundUser = this.users.find((user: User) => user.email == email);
 
-    if(!foundUser)
+    if (!foundUser)
       return false;
 
     var isUserAuthenticated = foundUser.password == password;
-    
-    if(isUserAuthenticated){
-      this.cookieService.setCookie("email", "roei910@gmail.com", 1);
+
+    if (isUserAuthenticated) {
+      this.cookieService.setCookie("email", email, 1);
 
       return true;
     }
