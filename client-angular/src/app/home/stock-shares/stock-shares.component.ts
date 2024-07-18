@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Share } from 'src/Models/share';
-import { User } from 'src/Models/user';
+import { Share } from 'src/models/share';
+import { User } from 'src/models/user';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';

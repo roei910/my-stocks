@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { User } from 'src/Models/user';
-import { Share } from 'src/Models/share';
+import { User } from 'src/models/user';
+import { Share } from 'src/models/share';
 import { environment } from 'src/environments/environment';
+import { sha256 } from 'js-sha256';
 
 //TODO: create authentication service and move some functions from here to the auth service
 @Injectable({
@@ -28,6 +29,7 @@ export class UserService {
   }
 
   async CreateUser(user: User): Promise<boolean> {
+    user.password = sha256(user.password);
     var res = await axios
       .post(`${environment.server_url}/User/register`, user)
       .then(res => {

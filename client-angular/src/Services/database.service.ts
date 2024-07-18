@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { Share } from 'src/Models/share';
-import { Stock } from 'src/Models/stock';
-import { User } from 'src/Models/user';
+import { Stock } from 'src/models/stock';
+import { User } from 'src/models/user';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -42,6 +41,7 @@ export class DatabaseService {
       email: 'roei910@gmail.com',
       firstName: "roei",
       lastName: "daniel",
+      password: "123456",
       lists: {
         "watching": {
           "BABA": {
