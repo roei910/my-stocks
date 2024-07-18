@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { StockServiceService as StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stocks-viewer',
@@ -10,14 +12,17 @@ import { UserService } from 'src/Services/user.service';
 export class StocksViewerComponent implements OnInit{
   User!: any;
   UserEmail!: any;
-  StocksDictionary!: any;
+  Stocks!: any;
 
-  constructor(private db: DatabaseService, private userService: UserService){}
+  constructor(private db: DatabaseService,
+    private stockService: StockService,
+    private userService: UserService,
+    private authenticationService: AuthenticationService
+  ){}
 
   ngOnInit(): void {
-    this.UserEmail = this.userService.GetUserEmail();
-    this.User = this.db.GetUser(this.UserEmail);
-    this.StocksDictionary = this.db.stocksDictionary;
+    this.UserEmail = this.authenticationService.GetUserEmail();
+    this.User = this.userService.GetUserByEmailAsync(this.UserEmail);
   }
 
   GetKeys(dictionary: any){

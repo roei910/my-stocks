@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-stocks-table',
@@ -23,9 +24,10 @@ export class StocksTableComponent {
 
   constructor(private database: DatabaseService, 
     private userService: UserService,
+    private authenticationService: AuthenticationService,
     private router: Router
   ){
-    this.email = this.userService.GetUserEmail();
+    this.email = this.authenticationService.GetUserEmail();
   }
 
   async CreateStockNote(symbol: string){

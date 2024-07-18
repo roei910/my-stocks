@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Share } from 'src/Models/share';
 import { Stock } from 'src/Models/stock';
 import { User } from 'src/Models/user';
 import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-user-information',
@@ -17,8 +17,10 @@ export class UserInformationComponent{
   ownedStocks: {[stocksymbol: string] : Share} = {};
   stocksDictionary!: {[stockSymbol: string]: Stock};
 
-  constructor(private userService: UserService, private database: DatabaseService) {
-    let userEmail = this.userService.GetUserEmail();
+  constructor(private userService: UserService, private database: DatabaseService,
+    private authenticationService: AuthenticationService
+  ) {
+    let userEmail = this.authenticationService.GetUserEmail();
     this.stocksDictionary = this.database.stocksDictionary;
 
     this.user = this.database.Users.find((user: User) => user.email == userEmail);

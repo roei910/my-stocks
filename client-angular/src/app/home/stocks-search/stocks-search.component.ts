@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DatabaseService } from 'src/Services/database.service';
+import { StockServiceService as StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stocks-search',
@@ -16,7 +17,7 @@ export class StocksSearchComponent {
   ) { }
 
   async SearchResults(searchTerm: string) {
-    this.stocksList = await this.database.FindStocksBySearchTerm(searchTerm);
+    this.stocksList = await this.database.SearchStocksByTermAsync(searchTerm);
   }
 
   NavigateStockInformation(symbol: string) {

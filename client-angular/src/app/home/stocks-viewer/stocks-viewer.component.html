@@ -1,4 +1,4 @@
-<ng-container *ngIf="!UserEmail; else elseTemplate">
+<!-- <ng-container *ngIf="!UserEmail; else elseTemplate">
   <div>
     <p>
       you are welcome to connect to your account, if you dont have an account yet
@@ -10,13 +10,15 @@
 </ng-container>
 <ng-template #elseTemplate>
   <div>
-    <div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
-      <h2>{{key}}</h2>
-      <app-stocks-table 
-        [listName]="key"
-        [stocksList]="this.User.lists[key]"
-        [stocksDictionary]="StocksDictionary">
-      </app-stocks-table>
-    </div>
+    
   </div>
-</ng-template>
+</ng-template> -->
+
+<div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
+  <h2>{{key}}</h2>
+  <app-stocks-table 
+    [listName]="key"
+    [stocksList]="this.User.lists[key]"
+    [stocksDictionary]="this.User">
+  </app-stocks-table>
+</div>

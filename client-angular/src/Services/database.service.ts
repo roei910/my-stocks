@@ -108,7 +108,7 @@ export class DatabaseService {
     return found;
   }
 
-  async FindStocksBySearchTerm(searchTerm: string) {
+  async SearchStocksByTermAsync(searchTerm: string) {
     var data = await axios.get(`${environment.server_url}/Stock/find/name/${searchTerm}`)
     .then(res => res.data);
     // var data = [

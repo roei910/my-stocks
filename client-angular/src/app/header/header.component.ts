@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/Services/user.service';
+import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -9,17 +10,18 @@ import { UserService } from 'src/Services/user.service';
 })
 export class HeaderComponent {
   constructor(private userService: UserService,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ){
 
   }
 
   IsConnected(): boolean{
-    return this.userService.isUserConnected();
+    return this.authenticationService.isUserConnected();
   }
 
   SignOut(){
-    this.userService.DisconnectUser();
+    this.authenticationService.DisconnectUser();
     this.router.navigate(['/']);
   }
 }
