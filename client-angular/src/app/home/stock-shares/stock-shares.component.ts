@@ -33,7 +33,7 @@ export class StockSharesComponent implements OnInit{
     let userEmail = this.authenticationService.GetUserEmail();
     let user = this.database.Users.find((user: User) => user.email == userEmail);
 
-    this.shares = user?.lists[this.listName][this.symbol].shares;
+    this.shares = user?.watchingSymbols[this.listName][this.symbol].shares;
   }
 
   AddShare(){

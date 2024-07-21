@@ -42,7 +42,7 @@ export class DatabaseService {
       firstName: "roei",
       lastName: "daniel",
       password: "123456",
-      lists: {
+      watchingSymbols: {
         "watching": {
           "BABA": {
             note: "buy when lower than 80",

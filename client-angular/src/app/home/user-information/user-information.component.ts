@@ -81,11 +81,11 @@ export class UserInformationComponent{
   }
 
   InitializeOwnedStocks() {
-    Object.keys(this.user!.lists).forEach((listKey: string) => {
-      let stockSymbols = Object.keys(this.user!.lists[listKey]);
+    Object.keys(this.user!.watchingSymbols).forEach((listKey: string) => {
+      let stockSymbols = Object.keys(this.user!.watchingSymbols[listKey]);
   
       stockSymbols.forEach((stockKey: string) => {
-        let shares = this.user!.lists[listKey][stockKey].shares;
+        let shares = this.user!.watchingSymbols[listKey][stockKey].shares;
         let amount = 0;
         let totalPrice = 0;
   

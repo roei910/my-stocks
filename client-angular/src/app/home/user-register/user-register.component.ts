@@ -29,7 +29,7 @@ export class UserRegisterComponent {
       lastName: "",
       password: this.form.value.password,
       email: this.form.value.email,
-      lists: {}
+      watchingSymbols: {}
     };
 
     var isCreated = await this.userService.CreateUser(user);
