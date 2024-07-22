@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DatabaseService } from 'src/Services/database.service';
 import { StockServiceService as StockService } from 'src/services/stock.service';
 
 @Component({
@@ -12,12 +11,12 @@ export class StocksSearchComponent {
 
   stocksList: any = null;
 
-  constructor(private database: DatabaseService,
+  constructor(private stockService: StockService,
     private router: Router
   ) { }
 
   async SearchResults(searchTerm: string) {
-    this.stocksList = await this.database.SearchStocksByTermAsync(searchTerm);
+    this.stocksList = await this.stockService.FindStockByNameAsync(searchTerm);
   }
 
   NavigateStockInformation(symbol: string) {

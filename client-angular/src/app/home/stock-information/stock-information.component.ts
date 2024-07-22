@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DatabaseService } from 'src/Services/database.service';
 
 @Component({
   selector: 'app-stock-information',
@@ -12,8 +11,7 @@ export class StockInformationComponent implements OnInit {
   stockData?: any;
   data?: any;
 
-  constructor(private activatedRoute: ActivatedRoute,
-    private dbService: DatabaseService) { 
+  constructor(private activatedRoute: ActivatedRoute) { 
       const tempData = [30, 25, 20, 15, 10];
 
       this.data = {
@@ -34,7 +32,7 @@ export class StockInformationComponent implements OnInit {
       this.symbol = params['stockSymbol'];
     });
 
-    this.stockData = await this.dbService.GetStockInformation(this.symbol);
-    console.log(this.stockData);
+    // this.stockData = await this.dbService.GetStockInformation(this.symbol);
+    // console.log(this.stockData);
   }
 }

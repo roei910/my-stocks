@@ -1,7 +1,5 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
-import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 
@@ -22,8 +20,7 @@ export class StocksTableComponent {
 
   email: any;
 
-  constructor(private database: DatabaseService, 
-    private userService: UserService,
+  constructor(private userService: UserService,
     private authenticationService: AuthenticationService,
     private router: Router
   ){
@@ -36,14 +33,14 @@ export class StocksTableComponent {
     if(!note)
       return;
     
-    await this.database.AddStockNote(this.listName, this.email, symbol, note);
+    // await this.database.AddStockNote(this.listName, this.email, symbol, note);
   }
 
   async DeleteNote(symbol: string){
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
-    if(confirmDelete)
-      await this.database.RemoveStockNote(this.listName, this.email, symbol);
+    // if(confirmDelete)
+    //   await this.database.RemoveStockNote(this.listName, this.email, symbol);
   }
 
   GetKeys(dictionary: any){

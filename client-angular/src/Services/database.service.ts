@@ -8,7 +8,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root',
 })
 export class DatabaseService {
-  stocksDictionary: { [stockSymbol: string] : Stock} = {
+  // stocksDictionary: { [stockSymbol: string] : Stock} = {
+  stocksDictionary: { [stockSymbol: string] : any} = {
     "BABA": {
       name: "Alibaba",
       price: 80.99,
@@ -36,7 +37,8 @@ export class DatabaseService {
     }
   }
 
-  Users: User[] = [
+  // Users: User[] = [
+  Users: any[] = [
     {
       email: 'roei910@gmail.com',
       firstName: "roei",
@@ -108,38 +110,7 @@ export class DatabaseService {
     return found;
   }
 
-  async SearchStocksByTermAsync(searchTerm: string) {
-    var data = await axios.get(`${environment.server_url}/Stock/find/name/${searchTerm}`)
-    .then(res => res.data);
-    // var data = [
-    //   {
-    //     name: "apple",
-    //     symbol: "aapl",
-    //     price: 50,
-    //     oneYearEstimate: 100
-    //   },
-    //   {
-    //     name: "microsoft",
-    //     symbol: "msft",
-    //   }
-    // ];
-
-    return data;
-  }
-
-  async GetStockInformation(symbol: string | null | undefined) {
-    var data = await axios.get(`${environment.server_url}/Stock/symbol/${symbol}`)
-    .then(res => res.data);
-    // var data = {
-    //   name: "apple",
-    //   symbol: "aapl",
-    //   price: 50,
-    //   oneYearEstimate: 100
-    // };
-
-    return data;
-  }
-
+  //TODO: create in backend, move to the user service
   async AddStockNote(stocksType: string | undefined, email: string | null, symbol: string, note: string) {
     // let user = this.Users.find((user: any) => user.email == email);
 
@@ -149,6 +120,7 @@ export class DatabaseService {
     // user.lists[stocksType!][symbol].note = note;
   }
 
+  //TODO: create in backend, move to the user service
   async RemoveStockNote(stocksType: string | undefined, email: string | null, symbol: string){
     // let user = this.Users.find((user: any) => user.email == email);
 
@@ -156,18 +128,5 @@ export class DatabaseService {
     //   return;
     
     // user.lists[stocksType!][symbol].note = "";
-  }
-
-  AddShare(email: string, listName: string, symbol: string, amount: number, avgPrice: number) {
-    // let user = this.Users.find((user: User) => user.email == email);
-
-    // let shares = user?.lists[listName][symbol].shares;
-    // let share: Share = {
-    //   amount: amount, averagePrice: avgPrice
-    // }
-    // if(shares == undefined)
-    //   shares = [share];
-    // else
-    //   shares.push(share)
   }
 }

@@ -28,7 +28,7 @@ export class UserInformationComponent{
     if(this.user == undefined)
       return;
 
-    this.InitializeOwnedStocks();
+    // this.InitializeOwnedStocks();
     // console.log(this.ownedStocks);
     this.InitializeChartData();
   }
@@ -67,45 +67,45 @@ export class UserInformationComponent{
     return Object.keys(this.ownedStocks).length;
   }
 
-  GetTotalGain(){
-    let ownedStockSymbols = Object.keys(this.ownedStocks);
-    let totalGain = 0;
+  // GetTotalGain(){
+  //   let ownedStockSymbols = Object.keys(this.ownedStocks);
+  //   let totalGain = 0;
 
-    ownedStockSymbols.forEach((symbol: string) => {
-      let stockValue = this.stocksDictionary[symbol].price * this.ownedStocks[symbol].amount;
-      let purchaseValue = this.ownedStocks[symbol].averagePrice * this.ownedStocks[symbol].amount;
-      totalGain += stockValue - purchaseValue;
-    });
+  //   ownedStockSymbols.forEach((symbol: string) => {
+  //     let stockValue = this.stocksDictionary[symbol].price * this.ownedStocks[symbol].amount;
+  //     let purchaseValue = this.ownedStocks[symbol].averagePrice * this.ownedStocks[symbol].amount;
+  //     totalGain += stockValue - purchaseValue;
+  //   });
 
-    return totalGain;
-  }
+  //   return totalGain;
+  // }
 
-  InitializeOwnedStocks() {
-    Object.keys(this.user!.watchingSymbols).forEach((listKey: string) => {
-      let stockSymbols = Object.keys(this.user!.watchingSymbols[listKey]);
+  // InitializeOwnedStocks() {
+  //   Object.keys(this.user!.watchingSymbols).forEach((listKey: string) => {
+  //     let stockSymbols = Object.keys(this.user!.watchingSymbols[listKey]);
   
-      stockSymbols.forEach((stockKey: string) => {
-        let shares = this.user!.watchingSymbols[listKey][stockKey].shares;
-        let amount = 0;
-        let totalPrice = 0;
+  //     stockSymbols.forEach((stockKey: string) => {
+  //       let shares = this.user!.watchingSymbols[listKey][stockKey].shares;
+  //       let amount = 0;
+  //       let totalPrice = 0;
   
-        shares.forEach((share: Share) => {
-          amount += share.amount;
-          totalPrice += share.amount * share.averagePrice;
-        });
+  //       shares.forEach((share: Share) => {
+  //         amount += share.amount;
+  //         totalPrice += share.amount * share.averagePrice;
+  //       });
   
-        if(stockKey in this.ownedStocks){
-          let previousAmount = this.ownedStocks[stockKey].amount
-          amount += previousAmount;
-          totalPrice += this.ownedStocks[stockKey].averagePrice * previousAmount;
-        }
+  //       if(stockKey in this.ownedStocks){
+  //         let previousAmount = this.ownedStocks[stockKey].amount
+  //         amount += previousAmount;
+  //         totalPrice += this.ownedStocks[stockKey].averagePrice * previousAmount;
+  //       }
   
-        if(amount > 0)
-          this.ownedStocks[stockKey] = {
-            amount: amount,
-            averagePrice: totalPrice / amount
-          };
-      })
-    });
-  }
+  //       if(amount > 0)
+  //         this.ownedStocks[stockKey] = {
+  //           amount: amount,
+  //           price: totalPrice / amount
+  //         };
+  //     })
+  //   });
+  // }
 }

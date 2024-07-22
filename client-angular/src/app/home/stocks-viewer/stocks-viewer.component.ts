@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockServiceService as StockService } from 'src/services/stock.service';
@@ -14,8 +13,7 @@ export class StocksViewerComponent implements OnInit{
   UserEmail!: any;
   Stocks!: any;
 
-  constructor(private db: DatabaseService,
-    private stockService: StockService,
+  constructor(private stockService: StockService,
     private userService: UserService,
     private authenticationService: AuthenticationService
   ){}

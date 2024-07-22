@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { User } from 'src/models/user';
+import { UserCreation } from 'src/models/user-creation';
 import { UserService } from 'src/Services/user.service';
 
 @Component({
@@ -24,12 +24,11 @@ export class UserRegisterComponent {
       return;
     }
 
-    const user: User = {
+    const user: UserCreation = {
       firstName: this.form.value.name,
       lastName: "",
       password: this.form.value.password,
       email: this.form.value.email,
-      watchingSymbols: {}
     };
 
     var isCreated = await this.userService.CreateUser(user);
@@ -37,6 +36,6 @@ export class UserRegisterComponent {
     if(isCreated)
       this.router.navigate(['/login']);
     else
-      prompt("couldn't create the user.");
+      alert("couldn't create the user.");
   }
 }

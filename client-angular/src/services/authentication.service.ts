@@ -52,15 +52,22 @@ export class AuthenticationService {
     return isConnected;
   }
 
-  //TODO: change from any
-  async AuthenticateToken(connectionToken: string): Promise<any> {
+  async AuthenticateToken(connectionToken: string): Promise<boolean> {
     var isAuthenticated = await axios.post(`${environment.server_url}/User/authenticate-token`,
       { params: {
         connectionToken
       }}
     )
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err));
+    .then(res => {
+      console.log(res.data);
+
+      return res.data;
+    })
+    .catch(err => {
+      console.log(err);
+
+      return false;
+    });
 
     return isAuthenticated;
   }

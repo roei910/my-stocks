@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Share } from 'src/models/share';
-import { User } from 'src/models/user';
-import { DatabaseService } from 'src/Services/database.service';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 
@@ -14,26 +11,29 @@ import { AuthenticationService } from 'src/services/authentication.service';
 export class StockSharesComponent implements OnInit{
   symbol!: string;
   listName!: string;
-  shares: Share[] | undefined;
+  watchingSymbols: string[] | undefined;
 
   constructor(private activatedRoute: ActivatedRoute,
-    private database: DatabaseService,
     private userService: UserService,
     private authenticationService: AuthenticationService
   ){
 
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
     this.activatedRoute.queryParams.subscribe(params => {
       this.symbol = params['stockSymbol'];
       this.listName = params['listName'];
     });
 
     let userEmail = this.authenticationService.GetUserEmail();
-    let user = this.database.Users.find((user: User) => user.email == userEmail);
 
-    this.shares = user?.watchingSymbols[this.listName][this.symbol].shares;
+    if(userEmail == null)
+      return;
+
+    let user = await this.userService.GetUserByEmailAsync(userEmail);
+
+    this.watchingSymbols = user.watchingSymbols[this.listName];
   }
 
   AddShare(){
@@ -44,6 +44,6 @@ export class StockSharesComponent implements OnInit{
     if(email == null)
       return;
     
-    this.database.AddShare(email, this.listName, this.symbol, amount, avgPrice);
+    // this.database.AddShare(email, this.listName, this.symbol, amount, avgPrice);
   }
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import axios from 'axios';
-import { User } from 'src/models/user';
 import { Share } from 'src/models/share';
 import { environment } from 'src/environments/environment';
 import { sha256 } from 'js-sha256';
+import { UserCreation } from 'src/models/user-creation';
+import { User } from 'src/models/user';
 
-//TODO: create authentication service and move some functions from here to the auth service
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +13,7 @@ export class UserService {
 
   constructor() { }
 
-  async GetUserByEmailAsync(email: string){
+  async GetUserByEmailAsync(email: string): Promise<User>{
     var res = await axios
       .get(`${environment.server_url}/User/by-email`,
         {
@@ -22,20 +22,30 @@ export class UserService {
           }
         }
       )
-      .then(res => console.log(res))
+      .then(res => {
+        console.log(res);
+
+        return res.data;
+      })
       .catch(err => console.log(err));
 
     return res;
   }
 
-  async CreateUser(user: User): Promise<boolean> {
+  async CreateUser(user: UserCreation): Promise<boolean> {
     user.password = sha256(user.password);
+
     var res = await axios
       .post(`${environment.server_url}/User/register`, user)
       .then(res => {
-        if (res.status == 201) {
+        if (res.status == 200) {
           return true;
         }
+
+        return false;
+      })
+      .catch(err => {
+        console.log(err);
 
         return false;
       });
@@ -45,7 +55,12 @@ export class UserService {
 
   async AddUserShare(email: string, sharePurchase: Share): Promise<boolean> {
     var res = await axios
-      .patch(`${environment.server_url}/User/add-share`, sharePurchase)
+      .patch(`${environment.server_url}/User/add-share`, {
+        params:{
+          email
+        },
+        body: sharePurchase
+      })
       .then(res => res.status == 200);
 
     return res
