@@ -1,24 +1,8 @@
-<!-- <ng-container *ngIf="!UserEmail; else elseTemplate">
-  <div>
-    <p>
-      you are welcome to connect to your account, if you dont have an account yet
-      be sure to create one!
-    </p>
-    <a routerLink="/connect">connect</a>
-    <a routerLink="/register">register</a>
-  </div>
-</ng-container>
-<ng-template #elseTemplate>
-  <div>
-    
-  </div>
-</ng-template> -->
-
-<div class="stock-list-container" *ngFor="let key of GetKeys(this.User.lists)">
-  <h2>{{key}}</h2>
+<div class="stock-list-container" *ngFor="let listName of GetKeys(this.User.watchingStocksByListName)">
+  <h2>{{listName}}</h2>
   <app-stocks-table 
-    [listName]="key"
-    [stocksList]="this.User.lists[key]"
+    [listName]="listName"
+    [stockSymbols]="this.User.watchingStocksByListName[listName]"
     [stocksDictionary]="this.User">
   </app-stocks-table>
 </div>

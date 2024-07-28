@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/Services/user.service';
+import { User } from 'src/models/user';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockServiceService as StockService } from 'src/services/stock.service';
 
@@ -9,8 +10,8 @@ import { StockServiceService as StockService } from 'src/services/stock.service'
   styleUrls: ['./stocks-viewer.component.css']
 })
 export class StocksViewerComponent implements OnInit{
-  User!: any;
-  UserEmail!: any;
+  User!: User;
+  UserEmail?: string | null;
   Stocks!: any;
 
   constructor(private stockService: StockService,
@@ -18,12 +19,18 @@ export class StocksViewerComponent implements OnInit{
     private authenticationService: AuthenticationService
   ){}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<any> {
     this.UserEmail = this.authenticationService.GetUserEmail();
-    this.User = this.userService.GetUserByEmailAsync(this.UserEmail);
+
+    if(this.UserEmail === null)
+      return;
+
+    this.User = await this.userService.GetUserByEmailAsync(this.UserEmail);
   }
 
   GetKeys(dictionary: any){
-    return Object.keys(dictionary);
+    var keys = Object.keys(dictionary);
+    
+    return keys;
   }
 }

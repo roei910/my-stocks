@@ -5,4 +5,5 @@ export class Stock {
     price!: number;
     analystRating?: string;
     updatedTime?: Date;
+    stockAnalysis: any;//TODO
 }

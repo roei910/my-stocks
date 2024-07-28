@@ -15,20 +15,22 @@
         <a 
         [routerLink]="['/', 'stocks', 'information']" 
         [queryParams]="{ stockSymbol: symbol }">
-          {{stocksDictionary[symbol].name}}
+          {{stocks[symbol].name}}
         </a>
       </td>
       <td>{{symbol}}</td>
-      <td>{{stocksDictionary[symbol].price}}</td>
-      <td>{{stocksDictionary[symbol].oneYearEstimate}}</td>
-      <td><p (click)="RedirectToSharesScreen(symbol)">{{CountShares(stocks[symbol].shares)}}</p></td>
+      <td>{{stocks[symbol].price}}</td>
+      <td></td>
       <td>
-        <ng-container *ngIf="!stocks[symbol].note; else elseTemplate">
+        <!-- <p (click)="RedirectToSharesScreen(symbol)">{{CountShares(stocks[symbol].shares)}}</p> -->
+      </td>
+      <td>
+        <!-- <ng-container *ngIf="!stocks.find(stock => stock.symbol == symbol).note; else elseTemplate">
           <button (click)="CreateStockNote(symbol)">+</button>
         </ng-container>
         <ng-template #elseTemplate>
           <p (click)="DeleteNote(symbol)">{{stocks[symbol].note}}</p>
-        </ng-template>
+        </ng-template> -->
       </td>
     </tr>
   </tbody>

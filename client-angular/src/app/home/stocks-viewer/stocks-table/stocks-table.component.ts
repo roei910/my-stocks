@@ -1,16 +1,18 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/Services/user.service';
+import { Stock } from 'src/models/stock';
+import { WatchingStock } from 'src/models/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { StockServiceService as StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stocks-table',
   templateUrl: './stocks-table.component.html',
   styleUrls: ['./stocks-table.component.css']
 })
-export class StocksTableComponent {
-  @Input('stocksList')
-  stocks: any;
+export class StocksTableComponent implements OnInit{
+  @Input('stockSymbols')
+  stockSymbols!: { [stockSymbol: string] : WatchingStock } ;
 
   @Input('stocksDictionary')
   stocksDictionary: any;
@@ -18,13 +20,27 @@ export class StocksTableComponent {
   @Input('listName')
   listName?: string;
 
+  stocks!: {
+      [stockSymbol: string] : Stock;
+  };
   email: any;
 
-  constructor(private userService: UserService,
+  constructor(private stockService: StockService,
     private authenticationService: AuthenticationService,
     private router: Router
   ){
     this.email = this.authenticationService.GetUserEmail();
+  }
+
+  async ngOnInit(): Promise<any> {
+    var allStocks = await this.stockService.GetAllStocksAsync()
+    this.stocks = {};
+
+    var filter = allStocks.filter(stock => Object.keys(this.stockSymbols).includes(stock.symbol));
+    
+    filter.forEach(stock => {
+        this.stocks[stock.symbol] = stock;
+      });
   }
 
   async CreateStockNote(symbol: string){
@@ -44,7 +60,9 @@ export class StocksTableComponent {
   }
 
   GetKeys(dictionary: any){
-    return Object.keys(dictionary);
+    var keys = Object.keys(dictionary);
+    
+    return keys;
   }
 
   CountShares(sharesList: any){

@@ -1,12 +1,13 @@
-import { Share } from "./share";
+import { WatchingStock } from "./watching-stock";
 
 export class User {
     id!: string;
     firstName!: string;
     lastName!: string;
     email!: string;
-    shares!: Share[];
-    watchingSymbols!: {
-        [listName: string] : string[];
+    watchingStocksByListName!: {
+        [listName: string] : {
+            [stockSymbol: string]: WatchingStock
+        }
     }
 }
