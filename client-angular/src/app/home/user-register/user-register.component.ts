@@ -30,7 +30,7 @@ export class UserRegisterComponent {
       password: this.form.value.password,
       email: this.form.value.email,
     };
-
+    
     var isCreated = await this.userService.CreateUser(user);
 
     if(isCreated)

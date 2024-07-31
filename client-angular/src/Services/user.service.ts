@@ -34,7 +34,7 @@ export class UserService {
 
   async CreateUser(user: UserCreation): Promise<boolean> {
     user.password = sha256(user.password);
-
+    
     var res = await axios
       .post(`${environment.server_url}/User/register`, user)
       .then(res => {
