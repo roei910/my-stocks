@@ -1,4 +1,4 @@
-export const environment = {
-    production: false,
-    server_url: "https://localhost:7173"
-}
+import { environment as devEnv  } from "./environment.development"
+import { environment as prodEnv  } from "./environment.production"
+
+export const environment = devEnv;
