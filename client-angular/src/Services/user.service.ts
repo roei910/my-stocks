@@ -79,11 +79,9 @@ export class UserService {
     var res = await axios
       .patch(`${environment.server_url}/User/add-watching-share`,
         {
-          params:{
-            email,
-            listName,
-            stockSymbol
-          }
+          email,
+          listName,
+          stockSymbol
         }
       )
       .then(res => console.log(res))
@@ -96,11 +94,9 @@ export class UserService {
     var res = await axios
       .patch(`${environment.server_url}/User/remove-watching-share`,
         {
-          params:{
-            email,
-            listName,
-            stockSymbol
-          }
+          email,
+          listName,
+          stockSymbol
         }
       )
       .then(res => console.log(res))
@@ -113,12 +109,10 @@ export class UserService {
     var res = await axios
       .patch(`${environment.server_url}/User/watching-stock-note`,
         {
-          params:{
-            email,
-            listName,
-            stockSymbol,
-            note
-          }
+          email,
+          listName,
+          stockSymbol,
+          note
         }
       )
       .then(res => console.log(res))
