@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { StockServiceService as StockService } from 'src/services/stock.service';
+import { StockService as StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stocks-search',

@@ -8,11 +8,11 @@
     </div>
     <div class="chart-container">
         <h3>Stock Portfolio</h3>
-        <p><strong>Total Gain:</strong> $</p>
+        <p><strong>Total Gain:</strong>{{GetTotalGain()}}$</p>
         <p><strong>Number of Stocks:</strong> {{CountOwnedStocks()}}</p>
     </div>
     <div class="chart-container">
         <h3>Stock Distribution</h3>
-        <p-chart type="pie" [data]="data" height="400" width="400"></p-chart>
+        <p-chart type="pie" [data]="chartData" height="400" width="400"></p-chart>
     </div>
 </div>

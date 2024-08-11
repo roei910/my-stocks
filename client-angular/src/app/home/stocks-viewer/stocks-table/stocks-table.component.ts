@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Stock } from 'src/models/stock';
 import { WatchingStock } from 'src/models/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { StockServiceService as StockService } from 'src/services/stock.service';
+import { StockService as StockService } from 'src/services/stock.service';
 import { UserService } from 'src/Services/user.service';
 
 @Component({

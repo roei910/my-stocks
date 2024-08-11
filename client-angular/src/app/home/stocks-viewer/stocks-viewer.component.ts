@@ -3,7 +3,7 @@ import { UserService } from 'src/Services/user.service';
 import { Stock } from 'src/models/stock';
 import { User } from 'src/models/user';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { StockServiceService as StockService } from 'src/services/stock.service';
+import { StockService as StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stocks-viewer',
