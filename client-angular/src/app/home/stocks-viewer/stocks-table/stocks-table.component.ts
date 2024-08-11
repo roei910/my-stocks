@@ -4,6 +4,7 @@ import { Stock } from 'src/models/stock';
 import { WatchingStock } from 'src/models/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockServiceService as StockService } from 'src/services/stock.service';
+import { UserService } from 'src/Services/user.service';
 
 @Component({
   selector: 'app-stocks-table',
@@ -11,52 +12,42 @@ import { StockServiceService as StockService } from 'src/services/stock.service'
   styleUrls: ['./stocks-table.component.css']
 })
 export class StocksTableComponent implements OnInit{
-  @Input('stockSymbols')
-  stockSymbols!: { [stockSymbol: string] : WatchingStock } ;
+  @Input('watchingStocks')
+  watchingStocks!: { [stockSymbol: string] : WatchingStock } ;
 
   @Input('stocksDictionary')
-  stocksDictionary: any;
+  stocksDictionary!: { [stockSymbol: string] : Stock };
 
   @Input('listName')
   listName?: string;
 
-  stocks!: {
-      [stockSymbol: string] : Stock;
-  };
   email: any;
 
   constructor(private stockService: StockService,
     private authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ){
     this.email = this.authenticationService.GetUserEmail();
   }
 
   async ngOnInit(): Promise<any> {
-    var allStocks = await this.stockService.GetAllStocksAsync()
-    this.stocks = {};
-
-    var filter = allStocks.filter(stock => Object.keys(this.stockSymbols).includes(stock.symbol));
-    
-    filter.forEach(stock => {
-        this.stocks[stock.symbol] = stock;
-      });
   }
 
   async CreateStockNote(symbol: string){
     let note = prompt("please enter a note");
 
-    if(!note)
+    if(!note || !this.listName)
       return;
     
-    // await this.database.AddStockNote(this.listName, this.email, symbol, note);
+    await this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note);
   }
 
   async DeleteNote(symbol: string){
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
-    // if(confirmDelete)
-    //   await this.database.RemoveStockNote(this.listName, this.email, symbol);
+    if(confirmDelete)
+    await this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "");
   }
 
   GetKeys(dictionary: any){
@@ -65,10 +56,12 @@ export class StocksTableComponent implements OnInit{
     return keys;
   }
 
-  CountShares(sharesList: any){
+  CountShares(watchingStock: WatchingStock){
     var sum = 0;
-
-    sharesList.forEach((share: any) => sum += share.amount);
+    var keys = Object.keys(watchingStock.purchaseGuidToShares);
+    
+    keys.forEach((purchaseGuid: string) => 
+      sum += watchingStock.purchaseGuidToShares[purchaseGuid].amount);
 
     return sum
   }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/Services/user.service';
+import { Stock } from 'src/models/stock';
 import { User } from 'src/models/user';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockServiceService as StockService } from 'src/services/stock.service';
@@ -12,7 +13,7 @@ import { StockServiceService as StockService } from 'src/services/stock.service'
 export class StocksViewerComponent implements OnInit{
   User!: User;
   UserEmail?: string | null;
-  Stocks!: any;
+  Stocks: { [stockSymbol: string] : Stock } = {};
 
   constructor(private stockService: StockService,
     private userService: UserService,
@@ -26,9 +27,15 @@ export class StocksViewerComponent implements OnInit{
       return;
 
     this.User = await this.userService.GetUserByEmailAsync(this.UserEmail);
+    var stocksList = await this.stockService.GetAllStocksAsync();
+    
+    stocksList.map(stock => this.Stocks[stock.symbol] = stock);
   }
 
   GetKeys(dictionary: any){
+    if(dictionary == null)
+      return [];
+
     var keys = Object.keys(dictionary);
     
     return keys;

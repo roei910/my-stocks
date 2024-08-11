@@ -1,8 +1,8 @@
-<div class="stock-list-container" *ngFor="let listName of GetKeys(this.User.watchingStocksByListName)">
+<div class="stock-list-container" *ngFor="let listName of GetKeys(this.User?.watchingStocksByListName)">
   <h2>{{listName}}</h2>
   <app-stocks-table 
     [listName]="listName"
-    [stockSymbols]="this.User.watchingStocksByListName[listName]"
-    [stocksDictionary]="this.User">
+    [watchingStocks]="this.User.watchingStocksByListName[listName]"
+    [stocksDictionary]="this.Stocks">
   </app-stocks-table>
 </div>

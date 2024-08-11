@@ -8,7 +8,6 @@ import { StockServiceService as StockService } from 'src/services/stock.service'
   styleUrls: ['./stocks-search.component.css']
 })
 export class StocksSearchComponent {
-
   stocksList: any = null;
 
   constructor(private stockService: StockService,

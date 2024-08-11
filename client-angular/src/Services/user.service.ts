@@ -15,18 +15,14 @@ export class UserService {
 
   async GetUserByEmailAsync(email: string): Promise<User>{
     var res = await axios
-      .get(`${environment.server_url}/User/by-email`,
+      .get(`${environment.server_url}/User`,
         {
           params:{
             email
           }
         }
       )
-      .then(res => {
-        console.log(res);
-
-        return res.data;
-      })
+      .then(res => res.data)
       .catch(err => console.log(err));
 
     return res;
@@ -104,6 +100,24 @@ export class UserService {
             email,
             listName,
             stockSymbol
+          }
+        }
+      )
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
+
+    return res
+  }
+
+  async UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string){
+    var res = await axios
+      .patch(`${environment.server_url}/User/watching-stock-note`,
+        {
+          params:{
+            email,
+            listName,
+            stockSymbol,
+            note
           }
         }
       )

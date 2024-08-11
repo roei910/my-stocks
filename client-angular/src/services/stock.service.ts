@@ -7,18 +7,29 @@ import { Stock } from 'src/models/stock';
   providedIn: 'root'
 })
 export class StockServiceService {
+  lastUpdateTime!: Date;
+  allStocks?: Stock[];
 
-  constructor() { }
+  constructor() {
+    this.lastUpdateTime = new Date();
+  }
 
   async GetAllStocksAsync(): Promise<Stock[]>{
+    if(this.allStocks !== undefined && 
+      this.shouldBeUpdated(this.lastUpdateTime, new Date()))
+      return this.allStocks;
+    console.log("updating");
+    
     var res = await axios.get(`${environment.server_url}/Stock`)
       .then(res => {
-        console.log(res.data);
 
         return res.data;
       })
       .catch(err => console.log(err));
-
+    
+    this.lastUpdateTime = new Date();
+    console.log(this.lastUpdateTime);
+    
     return res;
   }
 
@@ -56,5 +67,16 @@ export class StockServiceService {
       .catch(err => console.log(err));
 
     return res;
+  }
+
+  //TODO: create time helper service or something
+  shouldBeUpdated(startTime: Date, endTime: Date): boolean {
+    // Calculate the difference in milliseconds
+    const differenceInMillis = endTime.getTime() - startTime.getTime();
+    
+    // Convert 30 minutes to milliseconds
+    const thirtyMinutesInMillis = 30 * 60 * 1000;
+    
+    return differenceInMillis < thirtyMinutesInMillis;
   }
 }
