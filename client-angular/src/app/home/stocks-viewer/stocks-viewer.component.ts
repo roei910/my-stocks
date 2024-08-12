@@ -32,7 +32,7 @@ export class StocksViewerComponent implements OnInit{
     stocksList.map(stock => this.Stocks[stock.symbol] = stock);
   }
 
-  GetKeys(dictionary: any){
+  GetKeys(dictionary: any): string[]{
     if(dictionary == null)
       return [];
 
