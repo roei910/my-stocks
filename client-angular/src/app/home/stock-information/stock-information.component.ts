@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Stock } from 'src/models/stock';
+import { StockService } from 'src/services/stock.service';
 
 @Component({
   selector: 'app-stock-information',
@@ -8,10 +10,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class StockInformationComponent implements OnInit {
   symbol?: string | null;
-  stockData?: any;
+  stock?: Stock;
   data?: any;
+  //TODO: add button to add to a list
 
-  constructor(private activatedRoute: ActivatedRoute) { 
+  constructor(private activatedRoute: ActivatedRoute,
+    private stockService: StockService
+  ) { 
       const tempData = [30, 25, 20, 15, 10];
 
       this.data = {
@@ -32,7 +37,9 @@ export class StockInformationComponent implements OnInit {
       this.symbol = params['stockSymbol'];
     });
 
-    // this.stockData = await this.dbService.GetStockInformation(this.symbol);
-    // console.log(this.stockData);
+    if(!this.symbol)
+      return;
+
+    this.stock = await this.stockService.GetStockBySymbolAsync(this.symbol);
   }
 }

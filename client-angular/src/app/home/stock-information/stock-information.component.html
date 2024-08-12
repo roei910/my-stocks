@@ -1,9 +1,14 @@
 <div class="stock-details-container">
     <h2>Stock Details</h2>
     <div id="stockDetails">
-        <h3>{{stockData.name}}</h3>
-        <p>current price: {{stockData.price}}</p>
-        <p>one year estimate: {{stockData.oneYearEstimate}}</p>
+        <h3>{{stock?.name}}</h3>
+        <p>current price: {{stock?.price}}</p>
+        <h4>stock analysis</h4>
+        <p>recomendation: {{stock?.analysis?.recomendationKey}}</p>
+        <p>target high price: {{stock?.analysis?.targetHighPrice}}</p>
+        <p>target low price: {{stock?.analysis?.targetLowPrice}}</p>
+        <p>target mean price: {{stock?.analysis?.targetMeanPrice}}</p>
+        <p>target median price: {{stock?.analysis?.targetMedianPrice}}</p>
         <p-chart type="bar" [data]="data" height="400" width="400"></p-chart>
     </div>
 </div>
