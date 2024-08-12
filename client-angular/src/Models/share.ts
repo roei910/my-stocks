@@ -1,5 +1,5 @@
 export class Share {
     purchaseDate?: Date;
-    price!: number;
+    purchasingPrice!: number;
     amount!: number;
 }

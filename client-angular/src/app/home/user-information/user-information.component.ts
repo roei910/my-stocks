@@ -6,8 +6,6 @@ import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService } from 'src/services/stock.service';
 
-//TODO
-
 @Component({
   selector: 'app-user-information',
   templateUrl: './user-information.component.html',
@@ -77,10 +75,10 @@ export class UserInformationComponent implements OnInit{
   GetTotalGain(){
     let ownedStockSymbols = Object.keys(this.ownedStocks);
     let totalGain = 0;
-
+    
     ownedStockSymbols.forEach((symbol: string) => {
       let stockValue = this.stocksDictionary[symbol].price * this.ownedStocks[symbol].amount;
-      let purchaseValue = this.ownedStocks[symbol].price * this.ownedStocks[symbol].amount;
+      let purchaseValue = this.ownedStocks[symbol].purchasingPrice * this.ownedStocks[symbol].amount;
       totalGain += stockValue - purchaseValue;
     });
 
@@ -88,30 +86,30 @@ export class UserInformationComponent implements OnInit{
   }
 
   InitializeOwnedStocks() {
-    Object.keys(this.user!.watchingStocksByListName).forEach((listKey: string) => {
-      let stockSymbols = Object.keys(this.user!.watchingStocksByListName[listKey]);
-  
-      stockSymbols.forEach((stockKey: string) => {
-        let sharesDictionary = this.user!.watchingStocksByListName[listKey][stockKey].purchaseGuidToShares;
+    Object.keys(this.user!.watchingStocksByListName).forEach((listName: string) => {
+      let watchingStocks = this.user!.watchingStocksByListName[listName];
+
+      Object.keys(watchingStocks).forEach((stockSymbol: string) => {
+        let sharesDictionary = watchingStocks[stockSymbol].purchaseGuidToShares
         let amount = 0;
         let totalPrice = 0;
-  
+        
         Object.keys(sharesDictionary).forEach((purchaseGuid: string) => {
           let share = sharesDictionary[purchaseGuid];
           amount += share.amount;
-          totalPrice += share.amount * share.price;
+          totalPrice += share.amount * share.purchasingPrice;
         });
-  
-        if(stockKey in this.ownedStocks){
-          let previousAmount = this.ownedStocks[stockKey].amount
+        
+        if(stockSymbol in this.ownedStocks){
+          let previousAmount = this.ownedStocks[stockSymbol].amount
           amount += previousAmount;
-          totalPrice += this.ownedStocks[stockKey].price * previousAmount;
+          totalPrice += this.ownedStocks[stockSymbol].purchasingPrice * previousAmount;
         }
   
         if(amount > 0)
-          this.ownedStocks[stockKey] = {
+          this.ownedStocks[stockSymbol] = {
             amount: amount,
-            price: totalPrice / amount,
+            purchasingPrice: totalPrice / amount,
           };
       })
     });
