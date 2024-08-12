@@ -59,7 +59,7 @@ export class UserService {
       })
       .then(res => res.status == 200);
 
-    return res
+    return res;
   }
 
   async RemoveUserShare(email: string, purchaseId: string){
@@ -105,7 +105,7 @@ export class UserService {
     return res
   }
 
-  async UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string){
+  async UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): Promise<number>{
     var res = await axios
       .patch(`${environment.server_url}/User/watching-stock-note`,
         {
@@ -115,8 +115,12 @@ export class UserService {
           note
         }
       )
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      .then(res => res.status)
+      .catch(err => {
+        console.log(err);
+
+        return 500;
+      });
 
     return res
   }
