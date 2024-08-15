@@ -26,7 +26,7 @@ export class StocksViewerComponent implements OnInit{
     if(this.UserEmail === null)
       return;
 
-    this.User = await this.userService.GetUserByEmailAsync(this.UserEmail);
+    this.userService.GetUserByEmailAsync(this.UserEmail).subscribe(user => this.User = user);
     var stocksList = await this.stockService.GetAllStocksAsync();
     
     stocksList.map(stock => this.Stocks[stock.symbol] = stock);

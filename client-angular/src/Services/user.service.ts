@@ -5,46 +5,32 @@ import { environment } from 'src/environments/environment';
 import { sha256 } from 'js-sha256';
 import { UserCreation } from 'src/models/user-creation';
 import { User } from 'src/models/user';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  async GetUserByEmailAsync(email: string): Promise<User>{
-    var res = await axios
-      .get(`${environment.server_url}/User`,
-        {
-          params:{
-            email
-          }
+  GetUserByEmailAsync(email: string): Observable<User>{
+    var res = this.http.get<User>(`${environment.server_url}/User`,
+      {
+        params: {
+          email
         }
-      )
-      .then(res => res.data)
-      .catch(err => console.log(err));
+      }
+    );
 
     return res;
   }
 
-  async CreateUser(user: UserCreation): Promise<boolean> {
+  CreateUser(user: UserCreation): Observable<boolean> {
     user.password = sha256(user.password);
     
-    var res = await axios
-      .post(`${environment.server_url}/User/register`, user)
-      .then(res => {
-        if (res.status == 200) {
-          return true;
-        }
-
-        return false;
-      })
-      .catch(err => {
-        console.log(err);
-
-        return false;
-      });
+    var res = this.http.post<boolean>(`${environment.server_url}/User/register`, user)
 
     return res;
   }

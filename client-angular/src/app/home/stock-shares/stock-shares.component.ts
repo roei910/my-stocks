@@ -30,9 +30,9 @@ export class StockSharesComponent implements OnInit{
     if(userEmail == null)
       return;
 
-    let user = await this.userService.GetUserByEmailAsync(userEmail);
-
-    this.watchingSymbols = user.watchingStocksByListName[this.listName];
+    this.userService.GetUserByEmailAsync(userEmail).subscribe(user =>{
+      this.watchingSymbols = user.watchingStocksByListName[this.listName];
+    });
   }
 
   AddShare(){
