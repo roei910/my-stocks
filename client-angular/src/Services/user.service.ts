@@ -7,12 +7,12 @@ import { UserCreation } from 'src/models/user-creation';
 import { User } from 'src/models/user';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { StockListDetails } from 'src/models/stock-list-details';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-
   constructor(private http: HttpClient) { }
 
   GetUserByEmailAsync(email: string): Observable<User>{
@@ -109,5 +109,23 @@ export class UserService {
       });
 
     return res
+  }
+
+  addUserList(stockListDetails: StockListDetails):Observable<any> {
+    var res = this.http.post<User>(`${environment.server_url}/User/List`,
+      stockListDetails
+    );
+
+    return res;
+  }
+
+  removeUserList(stockListDetails: StockListDetails):Observable<any> {
+    var res = this.http.delete<User>(`${environment.server_url}/User/List`,
+      {
+        body: stockListDetails
+      }
+    );
+
+    return res;
   }
 }

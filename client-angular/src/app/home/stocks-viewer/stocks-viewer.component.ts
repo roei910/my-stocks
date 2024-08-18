@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from 'src/Services/user.service';
 import { Stock } from 'src/models/stock';
+import { StockListDetails } from 'src/models/stock-list-details';
 import { User } from 'src/models/user';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService as StockService } from 'src/services/stock.service';
@@ -39,5 +40,35 @@ export class StocksViewerComponent implements OnInit{
     var keys = Object.keys(dictionary);
     
     return keys;
+  }
+
+  AddUserList(){
+    var listName = prompt("please enter a list name, only 1 word");
+
+    if(listName == null)
+      return;
+
+    let stockListDetails: StockListDetails = 
+    {
+      userEmail: this.UserEmail!,
+      listName
+    }
+    
+    this.userService.addUserList(stockListDetails).subscribe(res => window.location.reload());
+  }
+
+  RemoveUserList(){
+    var listName = prompt("please enter a list name, only 1 word");
+
+    if(listName == null)
+      return;
+
+    let stockListDetails: StockListDetails = 
+    {
+      userEmail: this.UserEmail!,
+      listName
+    }
+    
+    this.userService.removeUserList(stockListDetails).subscribe(res => window.location.reload());
   }
 }
