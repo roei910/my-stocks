@@ -21,7 +21,7 @@
       </td>
       <td>{{symbol}}</td>
       <td>{{stocksDictionary[symbol].price}}</td>
-      <td>{{stocksDictionary[symbol].analysis?.targetMeanPrice}}</td>
+      <td>{{stocksDictionary[symbol].analysis?.targetMeanPrice ?? ""}}</td>
       <td>
         <p (click)="RedirectToSharesScreen(symbol)">{{CountShares(watchingStocks[symbol])}}</p>
       </td>
