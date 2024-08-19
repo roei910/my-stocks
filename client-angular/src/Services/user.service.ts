@@ -7,6 +7,7 @@ import { User } from 'src/models/user';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StockListDetails } from 'src/models/stock-list-details';
+import { SharePurchase } from 'src/models/share-purchase';
 
 @Injectable({
   providedIn: 'root'
@@ -34,12 +35,9 @@ export class UserService {
     return res;
   }
 
-  AddUserShare(email: string, sharePurchase: Share): Observable<HttpResponse<boolean>> {
+  AddUserShare(sharePurchase: SharePurchase): Observable<HttpResponse<boolean>> {
     var res = this.http
       .post<boolean>(`${environment.server_url}/User/share`, sharePurchase, {
-        params:{
-          email
-        },
         observe: 'response'
       });
 
