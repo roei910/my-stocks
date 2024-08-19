@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import axios from 'axios';
 import { Share } from 'src/models/share';
 import { environment } from 'src/environments/environment';
 import { sha256 } from 'js-sha256';
 import { UserCreation } from 'src/models/user-creation';
 import { User } from 'src/models/user';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { StockListDetails } from 'src/models/stock-list-details';
 
@@ -35,39 +34,41 @@ export class UserService {
     return res;
   }
 
-  async AddUserShare(email: string, sharePurchase: Share): Promise<boolean> {
-    var res = await axios
-      .patch(`${environment.server_url}/User/add-share`, {
+  AddUserShare(email: string, sharePurchase: Share): Observable<HttpResponse<boolean>> {
+    var res = this.http
+      .post<boolean>(`${environment.server_url}/User/share`, sharePurchase, {
         params:{
           email
         },
-        body: sharePurchase
-      })
-      .then(res => res.status == 200);
+        observe: 'response'
+      });
 
     return res;
   }
 
-  async RemoveUserShare(email: string, purchaseId: string){
-    var res = await axios
-      .patch(`${environment.server_url}/User/remove-share`, {
+  RemoveUserShare(email: string, purchaseId: string): Observable<HttpResponse<boolean>>{
+    var res = this.http
+      .delete<boolean>(`${environment.server_url}/User/share`, {
         params: {
           email: email
         },
-        body: purchaseId
-      })
-      .then(res => res.status == 200);
+        body: purchaseId,
+        observe: 'response'
+      });
 
       return res;
   }
 
   AddWatchingStock(email: string, listName: string, stockSymbol: string): 
-    Observable<any>{
-    var res = this.http.post(`${environment.server_url}/User/watching-stock`, 
+    Observable<HttpResponse<boolean>>{
+    var res = this.http.post<boolean>(`${environment.server_url}/User/watching-stock`, 
       {
         email,
         listName,
         stockSymbol
+      },
+      {
+        observe: 'response'
       }
     );
 
@@ -75,37 +76,36 @@ export class UserService {
   }
 
   RemoveWatchingStock(email: string, listName: string, stockSymbol: string):
-    Observable<any>{
+    Observable<HttpResponse<boolean>>{
     var res = this.http
-      .delete(`${environment.server_url}/User/watching-stock`,
+      .delete<boolean>(`${environment.server_url}/User/watching-stock`,
         {
           body:{
             email,
             listName,
             stockSymbol
-          }
+          },
+          observe: 'response'
         }
       );
 
     return res;
   }
 
-  async UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): Promise<number>{
-    var res = await axios
-      .patch(`${environment.server_url}/User/watching-stock-note`,
+  UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): 
+    Observable<HttpResponse<boolean>>{
+    var res = this.http
+      .patch<boolean>(`${environment.server_url}/User/watching-stock-note`,
         {
           email,
           listName,
           stockSymbol,
           note
+        },
+        {
+          observe: 'response'
         }
-      )
-      .then(res => res.status)
-      .catch(err => {
-        console.log(err);
-
-        return 500;
-      });
+      );
 
     return res
   }
@@ -118,10 +118,11 @@ export class UserService {
     return res;
   }
 
-  removeUserList(stockListDetails: StockListDetails):Observable<any> {
-    var res = this.http.delete<User>(`${environment.server_url}/User/List`,
+  removeUserList(stockListDetails: StockListDetails):Observable<HttpResponse<boolean>> {
+    var res = this.http.delete<boolean>(`${environment.server_url}/User/List`,
       {
-        body: stockListDetails
+        body: stockListDetails,
+        observe: 'response'
       }
     );
 

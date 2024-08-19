@@ -40,24 +40,26 @@ export class StocksTableComponent implements OnInit{
     if(!note || !this.listName)
       return;
     
-    var res = await this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note);
-
-    if(res != 200)
-      alert("error updating the note");
-    else
-        window.location.reload();
+    this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
+      .subscribe(res => {
+        if(res.status != 200)
+          alert("error updating the note");
+        else
+            window.location.reload();
+      });
   }
 
   async DeleteNote(symbol: string){
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
     if(confirmDelete){
-      var res = await this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "");
-
-      if(res != 200)
-        alert("error deleting note the note");
-      else
-        window.location.reload();
+      this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
+      .subscribe(res => {
+        if(res.status != 200)
+          alert("error updating the note");
+        else
+            window.location.reload();
+      });
     }
   }
 
