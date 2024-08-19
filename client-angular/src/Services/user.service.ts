@@ -61,34 +61,33 @@ export class UserService {
       return res;
   }
 
-  async AddWatchingStock(email: string, listName: string, stockSymbol: string){
-    var res = await axios
-      .patch(`${environment.server_url}/User/add-watching-share`,
-        {
-          email,
-          listName,
-          stockSymbol
-        }
-      )
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+  AddWatchingStock(email: string, listName: string, stockSymbol: string): 
+    Observable<any>{
+    var res = this.http.post(`${environment.server_url}/User/watching-stock`, 
+      {
+        email,
+        listName,
+        stockSymbol
+      }
+    );
 
     return res
   }
 
-  async RemoveWatchingStock(email: string, listName: string, stockSymbol: string){
-    var res = await axios
-      .patch(`${environment.server_url}/User/remove-watching-share`,
+  RemoveWatchingStock(email: string, listName: string, stockSymbol: string):
+    Observable<any>{
+    var res = this.http
+      .delete(`${environment.server_url}/User/watching-stock`,
         {
-          email,
-          listName,
-          stockSymbol
+          body:{
+            email,
+            listName,
+            stockSymbol
+          }
         }
-      )
-      .then(res => console.log(res))
-      .catch(err => console.log(err));
+      );
 
-    return res
+    return res;
   }
 
   async UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): Promise<number>{

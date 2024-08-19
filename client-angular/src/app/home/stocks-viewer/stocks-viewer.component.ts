@@ -71,4 +71,14 @@ export class StocksViewerComponent implements OnInit{
     
     this.userService.removeUserList(stockListDetails).subscribe(res => window.location.reload());
   }
+
+  AddListStock(listName: string) {
+    var stockSymbol = prompt("please enter a stock symbol");
+
+    if(stockSymbol == null)
+      return;
+    
+    this.userService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
+      .subscribe(res => window.location.reload());
+  }
 }

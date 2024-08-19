@@ -1,7 +1,7 @@
 <div><button (click)="AddUserList()">Add List</button></div>
 <div><button (click)="RemoveUserList()">Remove List</button></div>
 <div class="stock-list-container" *ngFor="let listName of GetKeys(this.User?.watchingStocksByListName)">
-  <h2>{{listName}}</h2>
+  <h2>{{listName}}<button (click)="AddListStock(listName)">AddStock</button></h2>
   <app-stocks-table 
     [listName]="listName"
     [watchingStocks]="this.User.watchingStocksByListName[listName]"
