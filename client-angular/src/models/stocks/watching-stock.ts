@@ -1,4 +1,4 @@
-import { Share } from "./share";
+import { Share } from "../shares/share";
 
 export class WatchingStock {
     purchaseGuidToShares!: {

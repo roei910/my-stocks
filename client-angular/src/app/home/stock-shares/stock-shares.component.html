@@ -1,9 +1,10 @@
 <p>Current shares for {{symbol}} of list {{listName}}</p>
 <div class="shares-container">
     <ul class="shares-list">
-        <li class="share-item" *ngFor="let share of shares">
-            <span class="share-amount">Amount: {{share.amount}}</span>
-            <span class="share-price">Avg Price: {{share.purchasingPrice}}</span>
+        <li class="share-item" *ngFor="let purchaseId of GetKeys(watchingStock!.purchaseGuidToShares)">
+            <span class="share-amount">Amount: {{watchingStock!.purchaseGuidToShares[purchaseId].amount}}</span>
+            <span class="share-price">Avg Price: {{watchingStock!.purchaseGuidToShares[purchaseId].purchasingPrice}}</span>
+            <button (click)="RemoveShare(purchaseId, symbol)">Remove Share</button>
         </li>
     </ul>
     <button (click)="AddShare(symbol, listName)">Add</button>

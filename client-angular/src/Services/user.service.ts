@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { Share } from 'src/models/share';
 import { environment } from 'src/environments/environment';
 import { sha256 } from 'js-sha256';
-import { UserCreation } from 'src/models/user-creation';
-import { User } from 'src/models/user';
+import { UserCreation } from 'src/models/users/user-creation';
+import { User } from 'src/models/users/user';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { StockListDetails } from 'src/models/stock-list-details';
-import { SharePurchase } from 'src/models/share-purchase';
+import { SharePurchase } from 'src/models/shares/share-purchase';
+import { ShareSale } from 'src/models/shares/share-sale';
+import { StockListDetails } from 'src/models/stocks/stock-list-details';
 
 @Injectable({
   providedIn: 'root'
@@ -44,13 +44,10 @@ export class UserService {
     return res;
   }
 
-  RemoveUserShare(email: string, purchaseId: string): Observable<HttpResponse<boolean>>{
+  RemoveUserShare(shareSale: ShareSale): Observable<HttpResponse<boolean>>{
     var res = this.http
       .delete<boolean>(`${environment.server_url}/User/share`, {
-        params: {
-          email: email
-        },
-        body: purchaseId,
+        body: shareSale,
         observe: 'response'
       });
 

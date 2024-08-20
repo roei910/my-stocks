@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Stock } from 'src/models/stock';
-import { WatchingStock } from 'src/models/watching-stock';
+import { Stock } from 'src/models/stocks/stock';
+import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService as StockService } from 'src/services/stock.service';
 import { UserService } from 'src/Services/user.service';

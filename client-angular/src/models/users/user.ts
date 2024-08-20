@@ -1,4 +1,4 @@
-import { WatchingStock } from "./watching-stock";
+import { WatchingStock } from "../stocks/watching-stock";
 
 export class User {
     id!: string;

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserCreation } from 'src/models/user-creation';
+import { UserCreation } from 'src/models/users/user-creation';
 import { UserService } from 'src/Services/user.service';
 
 @Component({
