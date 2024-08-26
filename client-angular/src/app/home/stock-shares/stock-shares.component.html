@@ -1,6 +1,6 @@
 <p>Current shares for {{symbol}} of list {{listName}}</p>
 <div class="shares-container">
-    <ul class="shares-list">
+    <ul class="shares-list" *ngIf="watchingStock?.purchaseGuidToShares">
         <li class="share-item" *ngFor="let purchaseId of GetKeys(watchingStock!.purchaseGuidToShares)">
             <span class="share-amount">Amount: {{watchingStock!.purchaseGuidToShares[purchaseId].amount}}</span>
             <span class="share-price">Avg Price: {{watchingStock!.purchaseGuidToShares[purchaseId].purchasingPrice}}</span>
