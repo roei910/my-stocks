@@ -4,7 +4,7 @@ import { User } from 'src/models/users/user';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService } from 'src/services/stock.service';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { Stock } from 'src/models/stocks/stock';
