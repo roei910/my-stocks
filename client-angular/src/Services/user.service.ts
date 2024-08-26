@@ -32,7 +32,13 @@ export class UserService {
     user.password = sha256(user.password);
     
     var res = this.http
-    .post<boolean>(`${environment.server_url}/User/register`, user)
+    .post(`${environment.server_url}/User/register`, user,
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    )
+    .pipe(map(response => response.status == 200));
 
     return res;
   }

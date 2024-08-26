@@ -2,12 +2,16 @@
     <h2>Sign Up</h2>
     <form (ngSubmit)="CreateUser()" #registrationForm="ngForm">
         <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" placeholder="Enter your name" required name="name" ngModel>
+            <label for="name">First Name</label>
+            <input type="text" id="firstName" placeholder="Enter your name" required name="firstName" ngModel>
+        </div>
+        <div class="form-group">
+            <label for="name">Last Name</label>
+            <input type="text" id="lastName" placeholder="Enter your name" required name="lastName" ngModel>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required name="email" ngModel>
+            <input type="email" id="email" placeholder="Enter your email" required email name="email" ngModel>
         </div>
         <div class="form-group">
             <label for="password">Password</label>

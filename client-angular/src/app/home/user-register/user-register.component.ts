@@ -25,14 +25,16 @@ export class UserRegisterComponent {
     }
 
     const user: UserCreation = {
-      firstName: this.form.value.name,
-      lastName: "",
+      firstName: this.form.value.firstName,
+      lastName: this.form.value.lastName,
       password: this.form.value.password,
       email: this.form.value.email,
     };
     
     this.userService.CreateUser(user)
     .subscribe(isCreated => {
+      console.log(isCreated);
+      
       if(isCreated)
         this.router.navigate(['/login']);
       else
