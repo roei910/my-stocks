@@ -10,7 +10,7 @@
       <th>Last Update</th>
     </tr>
   </thead>
-  <tbody id="stockList">
+  <tbody id="stockList" *ngIf="GetKeys(stocksDictionary).length > 0">
     <tr class="stock-card" *ngFor="let symbol of GetKeys(watchingStocks)">
       <td>
         <a

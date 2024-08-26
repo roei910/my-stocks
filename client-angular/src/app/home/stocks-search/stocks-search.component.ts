@@ -14,8 +14,9 @@ export class StocksSearchComponent {
     private router: Router
   ) { }
 
-  async SearchResults(searchTerm: string) {
-    this.stocksList = await this.stockService.FindStockByNameAsync(searchTerm);
+  SearchResults(searchTerm: string) {
+    this.stockService.FindStocksByNameAsync(searchTerm)
+      .subscribe(stocks => this.stocksList = stocks);
   }
 
   NavigateStockInformation(symbol: string) {

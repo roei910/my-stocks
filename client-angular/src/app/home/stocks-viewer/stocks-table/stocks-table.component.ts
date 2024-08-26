@@ -42,7 +42,7 @@ export class StocksTableComponent implements OnInit{
     
     this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
       .subscribe(res => {
-        if(res.status != 200)
+        if(res)
           alert("error updating the note");
         else
             window.location.reload();
@@ -55,7 +55,7 @@ export class StocksTableComponent implements OnInit{
     if(confirmDelete){
       this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
       .subscribe(res => {
-        if(res.status != 200)
+        if(res)
           alert("error updating the note");
         else
             window.location.reload();

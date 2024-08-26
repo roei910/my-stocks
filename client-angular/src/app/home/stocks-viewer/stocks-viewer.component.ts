@@ -21,16 +21,17 @@ export class StocksViewerComponent implements OnInit{
     private authenticationService: AuthenticationService
   ){}
 
-  async ngOnInit(): Promise<any> {
+  ngOnInit(): void {
     this.UserEmail = this.authenticationService.GetUserEmail();
 
     if(this.UserEmail === null)
       return;
 
-    this.userService.GetUserByEmailAsync(this.UserEmail).subscribe(user => this.User = user);
-    var stocksList = await this.stockService.GetAllStocksAsync();
-    
-    stocksList.map(stock => this.Stocks[stock.symbol] = stock);
+    this.userService.GetUserByEmail(this.UserEmail)
+      .subscribe(user => this.User = user);
+
+    this.stockService.GetAllStocks().subscribe(stocks => 
+      stocks.map(stock => this.Stocks[stock.symbol] = stock));
   }
 
   GetKeys(dictionary: any): string[]{
@@ -69,7 +70,12 @@ export class StocksViewerComponent implements OnInit{
       listName
     }
     
-    this.userService.removeUserList(stockListDetails).subscribe(res => window.location.reload());
+    this.userService.removeUserList(stockListDetails).subscribe(res => {
+      if(res)
+        window.location.reload();
+      else
+        alert("something went wrong, couldnt remove list")
+    });
   }
 
   AddListStock(listName: string) {
@@ -79,6 +85,11 @@ export class StocksViewerComponent implements OnInit{
       return;
     
     this.userService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
-      .subscribe(res => window.location.reload());
+      .subscribe(res => {
+        if(res)
+          window.location.reload();
+        else
+          alert("something went wrong, couldnt add stock to list...")
+      });
   }
 }

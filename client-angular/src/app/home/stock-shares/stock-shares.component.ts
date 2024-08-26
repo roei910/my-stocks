@@ -35,7 +35,7 @@ export class StockSharesComponent implements OnInit{
     if(this.userEmail == null)
       return;
 
-    this.userService.GetUserByEmailAsync(this.userEmail).subscribe(user =>{
+    this.userService.GetUserByEmail(this.userEmail).subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
 
       this.shares = Object.keys(this.watchingStock!.purchaseGuidToShares)
@@ -61,7 +61,12 @@ export class StockSharesComponent implements OnInit{
     };
 
     this.userService.AddUserShare(sharePurchase)
-      .subscribe(res => window.location.reload());
+      .subscribe(res => {
+        if(res)
+          window.location.reload();
+        else
+          alert("couldnt add share, something went wrong");
+      });
   }
 
   RemoveShare(purchaseId: string, stockSymbol: string){
@@ -81,7 +86,12 @@ export class StockSharesComponent implements OnInit{
     };
 
     this.userService.RemoveUserShare(shareSale)
-      .subscribe(res => window.location.reload());
+    .subscribe(res => {
+      if(res)
+        window.location.reload();
+      else
+        alert("couldnt remove share, something went wrong");
+    });
   }
 
   GetKeys(purchaseGuidToShares: { [purchaseGuid: string ] : Share}){

@@ -4,7 +4,7 @@ import { User } from 'src/models/users/user';
 import { UserService } from 'src/Services/user.service';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService } from 'src/services/stock.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
 import { Stock } from 'src/models/stocks/stock';
@@ -32,26 +32,28 @@ export class UserInformationComponent implements OnInit {
     private stockService: StockService
   ) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     let userEmail = this.authenticationService.GetUserEmail();
 
     if (userEmail == undefined)
       return;
 
-    let stocksList = await this.stockService.GetAllStocksAsync()
-    stocksList.map(stock => this.stocksDictionary[stock.symbol] = stock);
+    this.stockService.GetAllStocks()
+    .subscribe(stocks => 
+    {
+      stocks.map(stock => this.stocksDictionary[stock.symbol] = stock);
+      this.InitializeOwnedStocks();
+      this.InitializeChartData();
+    });
 
-    this.user = this.userService.GetUserByEmailAsync(userEmail);
-    
-    this.InitializeOwnedStocks();
-    this.InitializeChartData();
+    this.user = this.userService.GetUserByEmail(userEmail);
   }
 
   InitializeChartData() {
     this.ownedStocksSubject.asObservable().subscribe(ownedStocks => {
       const ownedStockSymbols = Object.keys(ownedStocks);
       const data = ownedStockSymbols.map((symbol: string) => {
-        return this.stocksDictionary[symbol].price * ownedStocks[symbol].amount;
+        return this.stocksDictionary[symbol]?.price ?? 0 * ownedStocks[symbol].amount;
       })
 
       this.chartData = {

@@ -1,5 +1,6 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import axios from 'axios';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Stock } from 'src/models/stocks/stock';
 
@@ -7,62 +8,48 @@ import { Stock } from 'src/models/stocks/stock';
   providedIn: 'root'
 })
 export class StockService {
-  lastUpdateTime!: Date;
-  allStocks?: Stock[];
+  lastUpdateTime: Date | undefined;
+  allStocks: BehaviorSubject<Stock[]> = new BehaviorSubject<Stock[]>([]);
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
     this.lastUpdateTime = new Date();
   }
 
-  async GetAllStocksAsync(): Promise<Stock[]>{
-    if(this.allStocks !== undefined && this.shouldBeUpdated(this.lastUpdateTime, new Date()))
-      return this.allStocks;
-    
-    var res = await axios.get(`${environment.server_url}/Stock`)
-      .then(res => {
-        return res.data;
-      })
-      .catch(err => console.log(err));
-    
-    this.lastUpdateTime = new Date();
-    
-    return res;
+  GetAllStocks(): Observable<Stock[]> {
+    if (!this.shouldBeUpdated(this.lastUpdateTime, new Date()))
+      return this.allStocks.asObservable();
+
+    return this.httpClient.get<Stock[]>(`${environment.server_url}/Stock`).pipe(
+      tap(res => {
+        this.allStocks.next(res);
+        this.lastUpdateTime = new Date();
+      }),
+      switchMap(() => this.allStocks.asObservable())
+    );
   }
 
-  async GetStockBySymbolAsync(stockSymbol: string): Promise<Stock>{
-    var res = await axios.get(`${environment.server_url}/Stock/symbol/${stockSymbol}`)
-      .then(res => {
-        return res.data;
-      })
-      .catch(err => console.log(err));
-
-    return res;
+  GetStockBySymbolAsync(stockSymbol: string): Observable<Stock> {
+    return this.httpClient
+      .get<Stock>(`${environment.server_url}/Stock/symbol/${stockSymbol}`);
   }
 
-  async GetStockByNameAsync(stockName: string): Promise<Stock>{
-    var res = await axios.get(`${environment.server_url}/Stock/name/${stockName}`)
-      .then(res => {
-        return res.data;
-      })
-      .catch(err => console.log(err));
-
-    return res;
+  GetStockByNameAsync(stockName: string): Observable<Stock> {
+    return this.httpClient
+      .get<Stock>(`${environment.server_url}/Stock/name/${stockName}`);
   }
 
-  async FindStockByNameAsync(stockName: string): Promise<Stock[]>{
-    var res = await axios.get(`${environment.server_url}/Stock/find/name/${stockName}`)
-      .then(res => {
-        return res.data;
-      })
-      .catch(err => console.log(err));
-
-    return res;
+  FindStocksByNameAsync(stockName: string): Observable<Stock[]> {
+    return this.httpClient
+      .get<Stock[]>(`${environment.server_url}/Stock/find/name/${stockName}`)
   }
 
-  shouldBeUpdated(startTime: Date, endTime: Date): boolean {
+  shouldBeUpdated(startTime: Date | undefined, endTime: Date): boolean {
+    if(startTime == undefined)
+      return true;
+
     const differenceInMillis = endTime.getTime() - startTime.getTime();
     const thirtyMinutesInMillis = 30 * 60 * 1000;
-    
+
     return differenceInMillis < thirtyMinutesInMillis;
   }
 }

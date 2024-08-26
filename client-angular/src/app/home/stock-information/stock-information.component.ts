@@ -32,7 +32,7 @@ export class StockInformationComponent implements OnInit {
       };
     }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.symbol = params['stockSymbol'];
     });
@@ -40,6 +40,7 @@ export class StockInformationComponent implements OnInit {
     if(!this.symbol)
       return;
 
-    this.stock = await this.stockService.GetStockBySymbolAsync(this.symbol);
+    this.stockService.GetStockBySymbolAsync(this.symbol)
+      .subscribe(stock => this.stock = stock);
   }
 }

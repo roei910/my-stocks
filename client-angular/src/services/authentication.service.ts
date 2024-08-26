@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
 import { CookiesService } from './cookies.service';
-import axios from 'axios';
 import { environment } from 'src/environments/environment';
 import { sha256 } from 'js-sha256';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  constructor(private cookieService: CookiesService) { }
+  constructor(private cookieService: CookiesService,
+    private httpClient: HttpClient) { }
 
   GetUserEmail() {
     var user = this.cookieService.getCookie("email");
@@ -29,46 +31,37 @@ export class AuthenticationService {
     return true;
   }
 
-  async TryConnect(email: string, password: string): Promise<boolean> {
+  TryConnect(email: string, password: string): Observable<boolean> {
     var passwordHash = sha256(password);
-    
-    var isConnected = await axios.post(`${environment.server_url}/User/connect-user`,
-      { email: email, password: passwordHash })
-      .then(res => {
-        if (res.status == 200) {
+
+    return this.httpClient
+    .post<boolean>(`${environment.server_url}/User/connect-user`,
+      {
+        email: email,
+        password: passwordHash
+      },
+      {
+        observe: 'response'
+      }
+    )
+    .pipe(
+      map(response => response.status == 200),
+      tap(res => {
+        if (res)
           this.cookieService.setCookie("email", email, 1);
-
-          return true;
-        }
-
-        return false;
       })
-      .catch(err => {
-        console.log(err);
-
-        return false;
-      });
-
-    return isConnected;
+    );
   }
 
-  async AuthenticateToken(connectionToken: string): Promise<boolean> {
-    var isAuthenticated = await axios.post(`${environment.server_url}/User/authenticate-token`,
-      { params: {
+  AuthenticateToken(connectionToken: string): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${environment.server_url}/User/authenticate-token`,
+      null, {
+      params: {
         connectionToken
-      }}
-    )
-    .then(res => {
-      console.log(res.data);
-
-      return res.data;
-    })
-    .catch(err => {
-      console.log(err);
-
-      return false;
-    });
-
-    return isAuthenticated;
+      },
+      observe: 'response'
+    }).pipe(
+      map(response => response.status === 200)
+    );
   }
 }
