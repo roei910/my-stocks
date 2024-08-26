@@ -17,7 +17,7 @@ export class UserRegisterComponent {
     private userService: UserService
   ){ }
 
-  async CreateUser(){
+  CreateUser(){
     if(this.form.invalid){
       alert("Please finish the form");
 
@@ -31,11 +31,12 @@ export class UserRegisterComponent {
       email: this.form.value.email,
     };
     
-    var isCreated = await this.userService.CreateUser(user);
-
-    if(isCreated)
-      this.router.navigate(['/login']);
-    else
-      alert("couldn't create the user.");
+    this.userService.CreateUser(user)
+    .subscribe(isCreated => {
+      if(isCreated)
+        this.router.navigate(['/login']);
+      else
+        alert("couldn't create the user.");
+    });
   }
 }
