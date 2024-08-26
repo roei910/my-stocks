@@ -52,10 +52,11 @@ export class UserInformationComponent implements OnInit {
   InitializeChartData() {
     this.ownedStocksSubject.asObservable().subscribe(ownedStocks => {
       const ownedStockSymbols = Object.keys(ownedStocks);
+      
       const data = ownedStockSymbols.map((symbol: string) => {
-        return this.stocksDictionary[symbol]?.price ?? 0 * ownedStocks[symbol].amount;
+        return (this.stocksDictionary[symbol]?.price ?? 0) * ownedStocks[symbol].amount;
       })
-
+      
       this.chartData = {
         labels: ownedStockSymbols,
         datasets: [
