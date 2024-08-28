@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CookiesService } from './cookies.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { sha256 } from 'js-sha256';
 import { HttpClient } from '@angular/common/http';
 import { map, Observable, tap } from 'rxjs';

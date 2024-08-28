@@ -7,7 +7,7 @@ import { UserRegisterComponent } from './home/user-register/user-register.compon
 import { UserInformationComponent } from './home/user-information/user-information.component';
 import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
-import { connectedUserGuard } from 'src/routeGuards/connected-user.guard';
+import { connectedUserGuard } from '../routeGuards/connected-user.guard';
 import { StockInformationComponent } from './home/stock-information/stock-information.component';
 import { StockSharesComponent } from './home/stock-shares/stock-shares.component';
 

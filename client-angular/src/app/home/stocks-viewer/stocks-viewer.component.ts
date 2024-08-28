@@ -27,7 +27,7 @@ export class StocksViewerComponent implements OnInit{
     if(this.UserEmail === null)
       return;
 
-    this.userService.GetUserByEmail(this.UserEmail)
+    this.userService.GetUserByEmail(this.UserEmail!)
       .subscribe(user => this.User = user);
 
     this.stockService.GetAllStocks().subscribe(stocks => 
