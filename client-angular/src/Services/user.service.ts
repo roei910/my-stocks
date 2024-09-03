@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { environment } from 'environments/environment';
-import { sha256 } from 'js-sha256';
-import { UserCreation } from 'models/users/user-creation';
-import { User } from 'models/users/user';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
-import { SharePurchase } from 'models/shares/share-purchase';
-import { ShareSale } from 'models/shares/share-sale';
-import { StockListDetails } from 'models/stocks/stock-list-details';
+import { Injectable } from '@angular/core';
+import { sha256 } from 'js-sha256';
+import { Observable, map } from 'rxjs';
+import { environment } from 'src/environments/environment.development';
+import { SharePurchase } from 'src/models/shares/share-purchase';
+import { ShareSale } from 'src/models/shares/share-sale';
+import { StockListDetails } from 'src/models/stocks/stock-list-details';
+import { User } from 'src/models/users/user';
+import { UserCreation } from 'src/models/users/user-creation';
 
 @Injectable({
   providedIn: 'root'
