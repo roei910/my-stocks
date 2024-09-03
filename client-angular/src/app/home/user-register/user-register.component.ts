@@ -33,8 +33,6 @@ export class UserRegisterComponent {
     
     this.userService.CreateUser(user)
     .subscribe(isCreated => {
-      console.log(isCreated);
-      
       if(isCreated)
         this.router.navigate(['/login']);
       else
