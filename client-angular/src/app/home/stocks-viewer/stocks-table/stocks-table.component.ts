@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Stock } from 'src/models/stocks/stock';
-import { WatchingStock } from 'src/models/stocks/watching-stock';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { StockService as StockService } from 'src/services/stock.service';
-import { UserService } from 'src/Services/user.service';
+import { Stock } from 'models/stocks/stock';
+import { WatchingStock } from 'models/stocks/watching-stock';
+import { AuthenticationService } from 'services/authentication.service';
+import { StockService } from 'services/stock.service';
+import { UserService } from 'services/user.service';
 
 @Component({
   selector: 'app-stocks-table',

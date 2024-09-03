@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { Share } from 'src/models/shares/share';
-import { User } from 'src/models/users/user';
-import { UserService } from 'src/Services/user.service';
-import { AuthenticationService } from 'src/services/authentication.service';
-import { StockService } from 'src/services/stock.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { ChartModule } from 'primeng/chart';
-import { Stock } from 'src/models/stocks/stock';
+import { Share } from 'models/shares/share';
+import { User } from 'models/users/user';
+import { Stock } from 'models/stocks/stock';
+import { UserService } from 'services/user.service';
+import { AuthenticationService } from 'services/authentication.service';
+import { StockService } from 'services/stock.service';
 
 @Component({
   selector: 'app-user-information',

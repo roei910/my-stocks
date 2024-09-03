@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/Services/user.service';
-import { AuthenticationService } from 'src/services/authentication.service';
+import { AuthenticationService } from 'services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +8,7 @@ import { AuthenticationService } from 'src/services/authentication.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent {
-  constructor(private userService: UserService,
+  constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ){
