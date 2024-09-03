@@ -46,7 +46,8 @@ export class StockSharesComponent implements OnInit{
   AddShare(symbol: string, listName: string){
     var amount = parseInt(prompt("number of shares") ?? "0");
     var avgPrice = parseFloat(prompt("average price for purchase") ?? "0.0");
-    var date = new Date(prompt("enter date", "")?.split(".").join("/") ?? "");
+    var userDate = prompt("enter date", "")?.split(".").join("/") ?? "";
+    var date = userDate != "" ? new Date(userDate) : new Date(Date.now());
     
     if(this.userEmail == null)
       return;
