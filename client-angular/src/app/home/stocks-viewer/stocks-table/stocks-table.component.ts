@@ -43,9 +43,9 @@ export class StocksTableComponent implements OnInit{
     this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
       .subscribe(res => {
         if(res)
-          alert("error updating the note");
+          window.location.reload();
         else
-            window.location.reload();
+          alert("error updating the note");
       });
   }
 
@@ -56,9 +56,9 @@ export class StocksTableComponent implements OnInit{
       this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
       .subscribe(res => {
         if(res)
-          alert("error updating the note");
+          window.location.reload();
         else
-            window.location.reload();
+          alert("error updating the note");
       });
     }
   }
