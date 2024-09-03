@@ -13,7 +13,6 @@ import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.compon
 import { NotFoundComponent } from './home/not-found/not-found.component';
 import { UserLoginComponent } from './home/user-login/user-login.component';
 import { UserRegisterComponent } from './home/user-register/user-register.component';
-import { UserInformationComponent } from './home/user-information/user-information.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
 import { StockInformationComponent } from './home/stock-information/stock-information.component';
 import { StocksTableComponent } from './home/stocks-viewer/stocks-table/stocks-table.component';
