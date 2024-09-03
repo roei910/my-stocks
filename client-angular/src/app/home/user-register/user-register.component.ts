@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserCreation } from 'models/users/user-creation';
-import { UserService } from 'services/user.service';
+import { UserCreation } from 'src/models/users/user-creation';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-user-register',

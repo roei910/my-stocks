@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Stock } from 'models/stocks/stock';
-import { StockListDetails } from 'models/stocks/stock-list-details';
-import { User } from 'models/users/user';
-import { AuthenticationService } from 'services/authentication.service';
-import { StockService } from 'services/stock.service';
-import { UserService } from 'services/user.service';
+import { Stock } from 'src/models/stocks/stock';
+import { StockListDetails } from 'src/models/stocks/stock-list-details';
+import { User } from 'src/models/users/user';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { StockService } from 'src/services/stock.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-stocks-viewer',

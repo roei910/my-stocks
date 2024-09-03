@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from 'services/user.service';
-import { Share } from 'models/shares/share';
-import { SharePurchase } from 'models/shares/share-purchase';
-import { ShareSale } from 'models/shares/share-sale';
-import { WatchingStock } from 'models/stocks/watching-stock';
-import { AuthenticationService } from 'services/authentication.service';
+import { Share } from 'src/models/shares/share';
+import { SharePurchase } from 'src/models/shares/share-purchase';
+import { ShareSale } from 'src/models/shares/share-sale';
+import { WatchingStock } from 'src/models/stocks/watching-stock';
+import { AuthenticationService } from 'src/services/authentication.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-stock-shares',

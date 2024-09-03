@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Stock } from 'models/stocks/stock';
 import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
-import { environment } from 'environments/environment.development';
+import { environment } from 'src/environments/environment';
+import { Stock } from 'src/models/stocks/stock';
 
 @Injectable({
   providedIn: 'root'
