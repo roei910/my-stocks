@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
-import { StockService } from 'src/services/stock.service';
-import { UserService } from 'src/services/user.service';
+import { SharesService } from 'src/services/shares.service';
 
 @Component({
   selector: 'app-stocks-table',
@@ -23,10 +22,10 @@ export class StocksTableComponent implements OnInit{
 
   email: any;
 
-  constructor(private stockService: StockService,
+  constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private userService: UserService
+    private shareService: SharesService
   ){
     this.email = this.authenticationService.GetUserEmail();
   }
@@ -40,7 +39,7 @@ export class StocksTableComponent implements OnInit{
     if(!note || !this.listName)
       return;
     
-    this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
+    this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
       .subscribe(res => {
         if(res)
           window.location.reload();
@@ -53,7 +52,7 @@ export class StocksTableComponent implements OnInit{
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
     if(confirmDelete){
-      this.userService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
+      this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
       .subscribe(res => {
         if(res)
           window.location.reload();

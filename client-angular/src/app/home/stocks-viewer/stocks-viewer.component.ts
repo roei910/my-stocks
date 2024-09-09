@@ -3,6 +3,7 @@ import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { User } from 'src/models/users/user';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
 import { UserService } from 'src/services/user.service';
 
@@ -18,7 +19,8 @@ export class StocksViewerComponent implements OnInit{
 
   constructor(private stockService: StockService,
     private userService: UserService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private shareService: SharesService
   ){}
 
   ngOnInit(): void {
@@ -55,7 +57,7 @@ export class StocksViewerComponent implements OnInit{
       listName
     }
     
-    this.userService.addUserList(stockListDetails).subscribe(res => window.location.reload());
+    this.shareService.addUserList(stockListDetails).subscribe(res => window.location.reload());
   }
 
   RemoveUserList(){
@@ -70,7 +72,7 @@ export class StocksViewerComponent implements OnInit{
       listName
     }
     
-    this.userService.removeUserList(stockListDetails).subscribe(res => {
+    this.shareService.removeUserList(stockListDetails).subscribe(res => {
       if(res)
         window.location.reload();
       else
@@ -84,7 +86,7 @@ export class StocksViewerComponent implements OnInit{
     if(stockSymbol == null)
       return;
     
-    this.userService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
+    this.shareService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
       .subscribe(res => {
         if(res)
           window.location.reload();

@@ -5,6 +5,7 @@ import { SharePurchase } from 'src/models/shares/share-purchase';
 import { ShareSale } from 'src/models/shares/share-sale';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { SharesService } from 'src/services/shares.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -21,7 +22,8 @@ export class StockSharesComponent implements OnInit{
 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private shareService: SharesService
   ){ }
 
   ngOnInit() {
@@ -61,7 +63,7 @@ export class StockSharesComponent implements OnInit{
       purchaseDate: date
     };
 
-    this.userService.AddUserShare(sharePurchase)
+    this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
           window.location.reload();
@@ -86,7 +88,7 @@ export class StockSharesComponent implements OnInit{
       userEmail: this.userEmail
     };
 
-    this.userService.RemoveUserShare(shareSale)
+    this.shareService.RemoveUserShare(shareSale)
     .subscribe(res => {
       if(res)
         window.location.reload();
