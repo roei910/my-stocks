@@ -42,7 +42,7 @@ export class StocksTableComponent implements OnInit{
     this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
       .subscribe(res => {
         if(res)
-          window.location.reload();
+          this.watchingStocks[symbol].note = note!;
         else
           alert("error updating the note");
       });
@@ -55,7 +55,7 @@ export class StocksTableComponent implements OnInit{
       this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
       .subscribe(res => {
         if(res)
-          window.location.reload();
+          this.watchingStocks[symbol].note = "";
         else
           alert("error updating the note");
       });

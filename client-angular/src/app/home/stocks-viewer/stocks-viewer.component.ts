@@ -57,7 +57,7 @@ export class StocksViewerComponent implements OnInit{
       listName
     }
     
-    this.shareService.addUserList(stockListDetails).subscribe(res => window.location.reload());
+    this.shareService.addUserList(stockListDetails).subscribe(res => window.location.reload());//TODO: remove this
   }
 
   RemoveUserList(){
@@ -74,7 +74,7 @@ export class StocksViewerComponent implements OnInit{
     
     this.shareService.removeUserList(stockListDetails).subscribe(res => {
       if(res)
-        window.location.reload();
+        delete(this.User.watchingStocksByListName[listName!]);
       else
         alert("something went wrong, couldnt remove list")
     });
@@ -89,7 +89,7 @@ export class StocksViewerComponent implements OnInit{
     this.shareService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
       .subscribe(res => {
         if(res)
-          window.location.reload();
+          window.location.reload();//TODO: remove this
         else
           alert("something went wrong, couldnt add stock to list...")
       });

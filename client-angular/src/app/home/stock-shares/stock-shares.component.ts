@@ -66,7 +66,7 @@ export class StockSharesComponent implements OnInit{
     this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
-          window.location.reload();
+          window.location.reload();//TODO: remove this
         else
           alert("couldnt add share, something went wrong");
       });
@@ -91,7 +91,7 @@ export class StockSharesComponent implements OnInit{
     this.shareService.RemoveUserShare(shareSale)
     .subscribe(res => {
       if(res)
-        window.location.reload();
+        delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
       else
         alert("couldnt remove share, something went wrong");
     });
