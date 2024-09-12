@@ -2,10 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Share } from 'src/models/shares/share';
 import { SharePurchase } from 'src/models/shares/share-purchase';
 import { ShareSale } from 'src/models/shares/share-sale';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
-import { User } from 'src/models/users/user';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +15,12 @@ export class SharesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  AddUserShare(sharePurchase: SharePurchase): Observable<boolean> {
+  AddUserShare(sharePurchase: SharePurchase): Observable<Share | null> {
     var res = this.httpClient
-    .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, sharePurchase, {
+    .post<Share>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, sharePurchase, {
       observe: 'response'
     })
-    .pipe(map(res => res.status == 200));
+    .pipe(map(res => res.status == 200 ? res.body : null));
 
     return res;
   }
@@ -89,11 +89,14 @@ export class SharesService {
     return res
   }
 
-  addUserList(stockListDetails: StockListDetails):Observable<any> {
+  addUserList(stockListDetails: StockListDetails):Observable<boolean> {
     var res = this.httpClient
-    .post<User>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
-      stockListDetails
-    );
+    .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
+      stockListDetails, {
+        observe: 'response'
+      }
+    )
+    .pipe(map(res => res.status == 200));
 
     return res;
   }

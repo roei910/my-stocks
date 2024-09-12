@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Stock } from 'src/models/stocks/stock';
 
@@ -28,21 +28,21 @@ export class StockService {
     );
   }
 
-  GetStockBySymbolAsync(stockSymbol: string): Observable<Stock> {
+  GetStockBySymbol(stockSymbol: string): Observable<Stock> {
     return this.httpClient
       .get<Stock>(`${environment.server_url}/Stock/symbol/${stockSymbol}`);
   }
 
-  GetStockByNameAsync(stockName: string): Observable<Stock> {
+  GetStockByName(stockName: string): Observable<Stock> {
     return this.httpClient
       .get<Stock>(`${environment.server_url}/Stock/name/${stockName}`);
   }
 
-  FindStocksByNameAsync(stockName: string): Observable<Stock[]> {
+  FindStocksByName(stockName: string): Observable<Stock[]> {
     return this.httpClient
       .get<Stock[]>(`${environment.server_url}/Stock/find/name/${stockName}`)
   }
-
+  
   shouldBeUpdated(startTime: Date | undefined, endTime: Date): boolean {
     if(startTime == undefined)
       return true;

@@ -18,7 +18,6 @@ export class StockSharesComponent implements OnInit{
   symbol!: string;
   listName!: string;
   watchingStock : WatchingStock | undefined;
-  shares!: Share[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -39,9 +38,6 @@ export class StockSharesComponent implements OnInit{
 
     this.userService.GetUserByEmail(this.userEmail).subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
-
-      this.shares = Object.keys(this.watchingStock!.purchaseGuidToShares)
-        .map(purchaseId => this.watchingStock!.purchaseGuidToShares[purchaseId])
     });
   }
 
@@ -66,7 +62,7 @@ export class StockSharesComponent implements OnInit{
     this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
-          window.location.reload();//TODO: remove this
+          this.watchingStock!.purchaseGuidToShares[res.Id!] = res
         else
           alert("couldnt add share, something went wrong");
       });

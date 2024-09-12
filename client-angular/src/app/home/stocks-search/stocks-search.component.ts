@@ -15,7 +15,7 @@ export class StocksSearchComponent {
   ) { }
 
   SearchResults(searchTerm: string) {
-    this.stockService.FindStocksByNameAsync(searchTerm)
+    this.stockService.FindStocksByName(searchTerm)
       .subscribe(stocks => this.stocksList = stocks);
   }
 

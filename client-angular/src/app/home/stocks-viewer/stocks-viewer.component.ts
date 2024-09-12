@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
+import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { User } from 'src/models/users/user';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
@@ -57,7 +58,13 @@ export class StocksViewerComponent implements OnInit{
       listName
     }
     
-    this.shareService.addUserList(stockListDetails).subscribe(res => window.location.reload());//TODO: remove this
+    this.shareService.addUserList(stockListDetails)
+      .subscribe(res => {
+        if(res)
+          this.User.watchingStocksByListName[listName!] = {}
+        else
+          alert("something went wrong, couldnt add list")
+      });
   }
 
   RemoveUserList(){
@@ -81,7 +88,7 @@ export class StocksViewerComponent implements OnInit{
   }
 
   AddListStock(listName: string) {
-    var stockSymbol = prompt("please enter a stock symbol");
+    var stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
 
     if(stockSymbol == null)
       return;
@@ -89,7 +96,14 @@ export class StocksViewerComponent implements OnInit{
     this.shareService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
       .subscribe(res => {
         if(res)
-          window.location.reload();//TODO: remove this
+        {
+          var watchingStock: WatchingStock = {
+            purchaseGuidToShares: {},
+            note: ""
+          };
+
+          this.User.watchingStocksByListName[listName][stockSymbol!] = watchingStock;
+        }
         else
           alert("something went wrong, couldnt add stock to list...")
       });
