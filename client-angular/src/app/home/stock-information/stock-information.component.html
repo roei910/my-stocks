@@ -1,5 +1,7 @@
 <div class="stock-details-container">
     <h2>Stock Details</h2>
+    <button (click)="AddNotification()">Add Notification</button><br>
+    <button (click)="AddToList()">Add Stock To List</button>
     <div id="stockDetails">
         <h3>{{stock?.name}}</h3>
         <p>current price: {{stock?.price}}</p>

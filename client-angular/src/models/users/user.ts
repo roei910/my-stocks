@@ -1,4 +1,5 @@
 import { WatchingStock } from "../stocks/watching-stock";
+import { StockNotification } from "./stock-notification";
 
 export class User {
     id!: string;
@@ -9,5 +10,6 @@ export class User {
         [listName: string] : {
             [stockSymbol: string]: WatchingStock
         }
-    }
+    };
+    stockNotifications!: StockNotification[]
 }

@@ -5,6 +5,7 @@ import { SharePurchase } from 'src/models/shares/share-purchase';
 import { ShareSale } from 'src/models/shares/share-sale';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
+import { SharesService } from 'src/services/shares.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -17,11 +18,11 @@ export class StockSharesComponent implements OnInit{
   symbol!: string;
   listName!: string;
   watchingStock : WatchingStock | undefined;
-  shares!: Share[];
 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private shareService: SharesService
   ){ }
 
   ngOnInit() {
@@ -37,9 +38,6 @@ export class StockSharesComponent implements OnInit{
 
     this.userService.GetUserByEmail(this.userEmail).subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
-
-      this.shares = Object.keys(this.watchingStock!.purchaseGuidToShares)
-        .map(purchaseId => this.watchingStock!.purchaseGuidToShares[purchaseId])
     });
   }
 
@@ -61,10 +59,10 @@ export class StockSharesComponent implements OnInit{
       purchaseDate: date
     };
 
-    this.userService.AddUserShare(sharePurchase)
+    this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
-          window.location.reload();
+          this.watchingStock!.purchaseGuidToShares[res.Id!] = res
         else
           alert("couldnt add share, something went wrong");
       });
@@ -86,10 +84,10 @@ export class StockSharesComponent implements OnInit{
       userEmail: this.userEmail
     };
 
-    this.userService.RemoveUserShare(shareSale)
+    this.shareService.RemoveUserShare(shareSale)
     .subscribe(res => {
       if(res)
-        window.location.reload();
+        delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
       else
         alert("couldnt remove share, something went wrong");
     });
