@@ -10,6 +10,7 @@ import { StocksSearchComponent } from './home/stocks-search/stocks-search.compon
 import { StockInformationComponent } from './home/stock-information/stock-information.component';
 import { StockSharesComponent } from './home/stock-shares/stock-shares.component';
 import { connectedUserGuard } from 'src/routeGuards/connected-user.guard';
+import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +20,8 @@ const routes: Routes = [
     path: 'stocks',
     children: [
       { path: 'search', component: StocksSearchComponent },
-      { path: 'information', component: StockInformationComponent }
+      { path: 'information', component: StockInformationComponent },
+      { path: 'all', component: StocksFilterPaginationTableComponent }
     ],
   },
   {

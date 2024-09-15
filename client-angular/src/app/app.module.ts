@@ -6,8 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
 import { HomeComponent } from './home/home.component';
 import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
 import { NotFoundComponent } from './home/not-found/not-found.component';
@@ -18,6 +16,10 @@ import { StockInformationComponent } from './home/stock-information/stock-inform
 import { StocksTableComponent } from './home/stocks-viewer/stocks-table/stocks-table.component';
 import { StockSharesComponent } from './home/stock-shares/stock-shares.component';
 import { AsyncPipe } from '@angular/common';
+import { FilterPaginationTableComponent } from './components/filter-pagination-table/filter-pagination-table.component';
+import { HeaderComponent } from './components/header/header.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { AsyncPipe } from '@angular/common';
     StocksSearchComponent,
     StockInformationComponent,
     StocksTableComponent,
-    StockSharesComponent
+    StockSharesComponent,
+    FilterPaginationTableComponent,
+    StocksFilterPaginationTableComponent,
   ],
   imports: [
     BrowserModule,

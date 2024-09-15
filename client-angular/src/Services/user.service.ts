@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ObjectIdResponse } from 'src/models/object-id-response';
 import { StockNotification } from 'src/models/users/stock-notification';
@@ -12,7 +12,17 @@ import { UserCreation } from 'src/models/users/user-creation';
   providedIn: 'root'
 })
 export class UserService {
+  user: Subject<User> = new Subject<User>();
+
   constructor(private httpClient: HttpClient) { }
+
+  GetUser(): Observable<User>{
+    return this.user.asObservable();
+  }
+
+  UpdateUser(user: User){
+    return this.user.next(user);
+  }
 
   GetUserByEmail(email: string): Observable<User>{
     var res = this.httpClient
@@ -22,7 +32,7 @@ export class UserService {
           email
         }
       }
-    );
+    ).pipe(tap(res => this.user.next(res)));
 
     return res;
   }
