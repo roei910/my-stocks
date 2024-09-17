@@ -14,27 +14,19 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./stocks-viewer.component.css']
 })
 export class StocksViewerComponent implements OnInit{
-  User!: User;
-  UserEmail?: string | null;
-  Stocks: { [stockSymbol: string] : Stock } = {};
+  user!: User;
+  userEmail?: string | null;
+  stocks: { [stockSymbol: string] : Stock } = {};
 
   constructor(private stockService: StockService,
     private userService: UserService,
-    private authenticationService: AuthenticationService,
     private shareService: SharesService
   ){}
 
   ngOnInit(): void {
-    this.UserEmail = this.authenticationService.GetUserEmail();
-
-    if(this.UserEmail === null)
-      return;
-
-    this.userService.GetUserByEmail(this.UserEmail!)
-      .subscribe(user => this.User = user);
-
+    this.userService.GetUser().subscribe(user => this.user = user);
     this.stockService.GetAllStocks().subscribe(stocks => 
-      stocks.map(stock => this.Stocks[stock.symbol] = stock));
+      stocks.map(stock => this.stocks[stock.symbol] = stock));
   }
 
   GetKeys(dictionary: any): string[]{
@@ -54,14 +46,14 @@ export class StocksViewerComponent implements OnInit{
 
     let stockListDetails: StockListDetails = 
     {
-      userEmail: this.UserEmail!,
+      userEmail: this.userEmail!,
       listName
     }
     
     this.shareService.addUserList(stockListDetails)
       .subscribe(res => {
         if(res)
-          this.User.watchingStocksByListName[listName!] = {}
+          this.user.watchingStocksByListName[listName!] = {}
         else
           alert("something went wrong, couldnt add list")
       });
@@ -75,13 +67,13 @@ export class StocksViewerComponent implements OnInit{
 
     let stockListDetails: StockListDetails = 
     {
-      userEmail: this.UserEmail!,
+      userEmail: this.userEmail!,
       listName
     }
     
     this.shareService.removeUserList(stockListDetails).subscribe(res => {
       if(res)
-        delete(this.User.watchingStocksByListName[listName!]);
+        delete(this.user.watchingStocksByListName[listName!]);
       else
         alert("something went wrong, couldnt remove list")
     });
@@ -93,7 +85,7 @@ export class StocksViewerComponent implements OnInit{
     if(stockSymbol == null)
       return;
     
-    this.shareService.AddWatchingStock(this.UserEmail!, listName, stockSymbol)
+    this.shareService.AddWatchingStock(this.userEmail!, listName, stockSymbol)
       .subscribe(res => {
         if(res)
         {
@@ -102,7 +94,7 @@ export class StocksViewerComponent implements OnInit{
             note: ""
           };
 
-          this.User.watchingStocksByListName[listName][stockSymbol!] = watchingStock;
+          this.user.watchingStocksByListName[listName][stockSymbol!] = watchingStock;
         }
         else
           alert("something went wrong, couldnt add stock to list...")

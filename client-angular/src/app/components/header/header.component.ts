@@ -19,12 +19,7 @@ export class HeaderComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    var email = this.authenticationService.GetUserEmail();
-
-    if(email == null)
-      return;
-
-    this.userService.GetUser(email)
+    this.userService.GetUser()
       .subscribe(user => {
         this.notifications = user.stockNotifications;
       });

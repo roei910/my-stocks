@@ -21,9 +21,7 @@ export class NotificationCenterComponent {
     if(email == null)
       return;
 
-    this.userService.GetUser(email)
+    this.userService.GetUser()
       .subscribe(user => this.stockNotifications = user.stockNotifications);
-
-    this.userService.GetUserByEmail(email).subscribe(user => user);
   }
 }

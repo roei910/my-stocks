@@ -1,43 +1,45 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
-import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
+import { Observable, Subject, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ObjectIdResponse } from 'src/models/object-id-response';
 import { StockNotification } from 'src/models/users/stock-notification';
 import { User } from 'src/models/users/user';
 import { UserCreation } from 'src/models/users/user-creation';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private user: Subject<User> | undefined;
+  private userSubject: Subject<User> | undefined;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, 
+    private authenticationService: AuthenticationService
+  ) { }
 
-  GetUser(email: string): Observable<User>{
-    if(this.user == undefined){
-      this.user = new Subject<User>();
-      this.GetUserByEmail(email).subscribe(res => res);
-      
-      return this.user;
-    }
+  GetUser(): Observable<User>{
+    if(this.userSubject == undefined)
+      this.userSubject = new Subject<User>();
 
-    return this.user.asObservable();
+    this.UpdateUser();
+
+    return this.userSubject.asObservable();
   }
 
-  GetUserByEmail(email: string): Observable<User>{
-    var res = this.httpClient
+  UpdateUser(): void{
+    let email = this.authenticationService.GetUserEmail();
+
+    this.httpClient
     .get<User>(`${environment.server_url}/User`,
       {
         params: {
           email
         }
       }
-    ).pipe(tap(res => this.user?.next(res)));
-
-    return res;
+    ).pipe(tap(res => this.userSubject?.next(res)))
+    .subscribe(user => user);
   }
 
   CreateUser(user: UserCreation): Observable<boolean> {

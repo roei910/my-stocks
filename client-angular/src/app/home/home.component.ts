@@ -18,6 +18,6 @@ export class HomeComponent {
     if(email == null)
       return;
 
-    this.userService.GetUserByEmail(email).subscribe(user => user);
+    this.userService.GetUser().subscribe(user => user);
   }
 }
