@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
-import { Observable, map } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, map, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ObjectIdResponse } from 'src/models/object-id-response';
 import { StockNotification } from 'src/models/users/stock-notification';
@@ -12,7 +12,20 @@ import { UserCreation } from 'src/models/users/user-creation';
   providedIn: 'root'
 })
 export class UserService {
+  private user: Subject<User> | undefined;
+
   constructor(private httpClient: HttpClient) { }
+
+  GetUser(email: string): Observable<User>{
+    if(this.user == undefined){
+      this.user = new Subject<User>();
+      this.GetUserByEmail(email).subscribe(res => res);
+      
+      return this.user;
+    }
+
+    return this.user.asObservable();
+  }
 
   GetUserByEmail(email: string): Observable<User>{
     var res = this.httpClient
@@ -22,7 +35,7 @@ export class UserService {
           email
         }
       }
-    );
+    ).pipe(tap(res => this.user?.next(res)));
 
     return res;
   }
@@ -43,8 +56,10 @@ export class UserService {
   }
 
   AddStockNotification(stockNotification: StockNotification): Observable<ObjectIdResponse>{
-    return this.httpClient
+    var res = this.httpClient
       .post<ObjectIdResponse>(`${environment.server_url}/User/notification`, 
         stockNotification);
+
+    return res;
   }
 }

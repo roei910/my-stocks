@@ -8,6 +8,7 @@
       <th>Shares</th>
       <th>Note</th>
       <th>Last Update</th>
+      <th>Options</th>
     </tr>
   </thead>
   <tbody id="stockList" *ngIf="GetKeys(stocksDictionary).length > 0">
@@ -33,7 +34,24 @@
           <p (click)="DeleteNote(symbol)">{{watchingStocks[symbol].note}}</p>
         </ng-template>
       </td>
-      <td>{{stocksDictionary[symbol].updatedTime}}</td>
+      <td>{{stocksDictionary[symbol].updatedTime | date}}</td>
+      <td>
+        <!-- <span>+</span>
+        <div class="dropdown-content">
+          <ul>
+            <li>hello</li>
+            <li>bye</li>
+          </ul>
+        </div> -->
+        <div class="dropdown">
+          <span>+</span>
+          <div class="dropdown-content">
+              <span class="dropdown-item link">Information</span>
+              <span class="dropdown-item link">Information</span>
+              <span class="dropdown-item link">Information</span>
+          </div>
+        </div>
+      </td>
     </tr>
   </tbody>
 </table>

@@ -13,9 +13,9 @@ export class AuthenticationService {
     private httpClient: HttpClient) { }
 
   GetUserEmail() {
-    var user = this.cookieService.getCookie("email");
+    var email = this.cookieService.getCookie("email");
 
-    return user;
+    return email;
   }
 
   DisconnectUser() {
