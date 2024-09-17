@@ -19,3 +19,69 @@ th {
 tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+td a{
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown {
+    position: absolute;
+}
+
+.dropbtn {
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    min-width: 160px;
+    z-index: 1;
+    border-radius: 5px;
+    transition: all 0.3s ease-in-out;
+}
+
+.dropdown-content .dropdown-item {
+    color: #333;
+    padding: 1rem;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    transition: background-color 0.3s ease;
+}
+
+.dropdown-content .dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.dropdown-content {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        margin-top: 1rem;
+    }
+
+    .nav-links li {
+        margin-bottom: 1rem;
+    }
+
+    .dropdown-content {
+        position: static;
+        width: 100%;
+    }
+}

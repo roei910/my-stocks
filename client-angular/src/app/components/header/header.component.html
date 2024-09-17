@@ -1,19 +1,24 @@
 <header>
     <nav>
-        <div class="logo" routerLink="/">Stock Collection</div>
-        <div class="nav-links">
-            <a routerLink="">Home</a>
-            <a routerLink="/stocks/search">Search</a>
-            <a routerLink="/stocks/all">Stocks</a>
+        <ul class="nav-links">
+            <li><a routerLink="" class="link">Home</a></li>
+            <li><a routerLink="/stocks/search" class="link">Search</a></li>
+            <li><a routerLink="/stocks/all" class="link">Stocks</a></li>
+
             <ng-container *ngIf="IsConnected(); else elseTemplate">
-                <a routerLink="/user/stocks">My Stocks</a>
-                <a routerLink="/user/information">User Information</a>
-                <a routerLink="/" (click)="SignOut()">Sign Out</a>
+                <li class="dropdown">
+                    <a>User</a>
+                    <div class="dropdown-content">
+                        <a routerLink="/user/information" class="dropdown-item link">Information</a>
+                        <a routerLink="/user/stocks" class="dropdown-item link">My Stocks</a>
+                        <a routerLink="/" (click)="SignOut()" class="dropdown-item link">Sign Out</a>
+                    </div>
+                    <span class="notification-badge" (click)="NavigateNotifications()">{{notifications?.length}}</span>
+                </li>
             </ng-container>
             <ng-template #elseTemplate>
-                <a routerLink="/login">Login</a>
+                <li><a routerLink="/login">Login</a></li>
             </ng-template>
-            <span>{{notifications?.length}}</span>
-        </div>
+        </ul>
     </nav>
 </header>

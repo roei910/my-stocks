@@ -20,6 +20,7 @@ import { FilterPaginationTableComponent } from './components/filter-pagination-t
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
+import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { StocksFilterPaginationTableComponent } from './partial-views/stocks-fil
     StockSharesComponent,
     FilterPaginationTableComponent,
     StocksFilterPaginationTableComponent,
+    NotificationCenterComponent,
   ],
   imports: [
     BrowserModule,

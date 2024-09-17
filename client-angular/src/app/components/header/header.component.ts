@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     if(email == null)
       return;
 
-    this.userService.GetUser()
+    this.userService.GetUser(email)
       .subscribe(user => {
         this.notifications = user.stockNotifications;
       });
@@ -37,5 +37,9 @@ export class HeaderComponent implements OnInit {
   SignOut(){
     this.authenticationService.DisconnectUser();
     this.router.navigate(['/']);
+  }
+
+  NavigateNotifications(){
+    this.router.navigate(['/', 'user', 'notifications'])
   }
 }
