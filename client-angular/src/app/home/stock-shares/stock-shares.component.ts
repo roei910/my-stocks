@@ -36,7 +36,7 @@ export class StockSharesComponent implements OnInit{
     if(this.userEmail == null)
       return;
 
-    this.userService.GetUserByEmail(this.userEmail).subscribe(user =>{
+    this.userService.GetUser().subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
     });
   }

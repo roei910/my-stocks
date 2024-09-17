@@ -21,7 +21,7 @@ import { StockService } from 'src/services/stock.service';
 })
 export class UserInformationComponent implements OnInit {
   chartData: any;
-  user?: Observable<User>;
+  user?: User;
   ownedStocks: { [stocksymbol: string]: Share } = {};
   stocksDictionary: { [stockSymbol: string]: Stock } = {};
   ownedStocksSubject: BehaviorSubject<{ [stocksymbol: string]: Share }> =
@@ -45,8 +45,6 @@ export class UserInformationComponent implements OnInit {
       this.InitializeOwnedStocks();
       this.InitializeChartData();
     });
-
-    this.user = this.userService.GetUserByEmail(userEmail);
   }
 
   InitializeChartData() {
@@ -98,18 +96,20 @@ export class UserInformationComponent implements OnInit {
   }
 
   InitializeOwnedStocks() {
-    this.user?.subscribe(user => {
-      Object.keys(user.watchingStocksByListName).forEach((listName: string) => {
-        let watchingStocks = user.watchingStocksByListName[listName];
+    this.userService.GetUser().subscribe(user => {
+      this.user = user;
 
+      Object.keys(user.watchingStocksByListName).forEach((listName: string) => {
+        let watchingStocks = this.user!.watchingStocksByListName[listName];
+  
         Object.keys(watchingStocks).forEach((stockSymbol: string) => {
           let sharesDictionary = watchingStocks[stockSymbol].purchaseGuidToShares
           this.UpdateOwnedStocksByStockShares(stockSymbol, sharesDictionary);
         })
-      });
+      })
 
       this.ownedStocksSubject.next(this.ownedStocks);
-    })
+    });
   }
 
   UpdateOwnedStocksByStockShares(stockSymbol: string,

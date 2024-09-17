@@ -10,7 +10,7 @@ import { SharesService } from 'src/services/shares.service';
   templateUrl: './stocks-table.component.html',
   styleUrls: ['./stocks-table.component.css']
 })
-export class StocksTableComponent implements OnInit{
+export class StocksTableComponent{
   @Input('watchingStocks')
   watchingStocks!: { [stockSymbol: string] : WatchingStock } ;
 
@@ -28,9 +28,6 @@ export class StocksTableComponent implements OnInit{
     private shareService: SharesService
   ){
     this.email = this.authenticationService.GetUserEmail();
-  }
-
-  async ngOnInit(): Promise<any> {
   }
 
   async CreateStockNote(symbol: string){
