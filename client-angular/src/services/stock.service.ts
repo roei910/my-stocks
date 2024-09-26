@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { MarketTrend } from 'src/models/marketTrends/market-trend';
 import { Stock } from 'src/models/stocks/stock';
 
 @Injectable({
@@ -10,6 +11,7 @@ import { Stock } from 'src/models/stocks/stock';
 export class StockService {
   lastUpdateTime: Date | undefined;
   allStocks: BehaviorSubject<Stock[]> = new BehaviorSubject<Stock[]>([]);
+  stockEndPointUrl: string = `${environment.server_url}/Stock`;
 
   constructor(private httpClient: HttpClient) {
     this.lastUpdateTime = new Date();
@@ -19,7 +21,7 @@ export class StockService {
     if (!this.shouldBeUpdated(this.lastUpdateTime, new Date()))
       return this.allStocks.asObservable();
 
-    return this.httpClient.get<Stock[]>(`${environment.server_url}/Stock`).pipe(
+    return this.httpClient.get<Stock[]>(this.stockEndPointUrl).pipe(
       tap(res => {
         this.allStocks.next(res);
         this.lastUpdateTime = new Date();
@@ -30,17 +32,17 @@ export class StockService {
 
   GetStockBySymbol(stockSymbol: string): Observable<Stock> {
     return this.httpClient
-      .get<Stock>(`${environment.server_url}/Stock/symbol/${stockSymbol}`);
-  }
-
-  GetStockByName(stockName: string): Observable<Stock> {
-    return this.httpClient
-      .get<Stock>(`${environment.server_url}/Stock/name/${stockName}`);
+      .get<Stock>(`${this.stockEndPointUrl}/symbol/${stockSymbol}`);
   }
 
   FindStocksByName(stockName: string): Observable<Stock[]> {
     return this.httpClient
-      .get<Stock[]>(`${environment.server_url}/Stock/find/name/${stockName}`)
+      .get<Stock[]>(`${this.stockEndPointUrl}/find/${stockName}`)
+  }
+
+  GetMarketsTrends(): Observable<MarketTrend[]>{
+    return this.httpClient
+      .get<MarketTrend[]>(`${this.stockEndPointUrl}/marketTrends`)
   }
   
   shouldBeUpdated(startTime: Date | undefined, endTime: Date): boolean {
