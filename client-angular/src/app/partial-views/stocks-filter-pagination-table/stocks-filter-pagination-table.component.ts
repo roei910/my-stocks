@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { FilterPaginationHeaderConfiguration } from 'src/models/filterPaginationTable/filter-pagination-header-configuration';
 import { Stock } from 'src/models/stocks/stock';
 import { StockService } from 'src/services/stock.service';
 
@@ -9,11 +9,32 @@ import { StockService } from 'src/services/stock.service';
   styleUrls: ['./stocks-filter-pagination-table.component.css']
 })
 export class StocksFilterPaginationTableComponent {
-  stocks?: Observable<Stock[]>;
+  stocks!: Stock[];
+  stocksTableHeaderConfiguration: FilterPaginationHeaderConfiguration = {
+    headerConfigurations: [
+      {
+        headerName: "name",
+        isFilterAllowed: true,
+        isOrderAllowed: true
+      },
+      {
+        headerName: "symbol",
+        isFilterAllowed: true,
+        isOrderAllowed: true
+      },
+      {
+        headerName: "price",
+        isFilterAllowed: false,
+        isOrderAllowed: true
+      }
+    ]
+  }
 
   constructor(private stockService: StockService){}
 
   ngOnInit(): void {
-    this.stocks = this.stockService.GetAllStocks();
+    this.stockService.GetAllStocks()
+    .subscribe(stocks => this.stocks = stocks);
+    // this.stocks = this.stockService.GetAllStocks();
   }
 }

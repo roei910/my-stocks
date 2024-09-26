@@ -1,0 +1,7 @@
+<div *ngFor="let marketTrend of marketTrends | async">
+    <p>{{GenerateMarketTrendName(marketTrend.trendName)}}</p>
+    <app-filter-pagination-table [HeaderConfiguration]="stockNewsHeaderConfiguration" 
+        [Items]="marketTrend.stockNews"></app-filter-pagination-table>
+    <app-filter-pagination-table [HeaderConfiguration]="trendingStockHeaderConfiguration"
+        [Items]="marketTrend.trendingStocks"></app-filter-pagination-table>
+</div>

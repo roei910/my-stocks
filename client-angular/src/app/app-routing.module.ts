@@ -12,6 +12,7 @@ import { StockSharesComponent } from './home/stock-shares/stock-shares.component
 import { connectedUserGuard } from 'src/routeGuards/connected-user.guard';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
+import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'all', component: StocksFilterPaginationTableComponent }
     ],
   },
+  { path: 'marketTrends', component: MarketTrendsComponent, canActivate: [connectedUserGuard] },
   {
     path: 'user',
     children: [
