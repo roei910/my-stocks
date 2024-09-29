@@ -3,7 +3,7 @@
         <thead>
             <tr>
                 <td>index</td>
-                <td *ngFor="let header of headerConfiguration.headerConfigurations">
+                <td *ngFor="let header of columnDefinitions">
                     {{header.headerName}}
                     <button *ngIf="header.isFilterAllowed" class="filter-icon"
                         (click)="FilterItemsByField(header.headerName)">
@@ -28,7 +28,7 @@
         <tbody>
             <tr *ngFor="let stock of GetCurrentStocks(), let i = index">
                 <td>{{i+1 + startingIndex}}</td>
-                <td *ngFor="let header of headerConfiguration.headerConfigurations">
+                <td *ngFor="let header of columnDefinitions">
                     {{GetItemField(stock, header.headerName)}}
                 </td>
             </tr>
