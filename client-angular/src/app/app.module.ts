@@ -23,6 +23,8 @@ import { NotificationCenterComponent } from './partial-views/notification-center
 import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
 import { interceptConnection } from 'src/interceptors/connection.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { interceptLoader } from 'src/interceptors/loading.interceptor';
+import { LoadingComponent } from './partial-views/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
     StocksFilterPaginationTableComponent,
     NotificationCenterComponent,
     MarketTrendsComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
   ],
   providers: [
     provideHttpClient(
-      withInterceptors([interceptConnection])
+      withInterceptors([
+        interceptConnection,
+        interceptLoader
+      ])
     )
   ],
   bootstrap: [AppComponent]
