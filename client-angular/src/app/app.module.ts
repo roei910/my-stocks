@@ -25,6 +25,7 @@ import { interceptConnection } from 'src/interceptors/connection.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { interceptLoader } from 'src/interceptors/loading.interceptor';
 import { LoadingComponent } from './partial-views/loading/loading.component';
+import { ErrorComponent } from './partial-views/error/error.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { LoadingComponent } from './partial-views/loading/loading.component';
     NotificationCenterComponent,
     MarketTrendsComponent,
     LoadingComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
