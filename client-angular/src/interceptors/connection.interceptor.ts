@@ -9,7 +9,7 @@ import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs'
 import { ErrorService } from 'src/services/error.service';
 
 export function interceptConnection (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  let requestTimeoutMs = 3000;
+  let requestTimeoutMs = 4000;
   let errorService = inject(ErrorService);
 
   return next(req).pipe(
