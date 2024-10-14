@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
@@ -6,11 +6,11 @@ import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
 
 @Component({
-  selector: 'app-stocks-table',
-  templateUrl: './stocks-table.component.html',
-  styleUrls: ['./stocks-table.component.css']
+  selector: 'app-portfolio-details',
+  templateUrl: './portfolio-details.component.html',
+  styleUrls: ['./portfolio-details.component.css']
 })
-export class StocksTableComponent{
+export class PortfolioDetailsComponent {
   @Input('watchingStocks')
   watchingStocks!: { [stockSymbol: string] : WatchingStock } ;
 

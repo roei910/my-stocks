@@ -1,19 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { User } from 'src/models/users/user';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
-  selector: 'app-stocks-viewer',
-  templateUrl: './stocks-viewer.component.html',
-  styleUrls: ['./stocks-viewer.component.css']
+  selector: 'app-user-stocks',
+  templateUrl: './user-stocks.component.html',
+  styleUrls: ['./user-stocks.component.css']
 })
-export class StocksViewerComponent implements OnInit{
+export class UserStocksComponent {
   user!: User;
   userEmail?: string | null;
   stocks: { [stockSymbol: string] : Stock } = {};

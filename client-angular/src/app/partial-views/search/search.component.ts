@@ -3,11 +3,11 @@ import { Router } from '@angular/router';
 import { StockService } from 'src/services/stock.service';
 
 @Component({
-  selector: 'app-stocks-search',
-  templateUrl: './stocks-search.component.html',
-  styleUrls: ['./stocks-search.component.css']
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
 })
-export class StocksSearchComponent {
+export class SearchComponent {
   stocksList: any = null;
 
   constructor(private stockService: StockService,

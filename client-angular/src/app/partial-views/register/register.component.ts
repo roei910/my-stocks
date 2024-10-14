@@ -5,11 +5,11 @@ import { UserCreation } from 'src/models/users/user-creation';
 import { UserService } from 'src/services/user.service';
 
 @Component({
-  selector: 'app-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class UserRegisterComponent {
+export class RegisterComponent {
   @ViewChild("registrationForm")
   form!: NgForm;
 

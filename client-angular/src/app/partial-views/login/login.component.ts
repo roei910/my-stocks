@@ -4,11 +4,11 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
 
 @Component({
-  selector: 'app-user-login',
-  templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class UserLoginComponent {
+export class LoginComponent {
   @ViewChild("connectionForm")
   form!: NgForm;
 

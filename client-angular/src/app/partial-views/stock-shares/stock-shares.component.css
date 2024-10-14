@@ -1,42 +1,42 @@
 h1 {
     text-align: center;
-  }
-  
-  .shares-container {
+}
+
+.shares-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-  }
-  
-  .shares-list {
+}
+
+.shares-list {
     list-style: none;
     padding: 0;
     margin: 0;
-  }
-  
-  .share-item {
+}
+
+.share-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ddd;
     padding: 10px 20px;
     width: 100%;
-  }
-  
-  .share-item:last-child {
+}
+
+.share-item:last-child {
     border-bottom: none;
-  }
-  
-  .share-amount,
-  .share-price {
+}
+
+.share-amount,
+.share-price {
     flex: 1;
     text-align: center;
-  }
-  
-  #add-share-button {
+}
+
+#add-share-button {
     margin-top: 20px;
     padding: 10px 20px;
     background-color: #4CAF50;
@@ -44,16 +44,16 @@ h1 {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-  }
-  
-  @media only screen and (max-width: 768px) {
+}
+
+@media only screen and (max-width: 768px) {
     .share-item {
-      flex-direction: column;
-      align-items: flex-start;
+        flex-direction: column;
+        align-items: flex-start;
     }
-  
+
     .share-amount,
     .share-price {
-      flex: auto;
+        flex: auto;
     }
-  }
+}
