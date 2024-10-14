@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
 import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs';
 
 export function interceptConnection (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  let requestTimeoutMs = 4000;
+  let requestTimeoutMs = 5000;
   let messageService = inject(MessageService);
 
   return next(req).pipe(
