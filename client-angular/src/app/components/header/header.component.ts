@@ -48,7 +48,7 @@ export class HeaderComponent implements OnInit {
       }
     ];
 
-    this.authenticationService.isUserConnected()
+    this.authenticationService.userConnection()
       .subscribe(isUserConnected => {
         let loginItemIndex = this.items
           .findIndex(item => item.label == 'Login')

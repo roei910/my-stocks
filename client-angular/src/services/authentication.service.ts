@@ -25,12 +25,18 @@ export class AuthenticationService {
     this.isUserConnectedSubject.next(false);
   }
 
-  isUserConnected(): Observable<boolean> {
-    var user = this.cookieService.getCookie("email");
-
-    this.isUserConnectedSubject.next(user != null && user != "");
+  userConnection(): Observable<boolean>{
+    this.isUserConnected();
 
     return this.isUserConnectedSubject.asObservable();
+  }
+  isUserConnected(): boolean {
+    var user = this.cookieService.getCookie("email");
+    var isUserConnected = user != null && user != "";
+
+    this.isUserConnectedSubject.next(isUserConnected);
+
+    return isUserConnected;
   }
 
   TryConnect(email: string, password: string): Observable<boolean> {
