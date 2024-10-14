@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Stock } from 'src/models/stocks/stock';
 import { StockNotification } from 'src/models/users/stock-notification';
@@ -8,11 +8,11 @@ import { StockService } from 'src/services/stock.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
-  selector: 'app-stock-information',
-  templateUrl: './stock-information.component.html',
-  styleUrls: ['./stock-information.component.css']
+  selector: 'app-stock-details',
+  templateUrl: './stock-details.component.html',
+  styleUrls: ['./stock-details.component.css']
 })
-export class StockInformationComponent implements OnInit {
+export class StockDetailsComponent {
   symbol?: string | null;
   stock?: Stock;
   data?: any;

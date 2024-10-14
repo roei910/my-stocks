@@ -12,14 +12,6 @@ import { MessageService } from 'primeng/api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
-import { UserLoginComponent } from './home/user-login/user-login.component';
-import { UserRegisterComponent } from './home/user-register/user-register.component';
-import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
-import { StockInformationComponent } from './home/stock-information/stock-information.component';
-import { StocksTableComponent } from './home/stocks-viewer/stocks-table/stocks-table.component';
-import { StockSharesComponent } from './home/stock-shares/stock-shares.component';
 import { AsyncPipe } from '@angular/common';
 import { FilterPaginationTableComponent } from './components/filter-pagination-table/filter-pagination-table.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -32,6 +24,15 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { interceptLoader } from 'src/interceptors/loading.interceptor';
 import { LoadingComponent } from './partial-views/loading/loading.component';
 import { NotFoundComponent } from './partial-views/not-found/not-found.component';
+import { UserStocksComponent } from './partial-views/user-stocks/user-stocks.component';
+import { LoginComponent } from './partial-views/login/login.component';
+import { RegisterComponent } from './partial-views/register/register.component';
+import { UserInformationComponent } from './partial-views/user-information/user-information.component';
+import { SearchComponent } from './partial-views/search/search.component';
+import { HomeComponent } from './partial-views/home/home.component';
+import { StockSharesComponent } from './partial-views/stock-shares/stock-shares.component';
+import { StockDetailsComponent } from './partial-views/stock-details/stock-details.component';
+import { PortfolioDetailsComponent } from './partial-views/portfolio-details/portfolio-details.component';
 
 @NgModule({
   declarations: [
@@ -39,19 +40,25 @@ import { NotFoundComponent } from './partial-views/not-found/not-found.component
     HeaderComponent,
     FooterComponent,
     HomeComponent,
-    StocksViewerComponent,
+    UserStocksComponent,
     NotFoundComponent,
-    UserLoginComponent,
-    UserRegisterComponent,
-    StocksSearchComponent,
-    StockInformationComponent,
-    StocksTableComponent,
+    LoginComponent,
+    RegisterComponent,
+    SearchComponent,
+    StockDetailsComponent,
     StockSharesComponent,
     FilterPaginationTableComponent,
     StocksFilterPaginationTableComponent,
     NotificationCenterComponent,
     MarketTrendsComponent,
     LoadingComponent,
+    UserStocksComponent,
+    LoginComponent,
+    RegisterComponent,
+    UserInformationComponent,
+    SearchComponent,
+    StockDetailsComponent,
+    PortfolioDetailsComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Share } from 'src/models/shares/share';
 import { SharePurchase } from 'src/models/shares/share-purchase';
@@ -13,7 +13,7 @@ import { UserService } from 'src/services/user.service';
   templateUrl: './stock-shares.component.html',
   styleUrls: ['./stock-shares.component.css']
 })
-export class StockSharesComponent implements OnInit{
+export class StockSharesComponent {
   userEmail!: string | null;
   symbol!: string;
   listName!: string;
