@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { ChartModule } from 'primeng/chart';
-import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { ChartModule } from 'primeng/chart';
+import { DropdownModule } from 'primeng/dropdown';
+import { MenubarModule } from 'primeng/menubar';
+import { MenuModule } from 'primeng/menu';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { StocksViewerComponent } from './home/stocks-viewer/stocks-viewer.component';
-import { NotFoundComponent } from './home/not-found/not-found.component';
 import { UserLoginComponent } from './home/user-login/user-login.component';
 import { UserRegisterComponent } from './home/user-register/user-register.component';
 import { StocksSearchComponent } from './home/stocks-search/stocks-search.component';
@@ -25,7 +31,7 @@ import { interceptConnection } from 'src/interceptors/connection.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { interceptLoader } from 'src/interceptors/loading.interceptor';
 import { LoadingComponent } from './partial-views/loading/loading.component';
-import { ErrorComponent } from './partial-views/error/error.component';
+import { NotFoundComponent } from './partial-views/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +52,6 @@ import { ErrorComponent } from './partial-views/error/error.component';
     NotificationCenterComponent,
     MarketTrendsComponent,
     LoadingComponent,
-    ErrorComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,6 +59,11 @@ import { ErrorComponent } from './partial-views/error/error.component';
     ChartModule,
     FormsModule,
     AsyncPipe,
+    DropdownModule,
+    BrowserAnimationsModule,
+    MenubarModule,
+    MenuModule,
+    ToastModule
   ],
   providers: [
     provideHttpClient(
@@ -61,7 +71,8 @@ import { ErrorComponent } from './partial-views/error/error.component';
         interceptConnection,
         interceptLoader
       ])
-    )
+    ),
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

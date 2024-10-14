@@ -1,3 +1,6 @@
+@import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
+@import "assets/styles/header-styling.css";
+
 * {
     margin: 0;
     padding: 0;

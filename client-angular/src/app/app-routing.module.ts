@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { NotFoundComponent } from './home/not-found/not-found.component';
 import { UserLoginComponent } from './home/user-login/user-login.component';
 import { UserRegisterComponent } from './home/user-register/user-register.component';
 import { UserInformationComponent } from './home/user-information/user-information.component';
@@ -13,6 +12,7 @@ import { connectedUserGuard } from 'src/routeGuards/connected-user.guard';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
 import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
+import { NotFoundComponent } from './partial-views/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
