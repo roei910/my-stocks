@@ -5,17 +5,17 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { inject } from '@angular/core';
+import { MessageService } from 'primeng/api';
 import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs';
-import { ErrorService } from 'src/services/error.service';
 
 export function interceptConnection (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  let requestTimeoutMs = 4000;
-  let errorService = inject(ErrorService);
+  let requestTimeoutMs = 5000;
+  let messageService = inject(MessageService);
 
   return next(req).pipe(
     timeout(requestTimeoutMs),
     catchError((error: HttpErrorResponse) => {
-      errorService.showError(error.message);
+      messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
 
       return throwError(() => error.message);
     })
