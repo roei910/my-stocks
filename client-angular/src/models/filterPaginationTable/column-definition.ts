@@ -1,4 +1,4 @@
-export class HeaderConfiguration {
+export class ColumnDefinition {
     headerName!: string;
     isFilterAllowed!: boolean;
     isOrderAllowed!: boolean;

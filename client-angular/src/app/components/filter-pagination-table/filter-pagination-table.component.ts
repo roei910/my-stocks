@@ -1,20 +1,20 @@
 import { Component, Input} from '@angular/core';
-import { FilterPaginationHeaderConfiguration } from 'src/models/filterPaginationTable/filter-pagination-header-configuration';
+import { ColumnDefinition } from 'src/models/filterPaginationTable/column-definition';
 
 @Component({
   selector: 'app-filter-pagination-table',
   templateUrl: './filter-pagination-table.component.html',
   styleUrls: ['./filter-pagination-table.component.css']
 })
-export class FilterPaginationTableComponent<ItemType> {
+export class FilterPaginationTableComponent<RowData> {
   ROWS_PER_PAGE: number = 5;
 
-  @Input('Items') items!: ItemType[];
-  @Input('HeaderConfiguration') headerConfiguration!: FilterPaginationHeaderConfiguration;
+  @Input('Data') items!: RowData[];
+  @Input('ColDefs') columnDefinitions!: ColumnDefinition[];
 
   startingIndex: number = 0;
   filterStringByField: { [field: string]: string } = {};
-  filteredItems!: ItemType[];
+  filteredItems!: RowData[];
 
   constructor() {}
 
@@ -22,7 +22,7 @@ export class FilterPaginationTableComponent<ItemType> {
     this.FilterItems();
   }
 
-  GetCurrentStocks(): ItemType[]{
+  GetCurrentStocks(): RowData[]{
     return this.filteredItems
       ?.slice(this.startingIndex, this.startingIndex+this.ROWS_PER_PAGE) ?? [];
   }
@@ -42,7 +42,7 @@ export class FilterPaginationTableComponent<ItemType> {
   }
 
   FilterItemsByField(field: string){
-    let fieldKey = field as keyof ItemType;
+    let fieldKey = field as keyof RowData;
 
     if(fieldKey == undefined || fieldKey == null)
       return;
@@ -91,7 +91,7 @@ export class FilterPaginationTableComponent<ItemType> {
     this.filteredItems = this.items;
 
     Object.keys(this.filterStringByField).forEach(field => {
-      let fieldKey = field as keyof ItemType;
+      let fieldKey = field as keyof RowData;
       let filterString = this.filterStringByField[field];
 
       this.filteredItems = this.filteredItems?.filter(stock => 
@@ -107,8 +107,8 @@ export class FilterPaginationTableComponent<ItemType> {
     return foundFilter != undefined;
   }
 
-  GetItemField(value: ItemType, field: string){
-    var fieldKey = field as keyof ItemType;
+  GetItemField(value: RowData, field: string){
+    var fieldKey = field as keyof RowData;
 
     return value[fieldKey];
   }

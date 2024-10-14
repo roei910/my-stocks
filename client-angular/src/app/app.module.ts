@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { ChartModule } from 'primeng/chart';
 import { AppRoutingModule } from './app-routing.module';
-import { provideHttpClient } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
@@ -22,6 +21,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
 import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
+import { interceptConnection } from 'src/interceptors/connection.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { interceptLoader } from 'src/interceptors/loading.interceptor';
+import { LoadingComponent } from './partial-views/loading/loading.component';
+import { ErrorComponent } from './partial-views/error/error.component';
 
 @NgModule({
   declarations: [
@@ -41,16 +45,23 @@ import { MarketTrendsComponent } from './partial-views/market-trends/market-tren
     StocksFilterPaginationTableComponent,
     NotificationCenterComponent,
     MarketTrendsComponent,
+    LoadingComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ChartModule,
     FormsModule,
-    AsyncPipe
+    AsyncPipe,
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([
+        interceptConnection,
+        interceptLoader
+      ])
+    )
   ],
   bootstrap: [AppComponent]
 })
