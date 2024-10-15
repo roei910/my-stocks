@@ -1,25 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { ChartModule } from 'primeng/chart';
-import { User } from 'src/models/users/user';
+import { Component } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Share } from 'src/models/shares/share';
 import { Stock } from 'src/models/stocks/stock';
-import { UserService } from 'src/services/user.service';
+import { User } from 'src/models/users/user';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { StockService } from 'src/services/stock.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-user-information',
   templateUrl: './user-information.component.html',
-  styleUrls: ['./user-information.component.css'],
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    ChartModule
-  ]
+  styleUrls: ['./user-information.component.css']
 })
-export class UserInformationComponent implements OnInit {
+export class UserInformationComponent {
   chartData: any;
   user?: User;
   ownedStocks: { [stocksymbol: string]: Share } = {};

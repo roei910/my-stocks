@@ -1,0 +1,9 @@
+<div>
+    <button (click)="AddUserList()">Add List</button>
+    <button (click)="RemoveUserList()">Remove List</button>
+</div>
+<div class="stock-list-container" *ngFor="let listName of GetKeys(this.user?.watchingStocksByListName)">
+    <h2>{{listName}}<button (click)="AddListStock(listName)">AddStock</button></h2>
+    <app-portfolio-details [listName]="listName" [watchingStocks]="this.user.watchingStocksByListName[listName]"
+    [stocksDictionary]="this.stocks"></app-portfolio-details>
+</div>
