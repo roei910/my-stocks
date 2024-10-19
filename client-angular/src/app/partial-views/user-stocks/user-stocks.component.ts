@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
-import { WatchingStockList } from 'src/models/stocks/watching-stock-list';
 import { User } from 'src/models/users/user';
 import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
@@ -113,25 +112,5 @@ export class UserStocksComponent {
 
     if(option != undefined)
       this.selectedPortfolio = this.user.watchingStocksByListName[option];
-  }
-
-  mapWatchingStockList(): WatchingStockList[]{
-    if(this.selectedPortfolio == undefined)
-      return [];
-
-    let watchingStockLists: WatchingStockList[] = Object
-      .keys(this.selectedPortfolio)
-        .map(stockSymbol => 
-          this.mapWatchingStock(stockSymbol, this.selectedPortfolio![stockSymbol])
-        );
-
-    return watchingStockLists;
-  }
-
-  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): WatchingStockList{
-    return {
-      stockSymbol,
-      watchingStock
-    }
   }
 }

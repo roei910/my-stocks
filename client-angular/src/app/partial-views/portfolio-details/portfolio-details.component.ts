@@ -5,6 +5,16 @@ import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
 
+interface StockDetail{
+  name: string;
+  symbol: string;
+  price: number;
+  prediction: number;
+  shares: number;
+  note: string;
+  lastUpdate: Date;
+};
+
 @Component({
   selector: 'app-portfolio-details',
   templateUrl: './portfolio-details.component.html',
@@ -21,6 +31,7 @@ export class PortfolioDetailsComponent {
   listName?: string;
 
   email: any;
+  watchingStockLists!: StockDetail[];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -28,6 +39,16 @@ export class PortfolioDetailsComponent {
     private shareService: SharesService
   ){
     this.email = this.authenticationService.GetUserEmail();
+  }
+
+  ngOnChanges(): void {
+    console.log(this.watchingStocks);
+
+    this.watchingStockLists = Object.keys(this.watchingStocks)
+      .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
+
+    console.log(this.watchingStockLists);
+    
   }
 
   async CreateStockNote(symbol: string){
@@ -81,5 +102,20 @@ export class PortfolioDetailsComponent {
     if(confirmRedirect)
       this.router.navigate([this.router.url, 'shares'], 
         { queryParams: { stockSymbol: stockSymbol, listName: this.listName }});
+  }
+
+  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetail{
+    let stock = this.stocksDictionary[stockSymbol];
+    console.log(stock);
+    
+    return {
+      symbol: stockSymbol,
+      name: stock.name,
+      lastUpdate: stock.updatedTime,
+      note: watchingStock.note,
+      prediction: stock.analysis?.targetMeanPrice ?? 0,
+      price: stock.price,
+      shares: this.CountShares(watchingStock)
+    };
   }
 }
