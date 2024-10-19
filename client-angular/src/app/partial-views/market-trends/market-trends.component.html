@@ -1,7 +1,39 @@
 <div *ngFor="let marketTrend of marketTrends | async">
     <p>{{GenerateMarketTrendName(marketTrend.trendName)}}</p>
-    <app-filter-pagination-table [ColDefs]="stockNewsColumnDefinitions" 
-        [Data]="marketTrend.stockNews"></app-filter-pagination-table>
-    <app-filter-pagination-table [ColDefs]="trendingStockColumnDefinitions"
-        [Data]="marketTrend.trendingStocks"></app-filter-pagination-table>
+    <p-table [value]="marketTrend.stockNews">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="articleTitle">
+                    Title <p-sortIcon field="articleTitle" />
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-stockNews>
+            <tr>
+                <td>{{stockNews.articleTitle}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+    <p-table [value]="marketTrend.trendingStocks">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="symbol">
+                    Symbol <p-sortIcon field="symbol" />
+                </th>
+                <th pSortableColumn="name">
+                    Name <p-sortIcon field="name" />
+                </th>
+                <th pSortableColumn="price">
+                    Price <p-sortIcon field="price" />
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-trendingStock>
+            <tr>
+                <td>{{trendingStock.symbol}}</td>
+                <td>{{trendingStock.name}}</td>
+                <td>{{trendingStock.price}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>

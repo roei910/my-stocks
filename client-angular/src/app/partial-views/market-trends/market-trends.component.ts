@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ColumnDefinition } from 'src/models/filterPaginationTable/column-definition';
 import { MarketTrend } from 'src/models/marketTrends/market-trend';
 import { StockService } from 'src/services/stock.service';
 
@@ -11,31 +10,6 @@ import { StockService } from 'src/services/stock.service';
 })
 export class MarketTrendsComponent implements OnInit {
   marketTrends?: Observable<MarketTrend[]>;
-  stockNewsColumnDefinitions: ColumnDefinition[] = [
-    {
-      headerName: "articleTitle",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    }
-  ];
-
-  trendingStockColumnDefinitions: ColumnDefinition[] = [
-    {
-      headerName: "symbol",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    },
-    {
-      headerName: "name",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    },
-    {
-      headerName: "price",
-      isFilterAllowed: false,
-      isOrderAllowed: true
-    }
-  ];
 
   constructor(private stockService: StockService) { }
 

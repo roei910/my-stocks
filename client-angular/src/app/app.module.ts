@@ -9,11 +9,13 @@ import { MenubarModule } from 'primeng/menubar';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { TableModule } from 'primeng/table';
+import { ListboxModule } from 'primeng/listbox';
+import { PanelModule } from 'primeng/panel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AsyncPipe } from '@angular/common';
-import { FilterPaginationTableComponent } from './components/filter-pagination-table/filter-pagination-table.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
@@ -47,7 +49,6 @@ import { PortfolioDetailsComponent } from './partial-views/portfolio-details/por
     SearchComponent,
     StockDetailsComponent,
     StockSharesComponent,
-    FilterPaginationTableComponent,
     StocksFilterPaginationTableComponent,
     NotificationCenterComponent,
     MarketTrendsComponent,
@@ -70,7 +71,10 @@ import { PortfolioDetailsComponent } from './partial-views/portfolio-details/por
     BrowserAnimationsModule,
     MenubarModule,
     MenuModule,
-    ToastModule
+    ToastModule,
+    TableModule,
+    ListboxModule,
+    PanelModule
   ],
   providers: [
     provideHttpClient(

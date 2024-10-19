@@ -1,7 +1,13 @@
-.stock-list-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 2rem;
-    padding: 2rem;
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 1rem;
+}
+
+.sidebar {
+    padding: 1rem;
+}
+
+.content {
+    padding: 1rem;
 }
