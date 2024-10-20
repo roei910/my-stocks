@@ -57,8 +57,6 @@ export class HeaderComponent implements OnInit {
 
     this.authenticationService.userConnection()
       .subscribe(isUserConnected => {
-        console.log(isUserConnected);
-        
         this.items[loginItemIndex].visible = !isUserConnected;
         this.items[userItemIndex].visible = isUserConnected;
 
