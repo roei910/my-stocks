@@ -1,12 +1,12 @@
 <div class="grid-container">
     <div class="sidebar">
         <p-panel header="Portfolios">
-            <button (click)="AddUserList()">Add List</button>
-            <button (click)="RemoveUserList()">Remove List</button>
-            <p-listbox 
-                [options]="listNames" 
-                [(ngModel)]="selectedPortfolioName"
-                (onClick)="onSelectedPortfolio($event)"/>
+            <div class="button-container">
+                <button (click)="AddUserList()">Add List</button>
+                <button (click)="RemoveUserList()">Remove List</button>
+            </div>
+            <p-listbox [options]="listNames" [(ngModel)]="selectedPortfolioName"
+                (onClick)="onSelectedPortfolio($event)" />
         </p-panel>
     </div>
     <div class="content">

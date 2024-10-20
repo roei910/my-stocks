@@ -2,15 +2,13 @@
 @import "assets/styles/header-styling.css";
 @import "assets/styles/table-styling.css";
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     background-color: #f7f7f7;
     color: #333;
+}
+
+.p-hidden-accessible{
+    display: none;
 }
