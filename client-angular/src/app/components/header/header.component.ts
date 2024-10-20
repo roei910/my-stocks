@@ -31,6 +31,10 @@ export class HeaderComponent implements OnInit {
         label: 'Stocks',
         routerLink: ['stocks', 'all']
       },
+      { 
+        label: 'Market Trends', 
+        routerLink: ['marketTrends'] 
+      },
       {
         label: 'Login',
         visible: false,
@@ -42,7 +46,6 @@ export class HeaderComponent implements OnInit {
         items: [
           { label: 'My Stocks', routerLink: ['user', 'stocks'] },
           { label: 'Information', routerLink: ['user', 'information'] },
-          { label: 'Market Trends', routerLink: ['marketTrends'] },
           { label: 'Notifications', routerLink: ['user', 'notifications'] },
           { label: 'Sign Out', command: () => this.SignOut() },
         ]

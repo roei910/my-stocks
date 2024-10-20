@@ -1,39 +1,57 @@
-<div *ngFor="let marketTrend of marketTrends | async">
-    <p>{{GenerateMarketTrendName(marketTrend.trendName)}}</p>
-    <p-table [value]="marketTrend.stockNews">
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="articleTitle">
-                    Title <p-sortIcon field="articleTitle" />
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-stockNews>
-            <tr>
-                <td>{{stockNews.articleTitle}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
-    <p-table [value]="marketTrend.trendingStocks">
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="symbol">
-                    Symbol <p-sortIcon field="symbol" />
-                </th>
-                <th pSortableColumn="name">
-                    Name <p-sortIcon field="name" />
-                </th>
-                <th pSortableColumn="price">
-                    Price <p-sortIcon field="price" />
-                </th>
-            </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-trendingStock>
-            <tr>
-                <td>{{trendingStock.symbol}}</td>
-                <td>{{trendingStock.name}}</td>
-                <td>{{trendingStock.price}}</td>
-            </tr>
-        </ng-template>
-    </p-table>
+<div class="grid-container">
+    <div class="sidebar">
+        <p-panel header="Portfolios">
+            <p-listbox 
+                [options]="marketTrends" 
+                [(ngModel)]="selectedMarketTrend"
+                optionLabel="trendName">
+                <ng-template let-marketTrend pTemplate="item">
+                    <span>{{ GenerateMarketTrendName(marketTrend.trendName) }}</span>
+                </ng-template>
+            </p-listbox>
+        </p-panel>
+    </div>
+    <div class="content">
+        <p-panel header="Portfolio Details">
+            <p *ngIf="selectedMarketTrend == undefined">
+                Please choose a market trend
+            </p>
+            <p-table *ngIf="selectedMarketTrend != undefined" [value]="selectedMarketTrend!.stockNews">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="articleTitle">
+                            Title <p-sortIcon field="articleTitle" />
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-stockNews>
+                    <tr>
+                        <td>{{stockNews.articleTitle}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <p-table *ngIf="selectedMarketTrend != undefined" [value]="selectedMarketTrend!.trendingStocks">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="symbol">
+                            Symbol <p-sortIcon field="symbol" />
+                        </th>
+                        <th pSortableColumn="name">
+                            Name <p-sortIcon field="name" />
+                        </th>
+                        <th pSortableColumn="price">
+                            Price <p-sortIcon field="price" />
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-trendingStock>
+                    <tr>
+                        <td>{{trendingStock.symbol}}</td>
+                        <td>{{trendingStock.name}}</td>
+                        <td>{{trendingStock.price}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-panel>
+    </div>
 </div>

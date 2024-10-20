@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component } from '@angular/core';
 import { MarketTrend } from 'src/models/marketTrends/market-trend';
 import { StockService } from 'src/services/stock.service';
 
@@ -8,13 +7,15 @@ import { StockService } from 'src/services/stock.service';
   templateUrl: './market-trends.component.html',
   styleUrls: ['./market-trends.component.css']
 })
-export class MarketTrendsComponent implements OnInit {
-  marketTrends?: Observable<MarketTrend[]>;
+export class MarketTrendsComponent {
+  marketTrends!: MarketTrend[];
+  selectedMarketTrend?: MarketTrend;
 
-  constructor(private stockService: StockService) { }
-
-  ngOnInit(): void {
-    this.marketTrends = this.stockService.GetMarketsTrends();
+  constructor(private stockService: StockService) { 
+    this.stockService.GetMarketsTrends()
+      .subscribe(marketTrends => {
+        this.marketTrends = marketTrends;
+      });
   }
 
   GenerateMarketTrendName(trendName: string): string {
