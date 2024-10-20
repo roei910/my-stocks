@@ -42,13 +42,8 @@ export class PortfolioDetailsComponent {
   }
 
   ngOnChanges(): void {
-    console.log(this.watchingStocks);
-
     this.watchingStockLists = Object.keys(this.watchingStocks)
       .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
-
-    console.log(this.watchingStockLists);
-    
   }
 
   async CreateStockNote(symbol: string){
@@ -106,7 +101,6 @@ export class PortfolioDetailsComponent {
 
   mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetail{
     let stock = this.stocksDictionary[stockSymbol];
-    console.log(stock);
     
     return {
       symbol: stockSymbol,

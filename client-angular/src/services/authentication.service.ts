@@ -30,6 +30,7 @@ export class AuthenticationService {
 
     return this.isUserConnectedSubject.asObservable();
   }
+  
   isUserConnected(): boolean {
     var user = this.cookieService.getCookie("email");
     var isUserConnected = user != null && user != "";
