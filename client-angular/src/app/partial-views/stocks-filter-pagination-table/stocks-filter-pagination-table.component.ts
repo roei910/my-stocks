@@ -5,7 +5,7 @@ import { StockService } from 'src/services/stock.service';
 @Component({
   selector: 'app-stocks-filter-pagination-table',
   templateUrl: './stocks-filter-pagination-table.component.html',
-  styleUrls: ['./stocks-filter-pagination-table.component.css']
+  styleUrls: ['./stocks-filter-pagination-table.component.css'],
 })
 export class StocksFilterPaginationTableComponent {
   stocks!: Stock[];

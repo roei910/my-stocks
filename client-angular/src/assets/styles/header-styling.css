@@ -1,40 +1,31 @@
-
-/* Base styles for the menubar */
 .p-menubar {
-    /* background-color: #007bff; */
     color: white;
     border-radius: 5px;
     padding: 10px 20px;
 }
 
-/* Styling the menu items */
 .p-menuitem{
     color: white;
-    /* Text color */
     font-size: 16px;
-    /* Font size */
     font-family: 'Arial', sans-serif;
     padding: 10px 20px;
     display: flex;
     align-items: center;
 }
 
-/* Styling icons inside the menu */
 .p-menubar .p-menu-list>li>a .pi {
     margin-right: 8px;
 }
 
-/* Add hover effect */
 .p-menubar .p-menuitem:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* Subtle hover background */
     transition: background-color 0.3s ease;
 }
 
 .p-menuitem-link-active{
     background-color: transparent;
 }
-/* Responsive behavior: Stack menu items vertically for smaller screens */
+
 @media (max-width: 768px) {
     .p-menubar .p-menu-list {
         flex-direction: column;
@@ -53,7 +44,6 @@
     }
 }
 
-/* Full-width for mobile view */
 @media (max-width: 480px) {
     .p-menubar {
         padding: 0;
