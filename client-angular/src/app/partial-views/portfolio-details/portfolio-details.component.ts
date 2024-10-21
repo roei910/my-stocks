@@ -1,19 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { StockDetails } from 'src/interfaces/stock-details';
 import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
-
-interface StockDetail{
-  name: string;
-  symbol: string;
-  price: number;
-  prediction: number;
-  shares: number;
-  note: string;
-  lastUpdate: Date;
-};
 
 @Component({
   selector: 'app-portfolio-details',
@@ -31,7 +22,7 @@ export class PortfolioDetailsComponent {
   listName?: string;
 
   email: any;
-  watchingStockLists!: StockDetail[];
+  watchingStockLists!: StockDetails[];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -99,7 +90,7 @@ export class PortfolioDetailsComponent {
         { queryParams: { stockSymbol: stockSymbol, listName: this.listName }});
   }
 
-  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetail{
+  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetails{
     let stock = this.stocksDictionary[stockSymbol];
     
     return {
