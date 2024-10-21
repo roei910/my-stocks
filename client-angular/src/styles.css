@@ -12,3 +12,15 @@ body {
 .p-hidden-accessible{
     display: none;
 }
+
+.flex-container{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.gap-2{
+    gap: 2rem;
+}

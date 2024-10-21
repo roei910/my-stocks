@@ -11,3 +11,10 @@
 .content {
     padding: 1rem 1rem 1rem 0;
 }
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
