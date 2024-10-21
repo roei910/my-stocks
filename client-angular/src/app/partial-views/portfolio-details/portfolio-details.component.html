@@ -24,21 +24,17 @@
   <ng-template pTemplate="body" let-watchingStockList>
     <tr>
       <td>
-        <a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: watchingStockList.symbol}">
-          {{watchingStockList.name}}
-        </a>
+        {{watchingStockList.name}}
       </td>
       <td>{{watchingStockList.symbol}}</td>
       <td>{{watchingStockList.price}}</td>
       <td>{{watchingStockList.prediction}}</td>
       <td>
-        <p (click)="RedirectToSharesScreen(watchingStockList.stockSymbol)">
-          {{watchingStockList.shares}}
-        </p>
+        {{watchingStockList.shares}}
       </td>
       <td>
         <ng-container *ngIf="!watchingStockList.note; else elseTemplate">
-          <button (click)="CreateStockNote(watchingStockList.stockSymbol)">+</button>
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="CreateStockNote(watchingStockList.symbol)"/>
         </ng-container>
         <ng-template #elseTemplate>
           <p (click)="DeleteNote(watchingStockList.symbol)">{{watchingStockList.note}}</p>
@@ -46,15 +42,9 @@
       </td>
       <td>{{watchingStockList.lastUpdate | date}}</td>
       <td>
-        +
-        <!-- <div class="dropdown">
-          <span>+</span>
-          <div class="dropdown-content">
-            <span class="dropdown-item link">Information</span>
-            <span class="dropdown-item link">Information</span>
-            <span class="dropdown-item link">Information</span>
-          </div>
-        </div> -->
+        <p-button icon="pi pi-search" [rounded]="true" [text]="true" [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: watchingStockList.symbol}"/>
+        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="RedirectToSharesScreen(watchingStockList.stockSymbol)"/>
+        <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
       </td>
     </tr>
   </ng-template>

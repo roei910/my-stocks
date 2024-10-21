@@ -12,6 +12,7 @@ import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
 import { PanelModule } from 'primeng/panel';
 import { MenubarModule } from 'primeng/menubar';
+import { ButtonModule } from 'primeng/button';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -74,7 +75,8 @@ import { StocksFilterPaginationTableComponent } from './partial-views/stocks-fil
     ToastModule,
     TableModule,
     ListboxModule,
-    PanelModule
+    PanelModule,
+    ButtonModule
   ],
   providers: [
     provideHttpClient(
