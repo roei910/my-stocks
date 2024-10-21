@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MessageService } from 'primeng/api';
+import { NotFoundError } from 'rxjs';
 import { MessageFactory } from 'src/factories/message-factory';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
@@ -87,6 +88,9 @@ export class UserStocksComponent {
       if (res) {
         delete (this.user.watchingStocksByListName[listName!]);
         this.updateListBox();
+
+        if(listName == this.selectedPortfolioName)
+          this.selectedPortfolioName = undefined;
       }
       else
         alert("something went wrong, couldnt remove list")
