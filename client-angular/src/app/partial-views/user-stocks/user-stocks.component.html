@@ -2,8 +2,10 @@
     <div class="sidebar">
         <p-panel header="Portfolios">
             <div class="button-container">
-                <button (click)="AddUserList()">Add List</button>
-                <button (click)="RemoveUserList()">Remove List</button>
+                <p-button label="Add List" [text]="true" [raised]="true" severity="secondary"
+                    (onClick)="AddUserList()" />
+                <p-button label="Remove List" [text]="true" [raised]="true" severity="secondary"
+                    (onClick)="RemoveUserList()" />
             </div>
             <p-listbox [options]="listNames" [(ngModel)]="selectedPortfolioName"
                 (onClick)="onSelectedPortfolio($event)" />
@@ -12,8 +14,10 @@
     <div class="content">
         <p-panel header="Portfolio Details">
             <div class="button-container" *ngIf="selectedPortfolioName != undefined">
-                <button (click)="AddListStock(selectedPortfolioName!)">Add Stock</button>
-                <button (click)="RemoveListStock(selectedPortfolioName!)">Remove Stock</button>
+                <p-button label="Add Stock" [text]="true" [raised]="true" severity="secondary"
+                    (onClick)="AddListStock(selectedPortfolioName!)" />
+                <p-button label="Remove Stock" [text]="true" [raised]="true" severity="secondary"
+                    (onClick)="RemoveListStock(selectedPortfolioName!)" />
             </div>
             <app-portfolio-details
                 *ngIf="selectedPortfolioName != undefined && selectedPortfolio != undefined; else noSelection"
