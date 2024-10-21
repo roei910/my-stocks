@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { MenuItem } from 'primeng/api';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
@@ -43,11 +45,10 @@ export class HeaderComponent implements OnInit {
       {
         label: 'User',
         visible: false,
-        badge: "2",
         items: [
           { label: 'My Stocks', routerLink: ['user', 'stocks'] },
           { label: 'Information', routerLink: ['user', 'information']},
-          { label: 'Notifications', routerLink: ['user', 'notifications'], badge: "2" },
+          { label: 'Notifications', routerLink: ['user', 'notifications'] },
           { label: 'Sign Out', command: () => this.SignOut() },
         ]
       }
@@ -66,19 +67,20 @@ export class HeaderComponent implements OnInit {
 
         this.updateVisibility();
       });
-  }
 
-  ngOnChanges(){
-    let isUserConnected = this.authenticationService.isUserConnected();
+    let notificationItemIndex = this.items[userItemIndex].items!
+      .findIndex(item => item.label == 'Notifications');
 
-    let loginItemIndex = this.items
-      .findIndex(item => item.label == 'Login');
+    this.userService.GetUser()
+      .subscribe(user => 
+        {
+          let notificationsCount = user.stockNotifications.length.toString();
+          
+          this.items[userItemIndex].badge = notificationsCount;
+          this.items[userItemIndex].items![notificationItemIndex].badge = notificationsCount;
 
-    let userItemIndex = this.items
-      .findIndex(item => item.label == 'User');
-
-    this.items[loginItemIndex].visible = !isUserConnected;
-    this.items[userItemIndex].visible = isUserConnected;
+          this.updateVisibility();
+        });
   }
 
   SignOut() {
