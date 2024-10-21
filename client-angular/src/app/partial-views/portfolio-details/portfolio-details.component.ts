@@ -13,70 +13,74 @@ import { SharesService } from 'src/services/shares.service';
 })
 export class PortfolioDetailsComponent {
   @Input('watchingStocks')
-  watchingStocks!: { [stockSymbol: string] : WatchingStock } ;
+  watchingStocks!: { [stockSymbol: string]: WatchingStock };
 
   @Input('stocksDictionary')
-  stocksDictionary!: { [stockSymbol: string] : Stock };
+  stocksDictionary!: { [stockSymbol: string]: Stock };
 
   @Input('listName')
   listName?: string;
 
   email: any;
   watchingStockLists!: StockDetails[];
+  visible: boolean = true;
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
     private shareService: SharesService
-  ){
+  ) {
     this.email = this.authenticationService.GetUserEmail();
   }
 
   ngOnChanges(): void {
-    this.watchingStockLists = Object.keys(this.watchingStocks)
-      .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
+    this.updateWatchingStocks();
   }
 
-  async CreateStockNote(symbol: string){
+  async CreateStockNote(symbol: string) {
     let note = prompt("please enter a note");
 
-    if(!note || !this.listName)
+    if (!note || !this.listName)
       return;
-    
+
     this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
       .subscribe(res => {
-        if(res)
+        if (res) {
           this.watchingStocks[symbol].note = note!;
+          this.updateWatchingStocks();
+        }
         else
           alert("error updating the note");
       });
   }
 
-  async DeleteNote(symbol: string){
+  async DeleteNote(symbol: string) {
     let confirmDelete = confirm("You are deleting this note, are you sure?");
 
-    if(confirmDelete){
+    if (confirmDelete) {
       this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
-      .subscribe(res => {
-        if(res)
-          this.watchingStocks[symbol].note = "";
-        else
-          alert("error updating the note");
-      });
+        .subscribe(res => {
+          if (res) {
+            this.watchingStocks[symbol].note = "";
+            this.updateWatchingStocks();
+          }
+          else
+            alert("error updating the note");
+        });
     }
   }
 
-  GetKeys(dictionary: any){
+  GetKeys(dictionary: any) {
     let keys = Object.keys(dictionary);
-    
+
     return keys;
   }
 
-  CountShares(watchingStock: WatchingStock){
+  CountShares(watchingStock: WatchingStock) {
     let sum = 0;
     let keys = Object.keys(watchingStock.purchaseGuidToShares);
-    
-    keys.forEach((purchaseGuid: string) => 
+
+    keys.forEach((purchaseGuid: string) =>
       sum += watchingStock.purchaseGuidToShares[purchaseGuid].amount);
 
     return sum
@@ -85,14 +89,14 @@ export class PortfolioDetailsComponent {
   RedirectToSharesScreen(stockSymbol: string) {
     let confirmRedirect = confirm("redirecting to shares screen, continue?");
 
-    if(confirmRedirect)
-      this.router.navigate([this.router.url, 'shares'], 
-        { queryParams: { stockSymbol: stockSymbol, listName: this.listName }});
+    if (confirmRedirect)
+      this.router.navigate([this.router.url, 'shares'],
+        { queryParams: { stockSymbol: stockSymbol, listName: this.listName } });
   }
 
-  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetails{
+  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetails {
     let stock = this.stocksDictionary[stockSymbol];
-    
+
     return {
       symbol: stockSymbol,
       name: stock.name,
@@ -102,5 +106,10 @@ export class PortfolioDetailsComponent {
       price: stock.price,
       shares: this.CountShares(watchingStock)
     };
+  }
+
+  updateWatchingStocks(): void {
+    this.watchingStockLists = Object.keys(this.watchingStocks)
+      .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
   }
 }
