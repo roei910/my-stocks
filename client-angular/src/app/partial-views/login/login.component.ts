@@ -23,7 +23,7 @@ export class LoginComponent {
       if(!isConnected)
         alert("username or password was incorrect");
       else
-        this.router.navigate(['/']);
+        this.router.navigate(['user', 'stocks']);
     }); 
   }
 }

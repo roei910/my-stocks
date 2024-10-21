@@ -16,7 +16,7 @@ export class SharesService {
   constructor(private httpClient: HttpClient) { }
 
   AddUserShare(sharePurchase: SharePurchase): Observable<Share | null> {
-    var res = this.httpClient
+    let res = this.httpClient
     .post<Share>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, sharePurchase, {
       observe: 'response'
     })
@@ -36,7 +36,7 @@ export class SharesService {
 
   AddWatchingStock(email: string, listName: string, stockSymbol: string): 
     Observable<boolean>{
-    var res = this.httpClient
+    let res = this.httpClient
     .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`, 
       {
         email,
@@ -54,7 +54,7 @@ export class SharesService {
 
   RemoveWatchingStock(email: string, listName: string, stockSymbol: string):
     Observable<boolean>{
-    var res = this.httpClient
+    let res = this.httpClient
     .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`,
       {
         body:{
@@ -72,7 +72,7 @@ export class SharesService {
 
   UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): 
     Observable<boolean>{
-    var res = this.httpClient
+    let res = this.httpClient
     .patch<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock-note`,
       {
         email,
@@ -90,7 +90,7 @@ export class SharesService {
   }
 
   addUserList(stockListDetails: StockListDetails):Observable<boolean> {
-    var res = this.httpClient
+    let res = this.httpClient
     .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
       stockListDetails, {
         observe: 'response'
@@ -102,7 +102,7 @@ export class SharesService {
   }
 
   removeUserList(stockListDetails: StockListDetails):Observable<boolean> {
-    var res = this.httpClient
+    let res = this.httpClient
     .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
       {
         body: stockListDetails,

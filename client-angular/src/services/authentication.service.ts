@@ -15,7 +15,7 @@ export class AuthenticationService {
     private httpClient: HttpClient) { }
 
   GetUserEmail(): string {
-    var email = this.cookieService.getCookie("email");
+    let email = this.cookieService.getCookie("email");
 
     return email!;
   }
@@ -32,8 +32,8 @@ export class AuthenticationService {
   }
   
   isUserConnected(): boolean {
-    var user = this.cookieService.getCookie("email");
-    var isUserConnected = user != null && user != "";
+    let user = this.cookieService.getCookie("email");
+    let isUserConnected = user != null && user != "";
 
     this.isUserConnectedSubject.next(isUserConnected);
 
@@ -41,7 +41,7 @@ export class AuthenticationService {
   }
 
   TryConnect(email: string, password: string): Observable<boolean> {
-    var passwordHash = sha256(password);
+    let passwordHash = sha256(password);
 
     return this.httpClient
       .post<boolean>(`${environment.server_url}/User/connect-user`,

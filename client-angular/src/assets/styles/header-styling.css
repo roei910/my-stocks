@@ -3,7 +3,7 @@
     border-radius: 5px;
 }
 
-.p-menuitem{
+.p-menuitem {
     color: white;
     font-size: 16px;
     font-family: 'Arial', sans-serif;
@@ -20,8 +20,23 @@
     transition: background-color 0.3s ease;
 }
 
-.p-menuitem-link-active{
+.p-menuitem-link-active {
     background-color: transparent;
+}
+
+.p-menuitem-badge {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    font-size: 0.8rem;
+    z-index: 200;
+    background-color: cyan;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 @media (max-width: 768px) {

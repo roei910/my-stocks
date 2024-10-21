@@ -1,19 +1,10 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { StockDetails } from 'src/interfaces/stock-details';
 import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
-
-interface StockDetail{
-  name: string;
-  symbol: string;
-  price: number;
-  prediction: number;
-  shares: number;
-  note: string;
-  lastUpdate: Date;
-};
 
 @Component({
   selector: 'app-portfolio-details',
@@ -31,7 +22,7 @@ export class PortfolioDetailsComponent {
   listName?: string;
 
   email: any;
-  watchingStockLists!: StockDetail[];
+  watchingStockLists!: StockDetails[];
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -76,14 +67,14 @@ export class PortfolioDetailsComponent {
   }
 
   GetKeys(dictionary: any){
-    var keys = Object.keys(dictionary);
+    let keys = Object.keys(dictionary);
     
     return keys;
   }
 
   CountShares(watchingStock: WatchingStock){
-    var sum = 0;
-    var keys = Object.keys(watchingStock.purchaseGuidToShares);
+    let sum = 0;
+    let keys = Object.keys(watchingStock.purchaseGuidToShares);
     
     keys.forEach((purchaseGuid: string) => 
       sum += watchingStock.purchaseGuidToShares[purchaseGuid].amount);
@@ -92,14 +83,14 @@ export class PortfolioDetailsComponent {
   }
 
   RedirectToSharesScreen(stockSymbol: string) {
-    var confirmRedirect = confirm("redirecting to shares screen, continue?");
+    let confirmRedirect = confirm("redirecting to shares screen, continue?");
 
     if(confirmRedirect)
       this.router.navigate([this.router.url, 'shares'], 
         { queryParams: { stockSymbol: stockSymbol, listName: this.listName }});
   }
 
-  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetail{
+  mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetails{
     let stock = this.stocksDictionary[stockSymbol];
     
     return {

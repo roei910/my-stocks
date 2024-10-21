@@ -42,15 +42,15 @@ export class StockSharesComponent {
   }
 
   AddShare(symbol: string, listName: string){
-    var amount = parseInt(prompt("number of shares") ?? "0");
-    var avgPrice = parseFloat(prompt("average price for purchase") ?? "0.0");
-    var userDate = prompt("enter date", "")?.split(".").join("/") ?? "";
-    var date = userDate != "" ? new Date(userDate) : new Date(Date.now());
+    let amount = parseInt(prompt("number of shares") ?? "0");
+    let avgPrice = parseFloat(prompt("average price for purchase") ?? "0.0");
+    let userDate = prompt("enter date", "")?.split(".").join("/") ?? "";
+    let date = userDate != "" ? new Date(userDate) : new Date(Date.now());
     
     if(this.userEmail == null)
       return;
     
-    var sharePurchase: SharePurchase = {
+    let sharePurchase: SharePurchase = {
       stockSymbol: symbol,
       amount,
       purchasingPrice: avgPrice,
@@ -72,12 +72,12 @@ export class StockSharesComponent {
     if(this.userEmail == null)
       return;
 
-    var shouldContinue = confirm("You are deleting a share, are you sure?");
+    let shouldContinue = confirm("You are deleting a share, are you sure?");
 
     if(!shouldContinue)
       return;
 
-    var shareSale: ShareSale = {
+    let shareSale: ShareSale = {
       listName: this.listName,
       sharePurchaseGuid: purchaseId,
       stockSymbol: stockSymbol,

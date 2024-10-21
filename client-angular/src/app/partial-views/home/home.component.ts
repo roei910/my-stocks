@@ -13,7 +13,7 @@ export class HomeComponent {
   ){}
 
   ngOnInit(): void {
-    var email = this.authenticationService.GetUserEmail();
+    let email = this.authenticationService.GetUserEmail();
 
     if(email == null)
       return;

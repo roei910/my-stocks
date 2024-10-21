@@ -1,4 +1,4 @@
-<div class="grid-container">
+<div class="grid-container" *ngIf="visible">
     <div class="sidebar">
         <p-panel header="Portfolios">
             <div class="button-container">
@@ -11,13 +11,17 @@
     </div>
     <div class="content">
         <p-panel header="Portfolio Details">
+            <div class="button-container" *ngIf="selectedPortfolioName != undefined">
+                <button (click)="AddListStock(selectedPortfolioName!)">Add Stock</button>
+                <button (click)="RemoveListStock(selectedPortfolioName!)">Remove Stock</button>
+            </div>
             <app-portfolio-details
                 *ngIf="selectedPortfolioName != undefined && selectedPortfolio != undefined; else noSelection"
                 [listName]="selectedPortfolioName" [watchingStocks]="selectedPortfolio"
                 [stocksDictionary]="this.stocks">
             </app-portfolio-details>
             <ng-template #noSelection>
-                <p>Please choose an item</p>
+                <p>Please choose a portfolio</p>
             </ng-template>
         </p-panel>
     </div>
