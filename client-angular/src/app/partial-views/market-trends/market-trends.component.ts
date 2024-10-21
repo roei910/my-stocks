@@ -1,6 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ColumnDefinition } from 'src/models/filterPaginationTable/column-definition';
+import { Component } from '@angular/core';
 import { MarketTrend } from 'src/models/marketTrends/market-trend';
 import { StockService } from 'src/services/stock.service';
 
@@ -9,38 +7,15 @@ import { StockService } from 'src/services/stock.service';
   templateUrl: './market-trends.component.html',
   styleUrls: ['./market-trends.component.css']
 })
-export class MarketTrendsComponent implements OnInit {
-  marketTrends?: Observable<MarketTrend[]>;
-  stockNewsColumnDefinitions: ColumnDefinition[] = [
-    {
-      headerName: "articleTitle",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    }
-  ];
+export class MarketTrendsComponent {
+  marketTrends!: MarketTrend[];
+  selectedMarketTrend?: MarketTrend;
 
-  trendingStockColumnDefinitions: ColumnDefinition[] = [
-    {
-      headerName: "symbol",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    },
-    {
-      headerName: "name",
-      isFilterAllowed: true,
-      isOrderAllowed: true
-    },
-    {
-      headerName: "price",
-      isFilterAllowed: false,
-      isOrderAllowed: true
-    }
-  ];
-
-  constructor(private stockService: StockService) { }
-
-  ngOnInit(): void {
-    this.marketTrends = this.stockService.GetMarketsTrends();
+  constructor(private stockService: StockService) { 
+    this.stockService.GetMarketsTrends()
+      .subscribe(marketTrends => {
+        this.marketTrends = marketTrends;
+      });
   }
 
   GenerateMarketTrendName(trendName: string): string {

@@ -1,15 +1,26 @@
 @import "primeng/resources/themes/bootstrap4-light-blue/theme.css";
 @import "assets/styles/header-styling.css";
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+@import "assets/styles/table-styling.css";
 
 body {
     font-family: 'Poppins', sans-serif;
     line-height: 1.6;
     background-color: #f7f7f7;
     color: #333;
+}
+
+.p-hidden-accessible{
+    display: none;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+.gap-2{
+    gap: 2rem;
 }

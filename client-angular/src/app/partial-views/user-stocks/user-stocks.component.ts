@@ -15,64 +15,72 @@ import { UserService } from 'src/services/user.service';
 export class UserStocksComponent {
   user!: User;
   userEmail?: string | null;
-  stocks: { [stockSymbol: string] : Stock } = {};
+  stocks: { [stockSymbol: string]: Stock } = {};
+  listNames: string[] = [];
+  selectedPortfolio: {
+    [stockSymbol: string]: WatchingStock
+  } | undefined;
+  selectedPortfolioName: string | undefined;
 
   constructor(private stockService: StockService,
     private userService: UserService,
     private shareService: SharesService
-  ){}
+  ) { }
 
   ngOnInit(): void {
-    this.userService.GetUser().subscribe(user => this.user = user);
-    this.stockService.GetAllStocks().subscribe(stocks => 
+    this.userService.GetUser().subscribe(user => {
+      this.user = user;
+      this.listNames = Object.keys(user.watchingStocksByListName);
+    });
+    this.stockService.GetAllStocks().subscribe(stocks =>
       stocks.map(stock => this.stocks[stock.symbol] = stock));
   }
 
-  GetKeys(dictionary: any): string[]{
-    if(dictionary == null)
+  GetKeys(dictionary: any): string[] {
+    if (dictionary == null)
       return [];
 
     var keys = Object.keys(dictionary);
-    
+
     return keys;
   }
 
-  AddUserList(){
+  AddUserList() {
     var listName = prompt("please enter a list name, only 1 word");
 
-    if(listName == null)
+    if (listName == null)
       return;
 
-    let stockListDetails: StockListDetails = 
+    let stockListDetails: StockListDetails =
     {
       userEmail: this.userEmail!,
       listName
     }
-    
+
     this.shareService.addUserList(stockListDetails)
       .subscribe(res => {
-        if(res)
+        if (res)
           this.user.watchingStocksByListName[listName!] = {}
         else
           alert("something went wrong, couldnt add list")
       });
   }
 
-  RemoveUserList(){
+  RemoveUserList() {
     var listName = prompt("please enter a list name, only 1 word");
 
-    if(listName == null)
+    if (listName == null)
       return;
 
-    let stockListDetails: StockListDetails = 
+    let stockListDetails: StockListDetails =
     {
       userEmail: this.userEmail!,
       listName
     }
-    
+
     this.shareService.removeUserList(stockListDetails).subscribe(res => {
-      if(res)
-        delete(this.user.watchingStocksByListName[listName!]);
+      if (res)
+        delete (this.user.watchingStocksByListName[listName!]);
       else
         alert("something went wrong, couldnt remove list")
     });
@@ -81,13 +89,12 @@ export class UserStocksComponent {
   AddListStock(listName: string) {
     var stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
 
-    if(stockSymbol == null)
+    if (stockSymbol == null)
       return;
-    
+
     this.shareService.AddWatchingStock(this.userEmail!, listName, stockSymbol)
       .subscribe(res => {
-        if(res)
-        {
+        if (res) {
           var watchingStock: WatchingStock = {
             purchaseGuidToShares: {},
             note: ""
@@ -98,5 +105,12 @@ export class UserStocksComponent {
         else
           alert("something went wrong, couldnt add stock to list...")
       });
+  }
+
+  onSelectedPortfolio(event: any){
+    const { option, value } = event;
+
+    if(option != undefined)
+      this.selectedPortfolio = this.user.watchingStocksByListName[option];
   }
 }

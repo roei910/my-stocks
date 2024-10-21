@@ -1,50 +1,61 @@
-<table id="stockTable">
-    <thead>
-      <tr>
-        <th>Name</th>
-        <th>Symbol</th>
-        <th>Price</th>
-        <th>Prediction (1 year)</th>
-        <th>Shares</th>
-        <th>Note</th>
-        <th>Last Update</th>
-        <th>Options</th>
-      </tr>
-    </thead>
-    <tbody id="stockList" *ngIf="GetKeys(stocksDictionary).length > 0">
-      <tr class="stock-card" *ngFor="let symbol of GetKeys(watchingStocks)">
-        <td>
-          <a
-          [routerLink]="['/', 'stocks', 'information']" 
-          [queryParams]="{ stockSymbol: symbol }">
-            {{stocksDictionary[symbol].name}}
-          </a>
-        </td>
-        <td>{{symbol}}</td>
-        <td>{{stocksDictionary[symbol].price}}</td>
-        <td>{{stocksDictionary[symbol].analysis?.targetMeanPrice ?? ""}}</td>
-        <td>
-          <p (click)="RedirectToSharesScreen(symbol)">{{CountShares(watchingStocks[symbol])}}</p>
-        </td>
-        <td>
-          <ng-container *ngIf="!watchingStocks[symbol].note; else elseTemplate">
-            <button (click)="CreateStockNote(symbol)">+</button>
-          </ng-container>
-          <ng-template #elseTemplate>
-            <p (click)="DeleteNote(symbol)">{{watchingStocks[symbol].note}}</p>
-          </ng-template>
-        </td>
-        <td>{{stocksDictionary[symbol].updatedTime | date}}</td>
-        <td>
-          <div class="dropdown">
-            <span>+</span>
-            <div class="dropdown-content">
-                <span class="dropdown-item link">Information</span>
-                <span class="dropdown-item link">Information</span>
-                <span class="dropdown-item link">Information</span>
-            </div>
+<p-table [value]="this.watchingStockLists"> 
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="name">
+        Name <p-sortIcon field="name"/>
+      </th>
+      <th pSortableColumn="symbol">
+        Symbol <p-sortIcon field="symbol"/>
+      </th>
+      <th pSortableColumn="price">
+        Price <p-sortIcon field="price"/>
+      </th>
+      <th pSortableColumn="prediction">
+        Predicition <p-sortIcon field="prediction"/>
+      </th>
+      <th pSortableColumn="shares">
+        Shares <p-sortIcon field="shares"/>
+      </th>
+      <th>Note</th>
+      <th>Last Update</th>
+      <th>Options</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-watchingStockList>
+    <tr>
+      <td>
+        <a [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: watchingStockList.symbol}">
+          {{watchingStockList.name}}
+        </a>
+      </td>
+      <td>{{watchingStockList.symbol}}</td>
+      <td>{{watchingStockList.price}}</td>
+      <td>{{watchingStockList.prediction}}</td>
+      <td>
+        <p (click)="RedirectToSharesScreen(watchingStockList.stockSymbol)">
+          {{watchingStockList.shares}}
+        </p>
+      </td>
+      <td>
+        <ng-container *ngIf="!watchingStockList.note; else elseTemplate">
+          <button (click)="CreateStockNote(watchingStockList.stockSymbol)">+</button>
+        </ng-container>
+        <ng-template #elseTemplate>
+          <p (click)="DeleteNote(watchingStockList.symbol)">{{watchingStockList.note}}</p>
+        </ng-template>
+      </td>
+      <td>{{watchingStockList.lastUpdate | date}}</td>
+      <td>
+        +
+        <!-- <div class="dropdown">
+          <span>+</span>
+          <div class="dropdown-content">
+            <span class="dropdown-item link">Information</span>
+            <span class="dropdown-item link">Information</span>
+            <span class="dropdown-item link">Information</span>
           </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </div> -->
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

@@ -80,8 +80,9 @@ export class StockDetailsComponent {
       targetPrice: targetPrice,
       isBiggerThanOrEqual: biggerThanOrEqual.toLowerCase() == "true"
     }
-    console.log(stockNotification);
     
+    //TODO: i think this is not finished
+
     this.userService.AddStockNotification(stockNotification)
       .subscribe(notificationId => console.log(notificationId));
   }
