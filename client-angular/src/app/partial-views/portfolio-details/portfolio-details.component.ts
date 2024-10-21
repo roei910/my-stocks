@@ -67,14 +67,14 @@ export class PortfolioDetailsComponent {
   }
 
   GetKeys(dictionary: any){
-    var keys = Object.keys(dictionary);
+    let keys = Object.keys(dictionary);
     
     return keys;
   }
 
   CountShares(watchingStock: WatchingStock){
-    var sum = 0;
-    var keys = Object.keys(watchingStock.purchaseGuidToShares);
+    let sum = 0;
+    let keys = Object.keys(watchingStock.purchaseGuidToShares);
     
     keys.forEach((purchaseGuid: string) => 
       sum += watchingStock.purchaseGuidToShares[purchaseGuid].amount);
@@ -83,7 +83,7 @@ export class PortfolioDetailsComponent {
   }
 
   RedirectToSharesScreen(stockSymbol: string) {
-    var confirmRedirect = confirm("redirecting to shares screen, continue?");
+    let confirmRedirect = confirm("redirecting to shares screen, continue?");
 
     if(confirmRedirect)
       this.router.navigate([this.router.url, 'shares'], 

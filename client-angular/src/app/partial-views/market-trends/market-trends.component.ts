@@ -19,13 +19,13 @@ export class MarketTrendsComponent {
   }
 
   GenerateMarketTrendName(trendName: string): string {
-    var words = trendName.split('_').map(word => {
-      var updatedWord = word[0].toUpperCase() + word.toLowerCase().slice(1);
+    let words = trendName.split('_').map(word => {
+      let updatedWord = word[0].toUpperCase() + word.toLowerCase().slice(1);
 
       return updatedWord;
     });
 
-    var updatedTrendName = words.join(" ");
+    let updatedTrendName = words.join(" ");
 
     return updatedTrendName;
   }

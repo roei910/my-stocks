@@ -45,13 +45,13 @@ export class UserStocksComponent {
     if (dictionary == null)
       return [];
 
-    var keys = Object.keys(dictionary);
+    let keys = Object.keys(dictionary);
 
     return keys;
   }
 
   AddUserList() {
-    var listName = prompt("please enter a list name, only 1 word");
+    let listName = prompt("please enter a list name, only 1 word");
 
     if (listName == null)
       return;
@@ -73,7 +73,7 @@ export class UserStocksComponent {
   }
 
   RemoveUserList() {
-    var listName = prompt("please enter a list name, only 1 word");
+    let listName = prompt("please enter a list name, only 1 word");
 
     if (listName == null)
       return;
@@ -99,7 +99,7 @@ export class UserStocksComponent {
 
   AddListStock(listName: string) {
     //TODO: move to the portfolio
-    var stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
+    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
 
     if (stockSymbol == null)
       return;
@@ -117,7 +117,7 @@ export class UserStocksComponent {
     this.shareService.AddWatchingStock(this.user.email!, listName, stockSymbol)
       .subscribe(res => {
         if (res) {
-          var watchingStock: WatchingStock = {
+          let watchingStock: WatchingStock = {
             purchaseGuidToShares: {},
             note: ""
           };
@@ -132,7 +132,7 @@ export class UserStocksComponent {
 
   RemoveListStock(listName: string) {
     //TODO: move to the portfolio
-    var stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
+    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
 
     if (stockSymbol == null)
       return;

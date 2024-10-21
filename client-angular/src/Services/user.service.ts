@@ -45,7 +45,7 @@ export class UserService {
   CreateUser(user: UserCreation): Observable<boolean> {
     user.password = sha256(user.password);
     
-    var res = this.httpClient
+    let res = this.httpClient
     .post(`${environment.server_url}/User/register`, user,
       {
         observe: 'response',
@@ -58,7 +58,7 @@ export class UserService {
   }
 
   AddStockNotification(stockNotification: StockNotification): Observable<ObjectIdResponse>{
-    var res = this.httpClient
+    let res = this.httpClient
       .post<ObjectIdResponse>(`${environment.server_url}/User/notification`, 
         stockNotification);
 

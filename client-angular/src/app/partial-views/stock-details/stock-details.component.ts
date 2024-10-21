@@ -51,28 +51,28 @@ export class StockDetailsComponent {
   }
 
   AddToList(){
-    var email = this.authenticationService.GetUserEmail();
+    let email = this.authenticationService.GetUserEmail();
 
     if(email == null || this.symbol == null)
       return;
 
-    var listName: string = prompt("please enter the list name") ?? "";
+    let listName: string = prompt("please enter the list name") ?? "";
 
     this.shareService.AddWatchingStock(email, listName, this.symbol);
   }
 
   AddNotification(){
-    var email = this.authenticationService.GetUserEmail();
+    let email = this.authenticationService.GetUserEmail();
 
     if(email == null || this.symbol == null)
       return;
 
-    var targetPrice: number = parseInt(prompt("please enter a target price") ?? "0");
+    let targetPrice: number = parseInt(prompt("please enter a target price") ?? "0");
 
     if(targetPrice == null || targetPrice == 0)
       return;
 
-    var biggerThanOrEqual: string = prompt("should the stock price be higher than or equal to the target price") ?? "true";
+    let biggerThanOrEqual: string = prompt("should the stock price be higher than or equal to the target price") ?? "true";
 
     let stockNotification: StockNotification = {
       userEmail: email,

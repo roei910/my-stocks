@@ -43,10 +43,11 @@ export class HeaderComponent implements OnInit {
       {
         label: 'User',
         visible: false,
+        badge: "2",
         items: [
           { label: 'My Stocks', routerLink: ['user', 'stocks'] },
-          { label: 'Information', routerLink: ['user', 'information'] },
-          { label: 'Notifications', routerLink: ['user', 'notifications'] },
+          { label: 'Information', routerLink: ['user', 'information']},
+          { label: 'Notifications', routerLink: ['user', 'notifications'], badge: "2" },
           { label: 'Sign Out', command: () => this.SignOut() },
         ]
       }
