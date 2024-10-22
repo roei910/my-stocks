@@ -112,4 +112,21 @@ export class PortfolioDetailsComponent {
     this.watchingStockLists = Object.keys(this.watchingStocks)
       .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
   }
+
+  RemoveListStock(stockSymbol: string): void {
+    let confirmRedirect = confirm("removing stock from portfolio, are you sure?");
+    
+    if(!confirmRedirect)
+      return;
+
+    this.shareService.RemoveWatchingStock(this.email, this.listName!, stockSymbol)
+      .subscribe(res => {
+        if (res) {
+          delete this.watchingStocks[stockSymbol!];
+          this.updateWatchingStocks();
+        }
+        else
+          alert("something went wrong, couldnt remove stock from list...")
+      });
+  }
 }

@@ -44,7 +44,7 @@
       <td>
         <p-button icon="pi pi-search" [rounded]="true" [text]="true" [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: watchingStockList.symbol}"/>
         <p-button icon="pi pi-pencil" [rounded]="true" [text]="true" (onClick)="RedirectToSharesScreen(watchingStockList.stockSymbol)"/>
-        <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" />
+        <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (onClick)="RemoveListStock(watchingStockList.symbol)"/>
       </td>
     </tr>
   </ng-template>

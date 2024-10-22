@@ -16,8 +16,6 @@
             <div class="button-container" *ngIf="selectedPortfolioName != undefined">
                 <p-button label="Add Stock" [text]="true" [raised]="true" severity="secondary"
                     (onClick)="AddListStock(selectedPortfolioName!)" />
-                <p-button label="Remove Stock" [text]="true" [raised]="true" severity="secondary"
-                    (onClick)="RemoveListStock(selectedPortfolioName!)" />
             </div>
             <app-portfolio-details
                 *ngIf="selectedPortfolioName != undefined && selectedPortfolio != undefined; else noSelection"

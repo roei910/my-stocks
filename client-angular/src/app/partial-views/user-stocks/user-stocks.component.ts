@@ -130,34 +130,6 @@ export class UserStocksComponent {
       });
   }
 
-  RemoveListStock(listName: string) {
-    //TODO: move to the portfolio
-    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
-
-    if (stockSymbol == null)
-      return;
-
-    let foundStock = Object.keys(this.user.watchingStocksByListName[listName])
-      .find(currectStockSymbol => currectStockSymbol == stockSymbol)
-
-    if (foundStock == undefined) {
-      let message = this.messageFactory.createErrorMessage("stock was not found at the current portfolio.")
-      this.messageService.add(message);
-
-      return;
-    }
-
-    this.shareService.RemoveWatchingStock(this.user.email!, listName, stockSymbol)
-      .subscribe(res => {
-        if (res) {
-          delete this.user.watchingStocksByListName[listName][stockSymbol!];
-          this.updatePortfolio();
-        }
-        else
-          alert("something went wrong, couldnt remove stock from list...")
-      });
-  }
-
   onSelectedPortfolio(event: any) {
     const { option, value } = event;
 
