@@ -11,7 +11,7 @@ export class MarketTrendsComponent {
   marketTrends!: MarketTrend[];
   selectedMarketTrend?: MarketTrend;
 
-  constructor(private stockService: StockService) { 
+  constructor(private stockService: StockService) {
     this.stockService.GetMarketsTrends()
       .subscribe(marketTrends => {
         this.marketTrends = marketTrends;
@@ -28,5 +28,9 @@ export class MarketTrendsComponent {
     let updatedTrendName = words.join(" ");
 
     return updatedTrendName;
+  }
+
+  openExternalLink(url: string) {
+    window.open(url, '_blank');
   }
 }
