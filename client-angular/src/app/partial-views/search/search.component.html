@@ -10,22 +10,31 @@
                 <p>No stocks found.</p>
             </div>
             <ng-template #elseTemplate>
-                <table id="stockTable">
-                    <thead>
+                <p-table [value]="stocksList" [paginator]="stocksList.length > 10" [rows]="10" [rowsPerPageOptions]="[5, 10, 20]">
+                    <ng-template pTemplate="header">
                         <tr>
-                            <th>Name</th>
-                            <th>Symbol</th>
-                            <th>Information</th>
+                            <th pSortableColumn="name">
+                                Name <p-sortIcon field="name" />
+                            </th>
+                            <th pSortableColumn="symbol">
+                                Symbol <p-sortIcon field="symbol" />
+                            </th>
+                            <th>
+                                Options
+                            </th>
                         </tr>
-                    </thead>
-                    <tbody id="stockList">
-                        <tr class="stock-card" *ngFor="let stock of stocksList">
+                    </ng-template>
+                    <ng-template pTemplate="body" let-stock>
+                        <tr>
                             <td>{{stock.name}}</td>
                             <td>{{stock.symbol}}</td>
-                            <td><button (click)="NavigateStockInformation(stock.symbol)">+</button></td>
+                            <td>
+                                <p-button icon="pi pi-search" [rounded]="true" [text]="true"
+                                    [routerLink]="['/', 'stocks', 'information']" [queryParams]="{ stockSymbol: stock.symbol}" />
+                            </td>
                         </tr>
-                    </tbody>
-                </table>
+                        </ng-template>
+                </p-table>
             </ng-template>
         </div>
     </div>
