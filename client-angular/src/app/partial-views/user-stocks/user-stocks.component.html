@@ -4,11 +4,14 @@
             <div class="button-container">
                 <p-button label="Add List" [text]="true" [raised]="true" severity="secondary"
                     (onClick)="AddUserList()" />
-                <p-button label="Remove List" [text]="true" [raised]="true" severity="secondary"
-                    (onClick)="RemoveUserList()" />
             </div>
             <p-listbox [options]="listNames" [(ngModel)]="selectedPortfolioName"
-                (onClick)="onSelectedPortfolio($event)" />
+                (onClick)="onSelectedPortfolio($event)">
+                <ng-template let-item pTemplate="item">
+                    <span>{{item}}</span>
+                    <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger" (onClick)="RemoveUserList(item)"/>
+                </ng-template>
+            </p-listbox>
         </p-panel>
     </div>
     <div class="content">

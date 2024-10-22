@@ -72,12 +72,7 @@ export class UserStocksComponent {
       });
   }
 
-  RemoveUserList() {
-    let listName = prompt("please enter a list name, only 1 word");
-
-    if (listName == null)
-      return;
-
+  RemoveUserList(listName: string) {
     let stockListDetails: StockListDetails =
     {
       userEmail: this.user.email!,

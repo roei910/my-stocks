@@ -13,7 +13,7 @@
             <p *ngIf="selectedMarketTrend == undefined">
                 Please choose a market trend
             </p>
-            <div class="flex-container flex-column gap-2">
+            <div class="container flex-column gap-2">
                 <p-table *ngIf="selectedMarketTrend != undefined" [value]="selectedMarketTrend!.stockNews"
                     [paginator]="selectedMarketTrend!.stockNews.length > 5" [rows]="5" [rowsPerPageOptions]="[5, 10]">
                     <ng-template pTemplate="header">
