@@ -30,7 +30,7 @@
     right: 0px;
     font-size: 0.8rem;
     z-index: 200;
-    background-color: cyan;
+    background-color: #0076b64c;
     width: 16px;
     height: 16px;
     border-radius: 50%;
@@ -65,7 +65,6 @@
 
     .p-menubar .p-menuitem {
         font-size: 14px;
-        /* Smaller font for mobile */
         padding: 8px 12px;
     }
 }
