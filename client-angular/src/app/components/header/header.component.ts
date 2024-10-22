@@ -35,7 +35,8 @@ export class HeaderComponent implements OnInit {
       },
       { 
         label: 'Market Trends', 
-        routerLink: ['marketTrends'] 
+        routerLink: ['marketTrends'] ,
+        visible: false
       },
       {
         label: 'Login',
@@ -60,11 +61,15 @@ export class HeaderComponent implements OnInit {
     let userItemIndex = this.items
       .findIndex(item => item.label == 'User');
 
+    let marketTrendsItemIndex = this.items
+      .findIndex(item => item.label == 'Market Trends');
+
     this.authenticationService.userConnection()
       .subscribe(isUserConnected => {
         this.items[loginItemIndex].visible = !isUserConnected;
         this.items[userItemIndex].visible = isUserConnected;
-
+        this.items[marketTrendsItemIndex].visible = isUserConnected;
+        
         this.updateVisibility();
       });
 
