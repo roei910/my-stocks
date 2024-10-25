@@ -14,11 +14,7 @@ export class StocksFilterPaginationTableComponent {
 
   ngOnInit(): void {
     this.stockService.GetAllStocks()
-      .subscribe(stocks => {
-        this.stocks = stocks;
-        console.log(this.stocks);
-        
-      });
+      .subscribe(stocks => this.stocks = stocks);
   }
 
   sortTargetPriceChangePercent(event: any) {
