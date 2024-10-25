@@ -53,6 +53,9 @@
                             <th pSortableColumn="change">
                                 Change <p-sortIcon field="change"/>
                             </th>
+                            <th pSortableColumn="changePercent">
+                                Change (%) <p-sortIcon field="changePercent"/>
+                            </th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-trendingStock>
@@ -60,7 +63,8 @@
                             <td>{{trendingStock.symbol}}</td>
                             <td>{{trendingStock.name}}</td>
                             <td>{{trendingStock.price}}</td>
-                            <td>{{trendingStock.change}} ({{trendingStock.changePercent}}%)</td>
+                            <td>{{trendingStock.change}}</td>
+                            <td>{{trendingStock.changePercent}}%</td>
                         </tr>
                     </ng-template>
                 </p-table>
