@@ -1,12 +1,11 @@
 <div class="stock-details-container">
     <h2>Stock Details</h2>
-    <button (click)="AddNotification()">Add Notification</button><br>
-    <button (click)="AddToList()">Add Stock To List</button>
+    <button (click)="visibleAddNotificationDialog = true">Add Notification</button><br>
+    <button (click)="visibleAddStockToListDialog = true">Add Stock To List</button>
     <div id="stockDetails">
         <h3>{{stock?.name}}</h3>
         <p>current price: {{stock?.price}}</p>
         <h4>stock analysis</h4>
-        <p>recomendation: {{stock?.analysis?.recomendationKey}}</p>
         <p>target high price: {{stock?.analysis?.targetHighPrice}}</p>
         <p>target low price: {{stock?.analysis?.targetLowPrice}}</p>
         <p>target mean price: {{stock?.analysis?.targetMeanPrice}}</p>
@@ -14,3 +13,23 @@
         <p-chart type="bar" [data]="data" height="400" width="400"></p-chart>
     </div>
 </div>
+<p-dialog header="Edit Note" [modal]="true" [(visible)]="visibleAddNotificationDialog" [style]="{ width: '25rem' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="targetPrice" class="font-semibold w-6rem">Target Price: </label>
+        <input pInputText id="targetPrice" class="flex-auto" autocomplete="off" [(ngModel)]="targetPrice" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="visibleAddNotificationDialog = false" />
+        <p-button label="Save" (onClick)="addNotification()" />
+    </div>
+</p-dialog>
+<p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddStockToListDialog" [style]="{ width: '25rem' }">
+    <div class="flex align-items-center gap-3 mb-3">
+        <label for="listName" class="font-semibold w-6rem">List Name: </label>
+        <input pInputText id="listName" class="flex-auto" autocomplete="off" [(ngModel)]="listName" />
+    </div>
+    <div class="flex justify-content-end gap-2">
+        <p-button label="Cancel" severity="secondary" (onClick)="visibleAddStockToListDialog = false" />
+        <p-button label="Save" (onClick)="addStockToList(listName)" />
+    </div>
+</p-dialog>

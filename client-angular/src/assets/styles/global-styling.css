@@ -17,3 +17,7 @@
 .m-2{
     margin: 2rem;
 }
+
+.align-items-center{
+    align-items: center;
+}

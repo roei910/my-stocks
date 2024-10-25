@@ -5,6 +5,7 @@ import { StockNotification } from 'src/models/users/stock-notification';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
+import { ToastService } from 'src/services/toast.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -13,77 +14,78 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./stock-details.component.css']
 })
 export class StockDetailsComponent {
-  symbol?: string | null;
+  symbol?: string | undefined;
   stock?: Stock;
   data?: any;
+  visibleAddNotificationDialog: boolean = false;
+  visibleAddStockToListDialog: boolean = false;
+  listName: string = '';
+  targetPrice: number = 0;
 
   constructor(private activatedRoute: ActivatedRoute,
     private stockService: StockService,
     private shareService: SharesService,
     private authenticationService: AuthenticationService,
-    private userService: UserService
-  ) { 
-      const tempData = [30, 25, 20, 15, 10];
+    private userService: UserService,
+    private toastService: ToastService
+  ) {
+    const tempData = [30, 25, 20, 15, 10];
 
-      this.data = {
-        labels: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB'],
-        datasets: [
-          {
-            // label: 'Sales',
-            data: tempData,
-            fill: true,
-            borderColor: '#FFFFFF'
-          }
-        ]
-      };
-    }
+    this.data = {
+      labels: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB'],
+      datasets: [
+        {
+          label: 'Stock Price History',
+          data: tempData,
+          fill: true,
+          borderColor: '#FFFFFF'
+        }
+      ]
+    };
+  }
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(params => {
       this.symbol = params['stockSymbol'];
     });
 
-    if(!this.symbol)
+    if (!this.symbol)
       return;
 
     this.stockService.GetStockBySymbol(this.symbol)
       .subscribe(stock => this.stock = stock);
   }
 
-  AddToList(){
+  addStockToList(listName: string) {
+    this.visibleAddStockToListDialog = false;
     let email = this.authenticationService.GetUserEmail();
 
-    if(email == null || this.symbol == null)
+    if (email == null) {
+      alert("Please login to your account first");
       return;
+    }
 
-    let listName: string = prompt("please enter the list name") ?? "";
-
-    this.shareService.AddWatchingStock(email, listName, this.symbol);
+    this.shareService.AddWatchingStock(email, listName, this.symbol!)
+      .subscribe(res => {
+        if (!res)
+          alert("something went wrong");
+      });
   }
 
-  AddNotification(){
-    let email = this.authenticationService.GetUserEmail();
-
-    if(email == null || this.symbol == null)
-      return;
-
-    let targetPrice: number = parseInt(prompt("please enter a target price") ?? "0");
-
-    if(targetPrice == null || targetPrice == 0)
-      return;
-
-    let biggerThanOrEqual: string = prompt("should the stock price be higher than or equal to the target price") ?? "true";
+  addNotification() {
+    this.visibleAddNotificationDialog = false;
+    let email = this.authenticationService.GetUserEmail()!;
 
     let stockNotification: StockNotification = {
       userEmail: email,
-      stockSymbol: this.symbol,
-      targetPrice: targetPrice,
-      isBiggerThanOrEqual: biggerThanOrEqual.toLowerCase() == "true"
+      stockSymbol: this.symbol!,
+      targetPrice: this.targetPrice,
+      isBiggerThanOrEqual: true
     }
-    
-    //TODO: i think this is not finished
 
     this.userService.AddStockNotification(stockNotification)
-      .subscribe(notificationId => console.log(notificationId));
+      .subscribe(() => {
+        this.toastService.addSuccessMessage("Notification added successfully");
+      });
   }
 }

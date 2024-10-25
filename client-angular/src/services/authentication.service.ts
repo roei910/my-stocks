@@ -14,10 +14,10 @@ export class AuthenticationService {
   constructor(private cookieService: CookiesService,
     private httpClient: HttpClient) { }
 
-  GetUserEmail(): string {
+  GetUserEmail(): string | null {
     let email = this.cookieService.getCookie("email");
 
-    return email!;
+    return email;
   }
 
   DisconnectUser() {

@@ -6,6 +6,7 @@ import { ShareSale } from 'src/models/shares/share-sale';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
+import { ToastService } from 'src/services/toast.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -18,11 +19,16 @@ export class StockSharesComponent {
   symbol!: string;
   listName!: string;
   watchingStock : WatchingStock | undefined;
+  visibleAddShareDialog : boolean = false;
+  purchaseDate: Date | undefined;
+  numberOfShares: number | undefined;
+  stockPrice: number | undefined;
 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
     private authenticationService: AuthenticationService,
-    private shareService: SharesService
+    private shareService: SharesService,
+    private toastService: ToastService
   ){ }
 
   ngOnInit() {
@@ -31,40 +37,38 @@ export class StockSharesComponent {
       this.listName = params['listName'];
     });
 
-    this.userEmail = this.authenticationService.GetUserEmail();
-
-    if(this.userEmail == null)
-      return;
+    this.userEmail = this.authenticationService.GetUserEmail()!;
 
     this.userService.GetUser().subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
     });
   }
 
-  AddShare(symbol: string, listName: string){
-    let amount = parseInt(prompt("number of shares") ?? "0");
-    let avgPrice = parseFloat(prompt("average price for purchase") ?? "0.0");
-    let userDate = prompt("enter date", "")?.split(".").join("/") ?? "";
-    let date = userDate != "" ? new Date(userDate) : new Date(Date.now());
-    
-    if(this.userEmail == null)
+  addShare() {
+    if(this.purchaseDate == undefined)
+      this.purchaseDate = new Date();
+
+    if(this.numberOfShares == undefined || this.stockPrice == undefined){
       return;
-    
+    }
+
     let sharePurchase: SharePurchase = {
-      stockSymbol: symbol,
-      amount,
-      purchasingPrice: avgPrice,
-      userEmail: this.userEmail,
-      listName,
-      purchaseDate: date
+      stockSymbol: this.symbol,
+      amount: this.numberOfShares,
+      purchasingPrice: this.stockPrice,
+      userEmail: this.userEmail!,
+      listName: this.listName!,
+      purchaseDate: this.purchaseDate
     };
 
+    console.log(sharePurchase);
+    
     this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
           this.watchingStock!.purchaseGuidToShares[res.Id!] = res
         else
-          alert("couldnt add share, something went wrong");
+          this.toastService.addErrorMessage("couldnt add share, something went wrong");
       });
   }
 
@@ -89,7 +93,7 @@ export class StockSharesComponent {
       if(res)
         delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
       else
-        alert("couldnt remove share, something went wrong");
+        this.toastService.addErrorMessage("couldnt remove share, something went wrong");
     });
   }
 

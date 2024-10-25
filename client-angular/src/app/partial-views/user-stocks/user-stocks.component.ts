@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { NotFoundError } from 'rxjs';
-import { MessageFactory } from 'src/factories/message-factory';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { User } from 'src/models/users/user';
 import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
+import { ToastService } from 'src/services/toast.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -24,12 +22,15 @@ export class UserStocksComponent {
   } | undefined;
   selectedPortfolioName: string | undefined;
   visible: boolean = true;
+  visibleAddStockToListDialog: boolean = false;
+  visibleAddUserListDialog: boolean = false;
+  stockSymbolToAdd: string = '';
+  listNameToAdd: string = '';
 
   constructor(private stockService: StockService,
     private userService: UserService,
     private shareService: SharesService,
-    private messageService: MessageService,
-    private messageFactory: MessageFactory
+    private toastService: ToastService
   ) { }
 
   ngOnInit(): void {
@@ -41,21 +42,9 @@ export class UserStocksComponent {
       stocks.map(stock => this.stocks[stock.symbol] = stock));
   }
 
-  GetKeys(dictionary: any): string[] {
-    if (dictionary == null)
-      return [];
-
-    let keys = Object.keys(dictionary);
-
-    return keys;
-  }
-
-  AddUserList() {
-    let listName = prompt("please enter a list name, only 1 word");
-
-    if (listName == null)
-      return;
-
+  addUserList(listName: string): void {
+    this.visibleAddUserListDialog = false;
+    
     let stockListDetails: StockListDetails =
     {
       userEmail: this.user.email!,
@@ -68,11 +57,11 @@ export class UserStocksComponent {
           this.user.watchingStocksByListName[listName!] = {}
           this.updateListBox();
         } else
-          alert("something went wrong, couldnt add list")
+          this.toastService.addErrorMessage("something went wrong, couldnt add list");
       });
   }
 
-  RemoveUserList(listName: string) {
+  removeUserList(listName: string) {
     let stockListDetails: StockListDetails =
     {
       userEmail: this.user.email!,
@@ -88,23 +77,21 @@ export class UserStocksComponent {
           this.selectedPortfolioName = undefined;
       }
       else
-        alert("something went wrong, couldnt remove list")
+        this.toastService.addErrorMessage("something went wrong, couldnt remove list");
     });
   }
 
-  AddListStock(listName: string) {
-    //TODO: move to the portfolio
-    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
+  addStockToList(stockSymbol: string){
+    stockSymbol = stockSymbol.toUpperCase();
 
-    if (stockSymbol == null)
-      return;
+    this.visibleAddStockToListDialog = false;
 
+    let listName = this.selectedPortfolioName!;
     let foundStock = Object.keys(this.user.watchingStocksByListName[listName])
       .find(currectStockSymbol => currectStockSymbol == stockSymbol)
 
     if (foundStock) {
-      let message = this.messageFactory.createErrorMessage("stock is already at the current portfolio.")
-      this.messageService.add(message);
+      this.toastService.addErrorMessage("stock is already at the current portfolio.");
 
       return;
     }
@@ -121,9 +108,9 @@ export class UserStocksComponent {
           this.updatePortfolio();
         }
         else
-          alert("something went wrong, couldnt add stock to list...")
+          this.toastService.addErrorMessage("something went wrong, couldnt add stock to list...");
       });
-  }
+  };
 
   onSelectedPortfolio(event: any) {
     const { option, value } = event;

@@ -32,7 +32,7 @@ export class UserService {
     if(this.authenticationService.isUserConnected() == false)
       return;
     
-    let email = this.authenticationService.GetUserEmail();
+    let email = this.authenticationService.GetUserEmail()!;
 
     this.httpClient
     .get<User>(`${environment.server_url}/User`,

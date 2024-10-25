@@ -28,7 +28,7 @@ export class UserInformationComponent {
   ngOnInit(): void {
     let userEmail = this.authenticationService.GetUserEmail();
 
-    if (userEmail == undefined)
+    if (userEmail == null)
       return;
 
     this.stockService.GetAllStocks()

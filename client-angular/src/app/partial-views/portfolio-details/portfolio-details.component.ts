@@ -21,53 +21,42 @@ export class PortfolioDetailsComponent {
   @Input('listName')
   listName?: string;
 
-  email: any;
+  note: string = '';
+  symbol: string = '';
+  email: string;
   watchingStockLists!: StockDetails[];
-  visible: boolean = true;
+  visibleDialog: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
     private shareService: SharesService
   ) {
-    this.email = this.authenticationService.GetUserEmail();
+    this.email = this.authenticationService.GetUserEmail()!;
   }
 
   ngOnChanges(): void {
     this.updateWatchingStocks();
   }
 
-  async CreateStockNote(symbol: string) {
-    let note = prompt("please enter a note");
+  openStockNoteDialog(currentSymbol: string, currentNote: string) {
+    this.note = currentNote;
+    this.symbol = currentSymbol;
+    this.visibleDialog = true;
+  }
 
-    if (!note || !this.listName)
-      return;
-
-    this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
+  async updateStockNote(){
+    this.visibleDialog = false;
+    
+    this.shareService.UpdateWatchingStockNote(this.email, this.listName!, this.symbol, this.note)
       .subscribe(res => {
         if (res) {
-          this.watchingStocks[symbol].note = note!;
+          this.watchingStocks[this.symbol].note = this.note!;
           this.updateWatchingStocks();
         }
         else
           alert("error updating the note");
       });
-  }
-
-  async DeleteNote(symbol: string) {
-    let confirmDelete = confirm("You are deleting this note, are you sure?");
-
-    if (confirmDelete) {
-      this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
-        .subscribe(res => {
-          if (res) {
-            this.watchingStocks[symbol].note = "";
-            this.updateWatchingStocks();
-          }
-          else
-            alert("error updating the note");
-        });
-    }
   }
 
   GetKeys(dictionary: any) {
