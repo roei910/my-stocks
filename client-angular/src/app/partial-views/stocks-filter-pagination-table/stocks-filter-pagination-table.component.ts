@@ -22,8 +22,8 @@ export class StocksFilterPaginationTableComponent {
       const valueA = this.targetPriceChangePercentage(a);
       const valueB = this.targetPriceChangePercentage(b);
       
-      const numA = valueA === "missing information" ? Number.NEGATIVE_INFINITY : parseFloat(valueA);
-      const numB = valueB === "missing information" ? Number.NEGATIVE_INFINITY : parseFloat(valueB);
+      const numA = valueA == undefined ? Number.NEGATIVE_INFINITY : parseFloat(valueA!);
+      const numB = valueB == undefined ? Number.NEGATIVE_INFINITY : parseFloat(valueB!);
 
       let result = 0;
       if (numA < numB) result = -1;
@@ -33,9 +33,9 @@ export class StocksFilterPaginationTableComponent {
     });
   }
 
-  targetPriceChangePercentage(stock: Stock){
+  targetPriceChangePercentage(stock: Stock): string | undefined{
     if(stock.analysis?.targetMeanPrice == undefined || stock.analysis?.targetMeanPrice == 0)
-      return "missing information";
+      return undefined;
 
     let targetChangePercentage = (stock?.analysis?.targetMeanPrice / stock.price * 100 - 100).toFixed(2);
 
