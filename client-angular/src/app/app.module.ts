@@ -7,7 +7,7 @@ import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
 import { PanelModule } from 'primeng/panel';
@@ -15,6 +15,7 @@ import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -82,7 +83,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ButtonModule,
     DialogModule,
     CalendarModule,
-    InputTextModule
+    InputTextModule,
+    ConfirmDialogModule
   ],
   providers: [
     provideHttpClient(
@@ -91,7 +93,8 @@ import { InputTextModule } from 'primeng/inputtext';
         interceptLoader
       ])
     ),
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

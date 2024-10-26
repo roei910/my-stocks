@@ -5,6 +5,7 @@ import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
+import { ToastService } from 'src/services/toast.service';
 
 @Component({
   selector: 'app-portfolio-details',
@@ -30,7 +31,8 @@ export class PortfolioDetailsComponent {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private shareService: SharesService
+    private shareService: SharesService,
+    private toastService: ToastService
   ) {
     this.email = this.authenticationService.GetUserEmail()!;
   }
@@ -55,7 +57,7 @@ export class PortfolioDetailsComponent {
           this.updateWatchingStocks();
         }
         else
-          alert("error updating the note");
+          this.toastService.addErrorMessage("error while updating note");
       });
   }
 
@@ -115,7 +117,7 @@ export class PortfolioDetailsComponent {
           this.updateWatchingStocks();
         }
         else
-          alert("something went wrong, couldnt remove stock from list...")
+          this.toastService.addErrorMessage("something went wrong, couldnt remove stock from list")
       });
   }
 }

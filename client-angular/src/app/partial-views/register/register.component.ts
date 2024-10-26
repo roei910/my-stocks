@@ -1,7 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { UserCreation } from 'src/models/users/user-creation';
+import { ToastService } from 'src/services/toast.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -14,12 +16,41 @@ export class RegisterComponent {
   form!: NgForm;
 
   constructor(private router: Router,
-    private userService: UserService
-  ){ }
+    private userService: UserService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
+  ) { }
 
-  CreateUser(){
-    if(this.form.invalid){
-      alert("Please finish the form");
+  CreateUser() {
+    if (this.form.invalid) {
+      this.confirmationService.confirm({
+        message: 'Please finish the form and try again',
+        header: 'Missing information',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: "none",
+        rejectIcon: "none",
+        rejectButtonStyleClass: "p-button-text",
+        rejectVisible: false,
+        acceptLabel: "Continue"
+      });
+
+      return;
+    }
+
+    let password = this.form.value.password;
+    let repeatPassword = this.form.value.repeatPassword;
+
+    if (password !== repeatPassword) {
+      this.confirmationService.confirm({
+        message: 'Password and Confirm Passwords must be a match',
+        header: 'Password Confirmation Error',
+        icon: 'pi pi-exclamation-triangle',
+        acceptIcon: "none",
+        rejectIcon: "none",
+        rejectButtonStyleClass: "p-button-text",
+        rejectVisible: false,
+        acceptLabel: "Continue"
+      });
 
       return;
     }
@@ -30,13 +61,13 @@ export class RegisterComponent {
       password: this.form.value.password,
       email: this.form.value.email,
     };
-    
+
     this.userService.CreateUser(user)
-    .subscribe(isCreated => {
-      if(isCreated)
-        this.router.navigate(['/login']);
-      else
-        alert("couldn't create the user.");
-    });
+      .subscribe(isCreated => {
+        if (isCreated)
+          this.router.navigate(['/login']);
+        else
+          this.toastService.addErrorMessage("couldn't create the user.");
+      });
   }
 }

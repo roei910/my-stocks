@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Stock } from 'src/models/stocks/stock';
 import { StockNotification } from 'src/models/users/stock-notification';
 import { AuthenticationService } from 'src/services/authentication.service';
@@ -27,7 +27,8 @@ export class StockDetailsComponent {
     private shareService: SharesService,
     private authenticationService: AuthenticationService,
     private userService: UserService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private router: Router
   ) {
     const tempData = [30, 25, 20, 15, 10];
 
@@ -58,17 +59,12 @@ export class StockDetailsComponent {
 
   addStockToList(listName: string) {
     this.visibleAddStockToListDialog = false;
-    let email = this.authenticationService.GetUserEmail();
-
-    if (email == null) {
-      alert("Please login to your account first");
-      return;
-    }
+    let email = this.authenticationService.GetUserEmail()!;
 
     this.shareService.AddWatchingStock(email, listName, this.symbol!)
       .subscribe(res => {
         if (!res)
-          alert("something went wrong");
+          this.toastService.addErrorMessage("couldn't add stock to list");
       });
   }
 
@@ -87,5 +83,24 @@ export class StockDetailsComponent {
       .subscribe(() => {
         this.toastService.addSuccessMessage("Notification added successfully");
       });
+  }
+
+  openAddNotificationDialog() {
+    this.confirmUserConnectedOrRedirect();
+    this.visibleAddNotificationDialog = true;
+  }
+
+  openAddStockToListDialog() {
+    this.confirmUserConnectedOrRedirect();
+    this.visibleAddStockToListDialog = true;
+  }
+
+  confirmUserConnectedOrRedirect(): boolean{
+    let email = this.authenticationService.GetUserEmail();
+
+    if (email == null)
+      this.router.navigate(['/login']);
+
+    return email != null;
   }
 }

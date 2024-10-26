@@ -3,23 +3,23 @@
     <form (ngSubmit)="CreateUser()" #registrationForm="ngForm">
         <div class="form-group">
             <label for="name">First Name</label>
-            <input type="text" id="firstName" placeholder="Enter your name" required name="firstName" ngModel>
+            <input pInputText type="text" id="firstName" placeholder="Enter your name" required name="firstName" ngModel>
         </div>
         <div class="form-group">
             <label for="name">Last Name</label>
-            <input type="text" id="lastName" placeholder="Enter your name" required name="lastName" ngModel>
+            <input pInputText type="text" id="lastName" placeholder="Enter your name" required name="lastName" ngModel>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" placeholder="Enter your email" required email name="email" ngModel>
+            <input pInputText type="email" id="email" placeholder="Enter your email" required email name="email" ngModel>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input type="password" id="password" placeholder="Enter your password" required name="password" ngModel>
+            <input pInputText type="password" id="password" placeholder="Enter your password" required name="password" ngModel>
         </div>
         <div class="form-group">
             <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" placeholder="Confirm your password" required name="repeatPassword" ngModel>
+            <input pInputText type="password" id="confirm-password" placeholder="Confirm your password" required name="repeatPassword" ngModel>
         </div>
         <button type="submit" class="btn-primary">Sign Up</button>
     </form>
