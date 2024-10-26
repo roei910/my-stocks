@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { NotFoundError } from 'rxjs';
-import { MessageFactory } from 'src/factories/message-factory';
+import { ConfirmationService } from 'primeng/api';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { User } from 'src/models/users/user';
 import { SharesService } from 'src/services/shares.service';
 import { StockService } from 'src/services/stock.service';
+import { ToastService } from 'src/services/toast.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -24,37 +23,29 @@ export class UserStocksComponent {
   } | undefined;
   selectedPortfolioName: string | undefined;
   visible: boolean = true;
+  visibleAddStockToListDialog: boolean = false;
+  visibleAddUserListDialog: boolean = false;
+  stockSymbolToAdd: string = '';
+  listNameToAdd: string = '';
 
   constructor(private stockService: StockService,
     private userService: UserService,
     private shareService: SharesService,
-    private messageService: MessageService,
-    private messageFactory: MessageFactory
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
-    this.userService.GetUser().subscribe(user => {
+    this.userService.getUser().subscribe(user => {
       this.user = user;
       this.listNames = Object.keys(user.watchingStocksByListName);
     });
-    this.stockService.GetAllStocks().subscribe(stocks =>
+    this.stockService.getAllStocks().subscribe(stocks =>
       stocks.map(stock => this.stocks[stock.symbol] = stock));
   }
 
-  GetKeys(dictionary: any): string[] {
-    if (dictionary == null)
-      return [];
-
-    let keys = Object.keys(dictionary);
-
-    return keys;
-  }
-
-  AddUserList() {
-    let listName = prompt("please enter a list name, only 1 word");
-
-    if (listName == null)
-      return;
+  addUserList(listName: string): void {
+    this.visibleAddUserListDialog = false;
 
     let stockListDetails: StockListDetails =
     {
@@ -68,53 +59,56 @@ export class UserStocksComponent {
           this.user.watchingStocksByListName[listName!] = {}
           this.updateListBox();
         } else
-          alert("something went wrong, couldnt add list")
+          this.toastService.addErrorMessage("something went wrong, couldnt add list");
       });
   }
 
-  RemoveUserList() {
-    let listName = prompt("please enter a list name, only 1 word");
+  removeUserList(listName: string) {
+    this.confirmationService.confirm({
+      message: 'removing portfolio, are you sure?',
+      header: 'Portfolio Removal Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        let stockListDetails: StockListDetails =
+        {
+          userEmail: this.user.email!,
+          listName
+        }
 
-    if (listName == null)
-      return;
+        this.shareService.removeUserList(stockListDetails).subscribe(res => {
+          if (res) {
+            delete (this.user.watchingStocksByListName[listName!]);
+            this.updateListBox();
 
-    let stockListDetails: StockListDetails =
-    {
-      userEmail: this.user.email!,
-      listName
-    }
-
-    this.shareService.removeUserList(stockListDetails).subscribe(res => {
-      if (res) {
-        delete (this.user.watchingStocksByListName[listName!]);
-        this.updateListBox();
-
-        if(listName == this.selectedPortfolioName)
-          this.selectedPortfolioName = undefined;
+            if (listName == this.selectedPortfolioName)
+              this.selectedPortfolioName = undefined;
+          }
+          else
+            this.toastService.addErrorMessage("something went wrong, couldnt remove list");
+        });
       }
-      else
-        alert("something went wrong, couldnt remove list")
     });
   }
 
-  AddListStock(listName: string) {
-    //TODO: move to the portfolio
-    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
+  addStockToList(stockSymbol: string) {
+    stockSymbol = stockSymbol.toUpperCase();
 
-    if (stockSymbol == null)
-      return;
+    this.visibleAddStockToListDialog = false;
 
+    let listName = this.selectedPortfolioName!;
     let foundStock = Object.keys(this.user.watchingStocksByListName[listName])
       .find(currectStockSymbol => currectStockSymbol == stockSymbol)
 
     if (foundStock) {
-      let message = this.messageFactory.createErrorMessage("stock is already at the current portfolio.")
-      this.messageService.add(message);
+      this.toastService.addErrorMessage("stock is already at the current portfolio.");
 
       return;
     }
 
-    this.shareService.AddWatchingStock(this.user.email!, listName, stockSymbol)
+    this.shareService.addWatchingStock(this.user.email!, listName, stockSymbol)
       .subscribe(res => {
         if (res) {
           let watchingStock: WatchingStock = {
@@ -126,37 +120,9 @@ export class UserStocksComponent {
           this.updatePortfolio();
         }
         else
-          alert("something went wrong, couldnt add stock to list...")
+          this.toastService.addErrorMessage("something went wrong, couldnt add stock to list...");
       });
-  }
-
-  RemoveListStock(listName: string) {
-    //TODO: move to the portfolio
-    let stockSymbol = prompt("please enter a stock symbol")?.toUpperCase();
-
-    if (stockSymbol == null)
-      return;
-
-    let foundStock = Object.keys(this.user.watchingStocksByListName[listName])
-      .find(currectStockSymbol => currectStockSymbol == stockSymbol)
-
-    if (foundStock == undefined) {
-      let message = this.messageFactory.createErrorMessage("stock was not found at the current portfolio.")
-      this.messageService.add(message);
-
-      return;
-    }
-
-    this.shareService.RemoveWatchingStock(this.user.email!, listName, stockSymbol)
-      .subscribe(res => {
-        if (res) {
-          delete this.user.watchingStocksByListName[listName][stockSymbol!];
-          this.updatePortfolio();
-        }
-        else
-          alert("something went wrong, couldnt remove stock from list...")
-      });
-  }
+  };
 
   onSelectedPortfolio(event: any) {
     const { option, value } = event;

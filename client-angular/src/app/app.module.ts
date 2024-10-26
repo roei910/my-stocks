@@ -7,12 +7,15 @@ import { ChartModule } from 'primeng/chart';
 import { DropdownModule } from 'primeng/dropdown';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { ListboxModule } from 'primeng/listbox';
 import { PanelModule } from 'primeng/panel';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
+import { CalendarModule } from 'primeng/calendar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -36,6 +39,7 @@ import { StockSharesComponent } from './partial-views/stock-shares/stock-shares.
 import { StockDetailsComponent } from './partial-views/stock-details/stock-details.component';
 import { PortfolioDetailsComponent } from './partial-views/portfolio-details/portfolio-details.component';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [
@@ -76,7 +80,11 @@ import { StocksFilterPaginationTableComponent } from './partial-views/stocks-fil
     TableModule,
     ListboxModule,
     PanelModule,
-    ButtonModule
+    ButtonModule,
+    DialogModule,
+    CalendarModule,
+    InputTextModule,
+    ConfirmDialogModule
   ],
   providers: [
     provideHttpClient(
@@ -85,7 +93,8 @@ import { StocksFilterPaginationTableComponent } from './partial-views/stocks-fil
         interceptLoader
       ])
     ),
-    MessageService
+    MessageService,
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

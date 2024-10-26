@@ -11,14 +11,14 @@ export class MarketTrendsComponent {
   marketTrends!: MarketTrend[];
   selectedMarketTrend?: MarketTrend;
 
-  constructor(private stockService: StockService) { 
-    this.stockService.GetMarketsTrends()
+  constructor(private stockService: StockService) {
+    this.stockService.getMarketsTrends()
       .subscribe(marketTrends => {
         this.marketTrends = marketTrends;
       });
   }
 
-  GenerateMarketTrendName(trendName: string): string {
+  generateMarketTrendName(trendName: string): string {
     let words = trendName.split('_').map(word => {
       let updatedWord = word[0].toUpperCase() + word.toLowerCase().slice(1);
 
@@ -28,5 +28,9 @@ export class MarketTrendsComponent {
     let updatedTrendName = words.join(" ");
 
     return updatedTrendName;
+  }
+
+  openExternalLink(url: string) {
+    window.open(url, '_blank');
   }
 }

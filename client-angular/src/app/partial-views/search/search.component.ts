@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { StockService } from 'src/services/stock.service';
 
 @Component({
@@ -10,16 +9,11 @@ import { StockService } from 'src/services/stock.service';
 export class SearchComponent {
   stocksList: any = null;
 
-  constructor(private stockService: StockService,
-    private router: Router
+  constructor(private stockService: StockService
   ) { }
 
-  SearchResults(searchTerm: string) {
-    this.stockService.FindStocksByName(searchTerm)
+  searchResults(searchTerm: string) {
+    this.stockService.findStocksByName(searchTerm)
       .subscribe(stocks => this.stocksList = stocks);
-  }
-
-  NavigateStockInformation(symbol: string) {
-    this.router.navigate(['stocks', 'information'], { queryParams: { stockSymbol: symbol }});
   }
 }

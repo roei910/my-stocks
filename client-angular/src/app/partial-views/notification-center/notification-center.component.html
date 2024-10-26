@@ -1,21 +1,23 @@
-<h2>Your notifications</h2>
-<div>
-    <table>
-        <thead>
-            <tr>
-                <th>symbol</th>
-                <th>status</th>
-                <th>target price</th>
-                <th>bigger than or equals</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let notification of stockNotifications">
-                <td>{{notification.stockSymbol}}</td>
-                <td>{{notification.shouldBeNotified}}</td>
-                <td>{{notification.targetPrice}}</td>
-                <td>{{notification.isBiggerThanOrEqual}}</td>
-            </tr>
-        </tbody>
-    </table>
+<div class="container flex-column p-2">
+    <h2>Your notifications</h2>
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>symbol</th>
+                    <th>status</th>
+                    <th>target price</th>
+                    <th>bigger than or equals</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let notification of stockNotifications">
+                    <td>{{notification.stockSymbol}}</td>
+                    <td>{{notification.shouldBeNotified}}</td>
+                    <td>{{notification.targetPrice}}</td>
+                    <td>{{notification.isBiggerThanOrEqual}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

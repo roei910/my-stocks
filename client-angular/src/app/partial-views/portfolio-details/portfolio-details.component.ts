@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { StockDetails } from 'src/interfaces/stock-details';
 import { Stock } from 'src/models/stocks/stock';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
 import { AuthenticationService } from 'src/services/authentication.service';
 import { SharesService } from 'src/services/shares.service';
+import { ToastService } from 'src/services/toast.service';
 
 @Component({
   selector: 'app-portfolio-details',
@@ -21,62 +23,53 @@ export class PortfolioDetailsComponent {
   @Input('listName')
   listName?: string;
 
-  email: any;
+  note: string = '';
+  symbol: string = '';
+  email: string;
   watchingStockLists!: StockDetails[];
-  visible: boolean = true;
+  visibleDialog: boolean = false;
 
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private shareService: SharesService
+    private shareService: SharesService,
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) {
-    this.email = this.authenticationService.GetUserEmail();
+    this.email = this.authenticationService.getUserEmail()!;
   }
 
   ngOnChanges(): void {
     this.updateWatchingStocks();
   }
 
-  async CreateStockNote(symbol: string) {
-    let note = prompt("please enter a note");
+  openStockNoteDialog(currentSymbol: string, currentNote: string) {
+    this.note = currentNote;
+    this.symbol = currentSymbol;
+    this.visibleDialog = true;
+  }
 
-    if (!note || !this.listName)
-      return;
+  updateStockNote() {
+    this.visibleDialog = false;
 
-    this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, note)
+    this.shareService.updateWatchingStockNote(this.email, this.listName!, this.symbol, this.note)
       .subscribe(res => {
         if (res) {
-          this.watchingStocks[symbol].note = note!;
+          this.watchingStocks[this.symbol].note = this.note!;
           this.updateWatchingStocks();
         }
         else
-          alert("error updating the note");
+          this.toastService.addErrorMessage("error while updating note");
       });
   }
 
-  async DeleteNote(symbol: string) {
-    let confirmDelete = confirm("You are deleting this note, are you sure?");
-
-    if (confirmDelete) {
-      this.shareService.UpdateWatchingStockNote(this.email, this.listName!, symbol, "")
-        .subscribe(res => {
-          if (res) {
-            this.watchingStocks[symbol].note = "";
-            this.updateWatchingStocks();
-          }
-          else
-            alert("error updating the note");
-        });
-    }
-  }
-
-  GetKeys(dictionary: any) {
+  getKeys(dictionary: any) {
     let keys = Object.keys(dictionary);
 
     return keys;
   }
 
-  CountShares(watchingStock: WatchingStock) {
+  countShares(watchingStock: WatchingStock) {
     let sum = 0;
     let keys = Object.keys(watchingStock.purchaseGuidToShares);
 
@@ -86,12 +79,19 @@ export class PortfolioDetailsComponent {
     return sum
   }
 
-  RedirectToSharesScreen(stockSymbol: string) {
-    let confirmRedirect = confirm("redirecting to shares screen, continue?");
-
-    if (confirmRedirect)
-      this.router.navigate([this.router.url, 'shares'],
-        { queryParams: { stockSymbol: stockSymbol, listName: this.listName } });
+  redirectToSharesScreen(stockSymbol: string) {
+    this.confirmationService.confirm({
+      message: 'redirecting to shares screen',
+      header: 'Share Screen Redirection',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      acceptLabel: "Continue",
+      rejectLabel: "Cancel",
+      accept: () => this.router.navigate([this.router.url, 'shares'],
+        { queryParams: { stockSymbol: stockSymbol, listName: this.listName } })
+    });
   }
 
   mapWatchingStock(stockSymbol: string, watchingStock: WatchingStock): StockDetails {
@@ -104,12 +104,34 @@ export class PortfolioDetailsComponent {
       note: watchingStock.note,
       prediction: stock.analysis?.targetMeanPrice ?? 0,
       price: stock.price,
-      shares: this.CountShares(watchingStock)
+      shares: this.countShares(watchingStock)
     };
   }
 
   updateWatchingStocks(): void {
     this.watchingStockLists = Object.keys(this.watchingStocks)
       .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
+  }
+
+  removeListStock(stockSymbol: string): void {
+    this.confirmationService.confirm({
+      message: 'removing stock from portfolio, are you sure?',
+      header: 'Stock Removal Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        this.shareService.removeWatchingStock(this.email, this.listName!, stockSymbol)
+          .subscribe(res => {
+            if (res) {
+              delete this.watchingStocks[stockSymbol!];
+              this.updateWatchingStocks();
+            }
+            else
+              this.toastService.addErrorMessage("something went wrong, couldnt remove stock from list")
+          });
+      }
+    });
   }
 }

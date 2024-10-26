@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { UserService } from 'src/services/user.service';
 
 @Component({
@@ -8,16 +7,10 @@ import { UserService } from 'src/services/user.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  constructor(private userService: UserService,
-    private authenticationService: AuthenticationService
+  constructor(private userService: UserService
   ){}
 
   ngOnInit(): void {
-    let email = this.authenticationService.GetUserEmail();
-
-    if(email == null)
-      return;
-
-    this.userService.GetUser().subscribe(user => user);
+    this.userService.getUser().subscribe(user => user);
   }
 }

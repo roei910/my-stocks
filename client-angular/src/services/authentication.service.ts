@@ -14,13 +14,13 @@ export class AuthenticationService {
   constructor(private cookieService: CookiesService,
     private httpClient: HttpClient) { }
 
-  GetUserEmail(): string {
+  getUserEmail(): string | null {
     let email = this.cookieService.getCookie("email");
 
-    return email!;
+    return email;
   }
 
-  DisconnectUser() {
+  disconnectUser() {
     this.cookieService.deleteCookie("email");
     this.isUserConnectedSubject.next(false);
   }
@@ -40,7 +40,7 @@ export class AuthenticationService {
     return isUserConnected;
   }
 
-  TryConnect(email: string, password: string): Observable<boolean> {
+  tryConnect(email: string, password: string): Observable<boolean> {
     let passwordHash = sha256(password);
 
     return this.httpClient
@@ -64,7 +64,7 @@ export class AuthenticationService {
       );
   }
 
-  AuthenticateToken(connectionToken: string): Observable<boolean> {
+  authenticateToken(connectionToken: string): Observable<boolean> {
     return this.httpClient.post<boolean>(`${environment.server_url}/User/authenticate-token`,
       null, {
       params: {

@@ -35,7 +35,8 @@ export class HeaderComponent implements OnInit {
       },
       { 
         label: 'Market Trends', 
-        routerLink: ['marketTrends'] 
+        routerLink: ['marketTrends'] ,
+        visible: false
       },
       {
         label: 'Login',
@@ -49,7 +50,7 @@ export class HeaderComponent implements OnInit {
           { label: 'My Stocks', routerLink: ['user', 'stocks'] },
           { label: 'Information', routerLink: ['user', 'information']},
           { label: 'Notifications', routerLink: ['user', 'notifications'] },
-          { label: 'Sign Out', command: () => this.SignOut() },
+          { label: 'Sign Out', command: () => this.signOut() },
         ]
       }
     ];
@@ -60,18 +61,22 @@ export class HeaderComponent implements OnInit {
     let userItemIndex = this.items
       .findIndex(item => item.label == 'User');
 
+    let marketTrendsItemIndex = this.items
+      .findIndex(item => item.label == 'Market Trends');
+
     this.authenticationService.userConnection()
       .subscribe(isUserConnected => {
         this.items[loginItemIndex].visible = !isUserConnected;
         this.items[userItemIndex].visible = isUserConnected;
-
+        this.items[marketTrendsItemIndex].visible = isUserConnected;
+        
         this.updateVisibility();
       });
 
     let notificationItemIndex = this.items[userItemIndex].items!
       .findIndex(item => item.label == 'Notifications');
 
-    this.userService.GetUser()
+    this.userService.getUser()
       .subscribe(user => 
         {
           let notificationsCount = user.stockNotifications.length.toString();
@@ -83,8 +88,8 @@ export class HeaderComponent implements OnInit {
         });
   }
 
-  SignOut() {
-    this.authenticationService.DisconnectUser();
+  signOut() {
+    this.authenticationService.disconnectUser();
     this.router.navigate(['/']);
   }
 

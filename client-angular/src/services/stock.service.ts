@@ -17,7 +17,7 @@ export class StockService {
     this.lastUpdateTime = new Date();
   }
 
-  GetAllStocks(): Observable<Stock[]> {
+  getAllStocks(): Observable<Stock[]> {
     if (!this.shouldBeUpdated(this.lastUpdateTime, new Date()))
       return this.allStocks.asObservable();
 
@@ -30,17 +30,17 @@ export class StockService {
     );
   }
 
-  GetStockBySymbol(stockSymbol: string): Observable<Stock> {
+  getStockBySymbol(stockSymbol: string): Observable<Stock> {
     return this.httpClient
       .get<Stock>(`${this.stockEndPointUrl}/symbol/${stockSymbol}`);
   }
 
-  FindStocksByName(stockName: string): Observable<Stock[]> {
+  findStocksByName(stockName: string): Observable<Stock[]> {
     return this.httpClient
       .get<Stock[]>(`${this.stockEndPointUrl}/find/${stockName}`)
   }
 
-  GetMarketsTrends(): Observable<MarketTrend[]>{
+  getMarketsTrends(): Observable<MarketTrend[]>{
     return this.httpClient
       .get<MarketTrend[]>(`${this.stockEndPointUrl}/marketTrends`)
   }
