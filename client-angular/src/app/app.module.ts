@@ -23,7 +23,7 @@ import { AsyncPipe } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
-import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
+import { InsightsComponent } from './partial-views/insights/insights.component';
 import { interceptConnection } from 'src/interceptors/connection.interceptor';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { interceptLoader } from 'src/interceptors/loading.interceptor';
@@ -55,7 +55,7 @@ import { InputTextModule } from 'primeng/inputtext';
     StockDetailsComponent,
     StockSharesComponent,
     NotificationCenterComponent,
-    MarketTrendsComponent,
+    InsightsComponent,
     LoadingComponent,
     UserStocksComponent,
     LoginComponent,
