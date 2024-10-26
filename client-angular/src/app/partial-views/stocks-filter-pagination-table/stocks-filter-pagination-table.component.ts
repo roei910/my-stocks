@@ -8,7 +8,7 @@ import { StockService } from 'src/services/stock.service';
   styleUrls: ['./stocks-filter-pagination-table.component.css'],
 })
 export class StocksFilterPaginationTableComponent {
-  stocks!: Stock[];
+  stocks: Stock[] = [];
 
   constructor(private stockService: StockService) { }
 
