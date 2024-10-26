@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ConfirmationService } from 'primeng/api';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
@@ -30,7 +31,8 @@ export class UserStocksComponent {
   constructor(private stockService: StockService,
     private userService: UserService,
     private shareService: SharesService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class UserStocksComponent {
 
   addUserList(listName: string): void {
     this.visibleAddUserListDialog = false;
-    
+
     let stockListDetails: StockListDetails =
     {
       userEmail: this.user.email!,
@@ -62,26 +64,36 @@ export class UserStocksComponent {
   }
 
   removeUserList(listName: string) {
-    let stockListDetails: StockListDetails =
-    {
-      userEmail: this.user.email!,
-      listName
-    }
+    this.confirmationService.confirm({
+      message: 'removing portfolio, are you sure?',
+      header: 'Portfolio Removal Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        let stockListDetails: StockListDetails =
+        {
+          userEmail: this.user.email!,
+          listName
+        }
 
-    this.shareService.removeUserList(stockListDetails).subscribe(res => {
-      if (res) {
-        delete (this.user.watchingStocksByListName[listName!]);
-        this.updateListBox();
+        this.shareService.removeUserList(stockListDetails).subscribe(res => {
+          if (res) {
+            delete (this.user.watchingStocksByListName[listName!]);
+            this.updateListBox();
 
-        if(listName == this.selectedPortfolioName)
-          this.selectedPortfolioName = undefined;
+            if (listName == this.selectedPortfolioName)
+              this.selectedPortfolioName = undefined;
+          }
+          else
+            this.toastService.addErrorMessage("something went wrong, couldnt remove list");
+        });
       }
-      else
-        this.toastService.addErrorMessage("something went wrong, couldnt remove list");
     });
   }
 
-  addStockToList(stockSymbol: string){
+  addStockToList(stockSymbol: string) {
     stockSymbol = stockSymbol.toUpperCase();
 
     this.visibleAddStockToListDialog = false;
