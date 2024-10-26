@@ -67,4 +67,20 @@ export class UserService {
 
     return res;
   }
+
+  removeStockNotification(email: string, notificationId: string): Observable<boolean> {
+    let res = this.httpClient
+      .delete<ObjectIdResponse>(
+        `${environment.server_url}/User/notification`,
+        {
+          observe: 'response',
+          params: {
+            email,
+            notificationId
+          }
+        })
+      .pipe(map(response => response.status == 200));
+
+    return res;
+  }
 }
