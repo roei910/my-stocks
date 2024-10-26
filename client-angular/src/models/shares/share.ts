@@ -1,5 +1,5 @@
 export class Share {
-    Id?: string;
+    id?: string;
     purchaseDate?: Date;
     purchasingPrice!: number;
     amount!: number;

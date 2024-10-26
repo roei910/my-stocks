@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService } from 'primeng/api';
 import { Share } from 'src/models/shares/share';
 import { SharePurchase } from 'src/models/shares/share-purchase';
 import { ShareSale } from 'src/models/shares/share-sale';
@@ -28,7 +29,8 @@ export class StockSharesComponent {
     private userService: UserService,
     private authenticationService: AuthenticationService,
     private shareService: SharesService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmationService: ConfirmationService
   ){ }
 
   ngOnInit() {
@@ -45,6 +47,8 @@ export class StockSharesComponent {
   }
 
   addShare() {
+    this.visibleAddShareDialog = false;
+
     if(this.purchaseDate == undefined)
       this.purchaseDate = new Date();
 
@@ -61,43 +65,43 @@ export class StockSharesComponent {
       purchaseDate: this.purchaseDate
     };
 
-    console.log(sharePurchase);
-    
     this.shareService.AddUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
-          this.watchingStock!.purchaseGuidToShares[res.Id!] = res
+          this.watchingStock!.purchaseGuidToShares[res.id!] = res
         else
           this.toastService.addErrorMessage("couldnt add share, something went wrong");
       });
   }
 
-  RemoveShare(purchaseId: string, stockSymbol: string){
-    if(this.userEmail == null)
-      return;
-
-    let shouldContinue = confirm("You are deleting a share, are you sure?");
-
-    if(!shouldContinue)
-      return;
-
-    let shareSale: ShareSale = {
-      listName: this.listName,
-      sharePurchaseGuid: purchaseId,
-      stockSymbol: stockSymbol,
-      userEmail: this.userEmail
-    };
-
-    this.shareService.RemoveUserShare(shareSale)
-    .subscribe(res => {
-      if(res)
-        delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
-      else
-        this.toastService.addErrorMessage("couldnt remove share, something went wrong");
+  removeShare(purchaseId: string, stockSymbol: string){
+    this.confirmationService.confirm({
+      message: 'You are deleting a share, are you sure?',
+      header: 'Share Remove Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      accept: () => {
+        let shareSale: ShareSale = {
+          listName: this.listName,
+          sharePurchaseGuid: purchaseId,
+          stockSymbol: stockSymbol,
+          userEmail: this.userEmail!
+        };
+    
+        this.shareService.RemoveUserShare(shareSale)
+        .subscribe(res => {
+          if(res)
+            delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
+          else
+            this.toastService.addErrorMessage("couldnt remove share, something went wrong");
+        });
+      }
     });
   }
 
-  GetKeys(purchaseGuidToShares: { [purchaseGuid: string ] : Share}){
+  getKeys(purchaseGuidToShares: { [purchaseGuid: string ] : Share}){
     return Object.keys(purchaseGuidToShares);
   }
 }
