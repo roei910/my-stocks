@@ -19,20 +19,20 @@ export class UserService {
     private authenticationService: AuthenticationService
   ) { }
 
-  GetUser(): Observable<User>{
+  getUser(): Observable<User>{
     if(this.userSubject == undefined)
       this.userSubject = new Subject<User>();
 
-    this.UpdateUser();
+    this.updateUser();
 
     return this.userSubject.asObservable();
   }
 
-  UpdateUser(): void{
+  updateUser(): void{
     if(this.authenticationService.isUserConnected() == false)
       return;
     
-    let email = this.authenticationService.GetUserEmail()!;
+    let email = this.authenticationService.getUserEmail()!;
 
     this.httpClient
     .get<User>(`${environment.server_url}/User`,
@@ -45,7 +45,7 @@ export class UserService {
     .subscribe(user => user);
   }
 
-  CreateUser(user: UserCreation): Observable<boolean> {
+  createUser(user: UserCreation): Observable<boolean> {
     user.password = sha256(user.password);
     
     let res = this.httpClient
@@ -60,7 +60,7 @@ export class UserService {
     return res;
   }
 
-  AddStockNotification(stockNotification: StockNotification): Observable<ObjectIdResponse>{
+  addStockNotification(stockNotification: StockNotification): Observable<ObjectIdResponse>{
     let res = this.httpClient
       .post<ObjectIdResponse>(`${environment.server_url}/User/notification`, 
         stockNotification);

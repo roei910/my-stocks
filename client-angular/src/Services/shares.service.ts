@@ -15,101 +15,101 @@ export class SharesService {
 
   constructor(private httpClient: HttpClient) { }
 
-  AddUserShare(sharePurchase: SharePurchase): Observable<Share | null> {
+  addUserShare(sharePurchase: SharePurchase): Observable<Share | null> {
     let res = this.httpClient
-    .post<Share>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, sharePurchase, {
-      observe: 'response'
-    })
-    .pipe(map(res => res.status == 200 ? res.body : null));
+      .post<Share>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, sharePurchase, {
+        observe: 'response'
+      })
+      .pipe(map(res => res.status == 200 ? res.body : null));
 
     return res;
   }
 
-  RemoveUserShare(shareSale: ShareSale): Observable<boolean>{
+  removeUserShare(shareSale: ShareSale): Observable<boolean> {
     return this.httpClient
-    .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, {
-      body: shareSale,
-      observe: 'response'
-    })
-    .pipe(map(res => res.status == 200));
-  }
-
-  AddWatchingStock(email: string, listName: string, stockSymbol: string): 
-    Observable<boolean>{
-    let res = this.httpClient
-    .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`, 
-      {
-        email,
-        listName,
-        stockSymbol
-      },
-      {
+      .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}`, {
+        body: shareSale,
         observe: 'response'
-      }
-    )
-    .pipe(map(res => res.status == 200));
-
-    return res
+      })
+      .pipe(map(res => res.status == 200));
   }
 
-  RemoveWatchingStock(email: string, listName: string, stockSymbol: string):
-    Observable<boolean>{
+  addWatchingStock(email: string, listName: string, stockSymbol: string):
+    Observable<boolean> {
     let res = this.httpClient
-    .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`,
-      {
-        body:{
+      .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`,
+        {
           email,
           listName,
           stockSymbol
         },
-        observe: 'response'
-      }
-    )
-    .pipe(map(res => res.status == 200));
-
-    return res;
-  }
-
-  UpdateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string): 
-    Observable<boolean>{
-    let res = this.httpClient
-    .patch<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock-note`,
-      {
-        email,
-        listName,
-        stockSymbol,
-        note
-      },
-      {
-        observe: 'response'
-      }
-    )
-    .pipe(map(res => res.status == 200));
+        {
+          observe: 'response'
+        }
+      )
+      .pipe(map(res => res.status == 200));
 
     return res
   }
 
-  addUserList(stockListDetails: StockListDetails):Observable<boolean> {
+  removeWatchingStock(email: string, listName: string, stockSymbol: string):
+    Observable<boolean> {
     let res = this.httpClient
-    .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
-      stockListDetails, {
-        observe: 'response'
-      }
-    )
-    .pipe(map(res => res.status == 200));
+      .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock`,
+        {
+          body: {
+            email,
+            listName,
+            stockSymbol
+          },
+          observe: 'response'
+        }
+      )
+      .pipe(map(res => res.status == 200));
 
     return res;
   }
 
-  removeUserList(stockListDetails: StockListDetails):Observable<boolean> {
+  updateWatchingStockNote(email: string, listName: string, stockSymbol: string, note: string):
+    Observable<boolean> {
     let res = this.httpClient
-    .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
-      {
-        body: stockListDetails,
+      .patch<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/watching-stock-note`,
+        {
+          email,
+          listName,
+          stockSymbol,
+          note
+        },
+        {
+          observe: 'response'
+        }
+      )
+      .pipe(map(res => res.status == 200));
+
+    return res
+  }
+
+  addUserList(stockListDetails: StockListDetails): Observable<boolean> {
+    let res = this.httpClient
+      .post<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
+        stockListDetails, {
         observe: 'response'
       }
-    )
-    .pipe(map(res => res.status == 200));
+      )
+      .pipe(map(res => res.status == 200));
+
+    return res;
+  }
+
+  removeUserList(stockListDetails: StockListDetails): Observable<boolean> {
+    let res = this.httpClient
+      .delete<boolean>(`${environment.server_url}/${this.SHARE_ENDPOINT}/List`,
+        {
+          body: stockListDetails,
+          observe: 'response'
+        }
+      )
+      .pipe(map(res => res.status == 200));
 
     return res;
   }

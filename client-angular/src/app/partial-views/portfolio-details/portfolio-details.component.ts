@@ -36,7 +36,7 @@ export class PortfolioDetailsComponent {
     private toastService: ToastService,
     private confirmationService: ConfirmationService
   ) {
-    this.email = this.authenticationService.GetUserEmail()!;
+    this.email = this.authenticationService.getUserEmail()!;
   }
 
   ngOnChanges(): void {
@@ -52,7 +52,7 @@ export class PortfolioDetailsComponent {
   updateStockNote() {
     this.visibleDialog = false;
 
-    this.shareService.UpdateWatchingStockNote(this.email, this.listName!, this.symbol, this.note)
+    this.shareService.updateWatchingStockNote(this.email, this.listName!, this.symbol, this.note)
       .subscribe(res => {
         if (res) {
           this.watchingStocks[this.symbol].note = this.note!;
@@ -122,7 +122,7 @@ export class PortfolioDetailsComponent {
       rejectIcon: "none",
       rejectButtonStyleClass: "p-button-text",
       accept: () => {
-        this.shareService.RemoveWatchingStock(this.email, this.listName!, stockSymbol)
+        this.shareService.removeWatchingStock(this.email, this.listName!, stockSymbol)
           .subscribe(res => {
             if (res) {
               delete this.watchingStocks[stockSymbol!];

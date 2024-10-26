@@ -12,13 +12,13 @@ export class MarketTrendsComponent {
   selectedMarketTrend?: MarketTrend;
 
   constructor(private stockService: StockService) {
-    this.stockService.GetMarketsTrends()
+    this.stockService.getMarketsTrends()
       .subscribe(marketTrends => {
         this.marketTrends = marketTrends;
       });
   }
 
-  GenerateMarketTrendName(trendName: string): string {
+  generateMarketTrendName(trendName: string): string {
     let words = trendName.split('_').map(word => {
       let updatedWord = word[0].toUpperCase() + word.toLowerCase().slice(1);
 

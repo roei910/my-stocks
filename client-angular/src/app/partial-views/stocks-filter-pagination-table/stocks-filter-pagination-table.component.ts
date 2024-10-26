@@ -13,7 +13,7 @@ export class StocksFilterPaginationTableComponent {
   constructor(private stockService: StockService) { }
 
   ngOnInit(): void {
-    this.stockService.GetAllStocks()
+    this.stockService.getAllStocks()
       .subscribe(stocks => this.stocks = stocks);
   }
 

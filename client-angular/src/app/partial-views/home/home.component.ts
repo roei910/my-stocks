@@ -11,6 +11,6 @@ export class HomeComponent {
   ){}
 
   ngOnInit(): void {
-    this.userService.GetUser().subscribe(user => user);
+    this.userService.getUser().subscribe(user => user);
   }
 }

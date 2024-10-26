@@ -18,9 +18,9 @@ export class LoginComponent {
     private toastService: ToastService
   ){ }
 
-  SignIn() {
+  signIn() {
     this.authenticationService
-    .TryConnect(this.form.value.email, this.form.value.password)
+    .tryConnect(this.form.value.email, this.form.value.password)
     .subscribe(isConnected => {
       if(!isConnected)
         this.toastService.addErrorMessage("username or password was incorrect");

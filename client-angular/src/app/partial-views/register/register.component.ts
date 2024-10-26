@@ -21,18 +21,9 @@ export class RegisterComponent {
     private confirmationService: ConfirmationService
   ) { }
 
-  CreateUser() {
+  createUser() {
     if (this.form.invalid) {
-      this.confirmationService.confirm({
-        message: 'Please finish the form and try again',
-        header: 'Missing information',
-        icon: 'pi pi-exclamation-triangle',
-        acceptIcon: "none",
-        rejectIcon: "none",
-        rejectButtonStyleClass: "p-button-text",
-        rejectVisible: false,
-        acceptLabel: "Continue"
-      });
+      this.confirmMissingInformation();
 
       return;
     }
@@ -41,16 +32,7 @@ export class RegisterComponent {
     let repeatPassword = this.form.value.repeatPassword;
 
     if (password !== repeatPassword) {
-      this.confirmationService.confirm({
-        message: 'Password and Confirm Passwords must be a match',
-        header: 'Password Confirmation Error',
-        icon: 'pi pi-exclamation-triangle',
-        acceptIcon: "none",
-        rejectIcon: "none",
-        rejectButtonStyleClass: "p-button-text",
-        rejectVisible: false,
-        acceptLabel: "Continue"
-      });
+      this.confirmMissingPassword();
 
       return;
     }
@@ -62,12 +44,38 @@ export class RegisterComponent {
       email: this.form.value.email,
     };
 
-    this.userService.CreateUser(user)
+    this.userService.createUser(user)
       .subscribe(isCreated => {
         if (isCreated)
           this.router.navigate(['/login']);
         else
           this.toastService.addErrorMessage("couldn't create the user.");
       });
+  }
+
+  confirmMissingInformation(): void{
+    this.confirmationService.confirm({
+      message: 'Please finish the form and try again',
+      header: 'Missing information',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      rejectVisible: false,
+      acceptLabel: "Continue"
+    });
+  }
+
+  confirmMissingPassword(): void{
+    this.confirmationService.confirm({
+      message: 'Password and Confirm Passwords must be a match',
+      header: 'Password Confirmation Error',
+      icon: 'pi pi-exclamation-triangle',
+      acceptIcon: "none",
+      rejectIcon: "none",
+      rejectButtonStyleClass: "p-button-text",
+      rejectVisible: false,
+      acceptLabel: "Continue"
+    });
   }
 }

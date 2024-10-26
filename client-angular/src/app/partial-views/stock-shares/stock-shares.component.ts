@@ -39,9 +39,9 @@ export class StockSharesComponent {
       this.listName = params['listName'];
     });
 
-    this.userEmail = this.authenticationService.GetUserEmail()!;
+    this.userEmail = this.authenticationService.getUserEmail()!;
 
-    this.userService.GetUser().subscribe(user =>{
+    this.userService.getUser().subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
     });
   }
@@ -65,7 +65,7 @@ export class StockSharesComponent {
       purchaseDate: this.purchaseDate
     };
 
-    this.shareService.AddUserShare(sharePurchase)
+    this.shareService.addUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
           this.watchingStock!.purchaseGuidToShares[res.id!] = res
@@ -90,7 +90,7 @@ export class StockSharesComponent {
           userEmail: this.userEmail!
         };
     
-        this.shareService.RemoveUserShare(shareSale)
+        this.shareService.removeUserShare(shareSale)
         .subscribe(res => {
           if(res)
             delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);

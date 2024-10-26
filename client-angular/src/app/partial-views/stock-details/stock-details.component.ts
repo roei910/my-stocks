@@ -53,15 +53,15 @@ export class StockDetailsComponent {
     if (!this.symbol)
       return;
 
-    this.stockService.GetStockBySymbol(this.symbol)
+    this.stockService.getStockBySymbol(this.symbol)
       .subscribe(stock => this.stock = stock);
   }
 
   addStockToList(listName: string) {
     this.visibleAddStockToListDialog = false;
-    let email = this.authenticationService.GetUserEmail()!;
+    let email = this.authenticationService.getUserEmail()!;
 
-    this.shareService.AddWatchingStock(email, listName, this.symbol!)
+    this.shareService.addWatchingStock(email, listName, this.symbol!)
       .subscribe(res => {
         if (!res)
           this.toastService.addErrorMessage("couldn't add stock to list");
@@ -70,7 +70,7 @@ export class StockDetailsComponent {
 
   addNotification() {
     this.visibleAddNotificationDialog = false;
-    let email = this.authenticationService.GetUserEmail()!;
+    let email = this.authenticationService.getUserEmail()!;
 
     let stockNotification: StockNotification = {
       userEmail: email,
@@ -79,7 +79,7 @@ export class StockDetailsComponent {
       isBiggerThanOrEqual: true
     }
 
-    this.userService.AddStockNotification(stockNotification)
+    this.userService.addStockNotification(stockNotification)
       .subscribe(() => {
         this.toastService.addSuccessMessage("Notification added successfully");
       });
@@ -96,7 +96,7 @@ export class StockDetailsComponent {
   }
 
   confirmUserConnectedOrRedirect(): boolean{
-    let email = this.authenticationService.GetUserEmail();
+    let email = this.authenticationService.getUserEmail();
 
     if (email == null)
       this.router.navigate(['/login']);

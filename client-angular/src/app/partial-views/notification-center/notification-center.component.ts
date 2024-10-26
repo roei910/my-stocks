@@ -14,7 +14,7 @@ export class NotificationCenterComponent {
   ){}
 
   ngOnInit(): void {
-    this.userService.GetUser()
+    this.userService.getUser()
       .subscribe(user => this.stockNotifications = user.stockNotifications);
   }
 }

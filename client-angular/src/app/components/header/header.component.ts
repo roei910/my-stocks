@@ -50,7 +50,7 @@ export class HeaderComponent implements OnInit {
           { label: 'My Stocks', routerLink: ['user', 'stocks'] },
           { label: 'Information', routerLink: ['user', 'information']},
           { label: 'Notifications', routerLink: ['user', 'notifications'] },
-          { label: 'Sign Out', command: () => this.SignOut() },
+          { label: 'Sign Out', command: () => this.signOut() },
         ]
       }
     ];
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit {
     let notificationItemIndex = this.items[userItemIndex].items!
       .findIndex(item => item.label == 'Notifications');
 
-    this.userService.GetUser()
+    this.userService.getUser()
       .subscribe(user => 
         {
           let notificationsCount = user.stockNotifications.length.toString();
@@ -88,8 +88,8 @@ export class HeaderComponent implements OnInit {
         });
   }
 
-  SignOut() {
-    this.authenticationService.DisconnectUser();
+  signOut() {
+    this.authenticationService.disconnectUser();
     this.router.navigate(['/']);
   }
 

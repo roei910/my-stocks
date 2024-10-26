@@ -2,7 +2,7 @@
     <h2>Search Stocks</h2>
     <div class="search-box">
         <input type="text" placeholder="Enter stock name" id="searchInput" #searchTerm>
-        <button id="searchBtn" (click)="SearchResults(searchTerm.value)">Search</button>
+        <button id="searchBtn" (click)="searchResults(searchTerm.value)">Search</button>
     </div>
     <div *ngIf="stocksList">
         <div class="search-results" id="searchResults">

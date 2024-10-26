@@ -26,21 +26,21 @@ export class UserInformationComponent {
   ) { }
 
   ngOnInit(): void {
-    let userEmail = this.authenticationService.GetUserEmail();
+    let userEmail = this.authenticationService.getUserEmail();
 
     if (userEmail == null)
       return;
 
-    this.stockService.GetAllStocks()
+    this.stockService.getAllStocks()
     .subscribe(stocks => 
     {
       stocks.map(stock => this.stocksDictionary[stock.symbol] = stock);
-      this.InitializeOwnedStocks();
-      this.InitializeChartData();
+      this.initializeOwnedStocks();
+      this.initializeChartData();
     });
   }
 
-  InitializeChartData() {
+  initializeChartData() {
     this.ownedStocksSubject.asObservable().subscribe(ownedStocks => {
       const ownedStockSymbols = Object.keys(ownedStocks);
       
@@ -71,11 +71,11 @@ export class UserInformationComponent {
     return colors;
   }
 
-  CountOwnedStocks() {
+  countOwnedStocks() {
     return Object.keys(this.ownedStocks).length;
   }
 
-  GetTotalGain() {
+  getTotalGain() {
     let ownedStockSymbols = Object.keys(this.ownedStocks);
     let totalGain = 0;
 
@@ -88,8 +88,8 @@ export class UserInformationComponent {
     return totalGain;
   }
 
-  InitializeOwnedStocks() {
-    this.userService.GetUser().subscribe(user => {
+  initializeOwnedStocks() {
+    this.userService.getUser().subscribe(user => {
       this.user = user;
 
       Object.keys(user.watchingStocksByListName).forEach((listName: string) => {
@@ -97,7 +97,7 @@ export class UserInformationComponent {
   
         Object.keys(watchingStocks).forEach((stockSymbol: string) => {
           let sharesDictionary = watchingStocks[stockSymbol].purchaseGuidToShares
-          this.UpdateOwnedStocksByStockShares(stockSymbol, sharesDictionary);
+          this.updateOwnedStocksByStockShares(stockSymbol, sharesDictionary);
         })
       })
 
@@ -105,7 +105,7 @@ export class UserInformationComponent {
     });
   }
 
-  UpdateOwnedStocksByStockShares(stockSymbol: string,
+  updateOwnedStocksByStockShares(stockSymbol: string,
     shareToPurchaseIdDictionary: { [purchaseGuid: string]: Share }) {
     let amount = 0;
     let equity = 0;

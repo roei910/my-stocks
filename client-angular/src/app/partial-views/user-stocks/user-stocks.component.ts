@@ -34,11 +34,11 @@ export class UserStocksComponent {
   ) { }
 
   ngOnInit(): void {
-    this.userService.GetUser().subscribe(user => {
+    this.userService.getUser().subscribe(user => {
       this.user = user;
       this.listNames = Object.keys(user.watchingStocksByListName);
     });
-    this.stockService.GetAllStocks().subscribe(stocks =>
+    this.stockService.getAllStocks().subscribe(stocks =>
       stocks.map(stock => this.stocks[stock.symbol] = stock));
   }
 
@@ -96,7 +96,7 @@ export class UserStocksComponent {
       return;
     }
 
-    this.shareService.AddWatchingStock(this.user.email!, listName, stockSymbol)
+    this.shareService.addWatchingStock(this.user.email!, listName, stockSymbol)
       .subscribe(res => {
         if (res) {
           let watchingStock: WatchingStock = {
