@@ -75,8 +75,7 @@ export class StockDetailsComponent {
     let stockNotification: StockNotification = {
       userEmail: email,
       stockSymbol: this.symbol!,
-      targetPrice: this.targetPrice,
-      isBiggerThanOrEqual: true
+      targetPrice: this.targetPrice
     }
 
     this.userService.addStockNotification(stockNotification)
