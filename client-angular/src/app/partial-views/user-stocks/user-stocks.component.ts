@@ -39,6 +39,8 @@ export class UserStocksComponent {
     this.userService.getUser().subscribe(user => {
       this.user = user;
       this.listNames = Object.keys(user.watchingStocksByListName);
+      this.selectedPortfolioName = this.listNames[0];
+      this.selectedPortfolio = this.user.watchingStocksByListName[this.selectedPortfolioName];
     });
     this.stockService.getAllStocks().subscribe(stocks =>
       stocks.map(stock => this.stocks[stock.symbol] = stock));
