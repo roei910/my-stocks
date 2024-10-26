@@ -30,10 +30,10 @@ export class StockDetailsComponent {
     private toastService: ToastService,
     private router: Router
   ) {
-    const tempData = [30, 25, 20, 15, 10];
+    const tempData = [10, 15, 20, 25, 30];
 
     this.data = {
-      labels: ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'FB'],
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
       datasets: [
         {
           label: 'Stock Price History',

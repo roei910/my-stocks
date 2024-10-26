@@ -1,7 +1,10 @@
-<div class="stock-details-container">
+<div class="stock-details-container container flex-column align-items-center">
     <h2>Stock Details</h2>
-    <button (click)="openAddNotificationDialog()">Add Notification</button><br>
-    <button (click)="openAddStockToListDialog()">Add Stock To List</button>
+    <div class="container gap-2">
+        <p-button (click)="openAddNotificationDialog()">Add Notification</p-button>
+        <p-button (click)="openAddStockToListDialog()">Add Stock To List</p-button>
+    </div>
+    
     <div id="stockDetails">
         <h3>{{stock?.name}}</h3>
         <p>current price: {{stock?.price}}</p>
