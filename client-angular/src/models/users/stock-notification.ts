@@ -3,6 +3,6 @@ export class StockNotification {
     stockSymbol!: string;
     userEmail!: string;
     targetPrice!: number;
-    isBiggerThanOrEqual?: boolean;
+    isTargetBiggerThanOrEqual?: boolean;
     shouldBeNotified?: boolean;
 }
