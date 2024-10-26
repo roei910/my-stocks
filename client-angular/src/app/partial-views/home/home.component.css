@@ -21,8 +21,7 @@
 }
 
 .hero button {
-    /* background-color: #0077b6; */
-    background-color: #ffc61e;
+    background-color:  #689ae6;
     color: #ffffff;
     text-shadow: 1px 1px 2px #000000;
     font-weight: 700;
@@ -36,7 +35,7 @@
 }
 
 .hero button:hover {
-    background-color: #ffe79f;
+    background-color: #a7c8fa;
     color: #000000;
     text-shadow: none;
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
