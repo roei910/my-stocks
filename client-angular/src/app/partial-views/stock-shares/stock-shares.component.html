@@ -1,24 +1,44 @@
-<p>Current shares for {{symbol}} of list {{listName}}</p>
-<div class="shares-container">
-    <ul class="shares-list" *ngIf="watchingStock?.purchaseGuidToShares">
-        <li class="share-item" *ngFor="let purchaseId of getKeys(watchingStock!.purchaseGuidToShares)">
-            <span class="share-amount">Amount: {{watchingStock!.purchaseGuidToShares[purchaseId].amount}}</span>
-            <span class="share-price">Avg Price: {{watchingStock!.purchaseGuidToShares[purchaseId].purchasingPrice}}</span>
-            <button (click)="removeShare(watchingStock!.purchaseGuidToShares[purchaseId].id!, symbol)">Remove Share</button>
-        </li>
-    </ul>
-    <button (click)="visibleAddShareDialog = true">Add</button>
+<div class="shares-container gap-2">
+    <p>{{symbol}} shares of portfolio {{listName}}</p>
+    <p-button (click)="visibleAddShareDialog = true">Add Share</p-button>
+    <p-table [value]="this.shares" [paginator]="shares.length > 10" [rows]="10" [rowsPerPageOptions]="[10, 20]">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="amount">
+                    Amount <p-sortIcon field="amount" />
+                </th>
+                <th pSortableColumn="purchasingPrice">
+                    Avg Price <p-sortIcon field="purchasingPrice" />
+                </th>
+                <th>Options</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-share>
+            <tr>
+                <td>
+                    {{share.amount}}
+                </td>
+                <td>{{share.purchasingPrice}}</td>
+                <td>
+                    <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger"
+                        (onClick)="removeShare(share.id, symbol)" />
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
 <p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddShareDialog" [style]="{ width: '30rem' }">
     <div class="flex align-items-center gap-3 mb-3">
         <label for="numberOfShares" class="font-semibold w-6rem">Number Of Shares: </label>
-        <input pInputText type="number" id="numberOfShares" class="flex-auto" autocomplete="off" [(ngModel)]="numberOfShares" required />
+        <input pInputText type="number" id="numberOfShares" class="flex-auto" autocomplete="off"
+            [(ngModel)]="numberOfShares" required />
         <br>
         <label for="stockPrice" class="font-semibold w-6rem">Stock Price: </label>
-        <input pInputText type="number" id="stockPrice" class="flex-auto" autocomplete="off" [(ngModel)]="stockPrice" required />
+        <input pInputText type="number" id="stockPrice" class="flex-auto" autocomplete="off" [(ngModel)]="stockPrice"
+            required />
         <br>
         <label for="purchaseDate" class="font-semibold w-6rem">Purchase Date: </label>
-        <p-calendar [(ngModel)]="purchaseDate" [showIcon]="true" appendTo="body"/>
+        <p-calendar [(ngModel)]="purchaseDate" [showIcon]="true" appendTo="body" />
     </div>
     <div class="flex justify-content-end gap-2">
         <p-button label="Cancel" severity="secondary" (onClick)="visibleAddShareDialog = false" />
