@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
     this.userService.getUser()
       .subscribe(user => 
         {
-          let notificationsCount = user.stockNotifications.length.toString();
+          let notificationsCount = user.stockNotifications.filter(notification => notification.shouldBeNotified).length.toString();
           
           this.items[userItemIndex].badge = notificationsCount;
           this.items[userItemIndex].items![notificationItemIndex].badge = notificationsCount;
