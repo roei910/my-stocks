@@ -31,23 +31,27 @@
         </p-panel>
     </div>
 </div>
-<p-dialog header="Add List" [modal]="true" [(visible)]="visibleAddUserListDialog" [style]="{ width: '25rem' }">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="listName" class="font-semibold w-6rem">List Name: </label>
-        <input pInputText id="listName" class="flex-auto" autocomplete="off" [(ngModel)]="listNameToAdd" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="visibleAddUserListDialog = false" />
-        <p-button label="Save" (onClick)="addUserList(listNameToAdd)" />
+<p-dialog header="Add List" [modal]="true" [(visible)]="visibleAddUserListDialog">
+    <div class="container flex-column gap-2">
+        <div class="container align-items-center gap-1">
+            <label for="listName" class="font-semibold w-6rem">List Name: </label>
+            <input pInputText id="listName" class="flex-auto" autocomplete="off" [(ngModel)]="listNameToAdd" />
+        </div>
+        <div class="container align-items-center justify-space-between gap-1">
+            <p-button label="Cancel" severity="secondary" (onClick)="visibleAddUserListDialog = false" />
+            <p-button label="Save" (onClick)="addUserList(listNameToAdd)" />
+        </div>
     </div>
 </p-dialog>
-<p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddStockToListDialog" [style]="{ width: '25rem' }">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="stockSymbol" class="font-semibold w-6rem">Stock Symbol: </label>
-        <input pInputText id="stockSymbol" class="flex-auto" autocomplete="off" [(ngModel)]="stockSymbolToAdd" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="visibleAddStockToListDialog = false" />
-        <p-button label="Save" (onClick)="addStockToList(stockSymbolToAdd)" />
+<p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddStockToListDialog">
+    <div class="container flex-column gap-2">
+        <div class="container align-items-center gap-1">
+            <label for="stockSymbol" class="font-semibold w-6rem">Symbol: </label>
+            <input pInputText id="stockSymbol" class="flex-auto" autocomplete="off" [(ngModel)]="stockSymbolToAdd" />
+        </div>
+        <div class="container align-items-center justify-space-between gap-1">
+            <p-button label="Cancel" severity="secondary" (onClick)="visibleAddStockToListDialog = false" />
+            <p-button label="Add" (onClick)="addStockToList(stockSymbolToAdd)" />
+        </div>
     </div>
 </p-dialog>

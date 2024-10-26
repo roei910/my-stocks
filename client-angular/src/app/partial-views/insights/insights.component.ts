@@ -3,11 +3,11 @@ import { MarketTrend } from 'src/models/marketTrends/market-trend';
 import { StockService } from 'src/services/stock.service';
 
 @Component({
-  selector: 'app-market-trends',
-  templateUrl: './market-trends.component.html',
-  styleUrls: ['./market-trends.component.css']
+  selector: 'app-insights',
+  templateUrl: './insights.component.html',
+  styleUrls: ['./insights.component.css']
 })
-export class MarketTrendsComponent {
+export class InsightsComponent {
   marketTrends!: MarketTrend[];
   selectedMarketTrend?: MarketTrend;
 
@@ -15,6 +15,7 @@ export class MarketTrendsComponent {
     this.stockService.getMarketsTrends()
       .subscribe(marketTrends => {
         this.marketTrends = marketTrends;
+        this.selectedMarketTrend = marketTrends[0];
       });
   }
 

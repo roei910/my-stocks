@@ -34,8 +34,8 @@ export class HeaderComponent implements OnInit {
         routerLink: ['stocks', 'all']
       },
       { 
-        label: 'Market Trends', 
-        routerLink: ['marketTrends'] ,
+        label: 'Insights', 
+        routerLink: ['insights'] ,
         visible: false
       },
       {
@@ -61,14 +61,14 @@ export class HeaderComponent implements OnInit {
     let userItemIndex = this.items
       .findIndex(item => item.label == 'User');
 
-    let marketTrendsItemIndex = this.items
-      .findIndex(item => item.label == 'Market Trends');
+    let insightsItemIndex = this.items
+      .findIndex(item => item.label == 'Insights');
 
     this.authenticationService.userConnection()
       .subscribe(isUserConnected => {
         this.items[loginItemIndex].visible = !isUserConnected;
         this.items[userItemIndex].visible = isUserConnected;
-        this.items[marketTrendsItemIndex].visible = isUserConnected;
+        this.items[insightsItemIndex].visible = isUserConnected;
         
         this.updateVisibility();
       });
@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
     this.userService.getUser()
       .subscribe(user => 
         {
-          let notificationsCount = user.stockNotifications.length.toString();
+          let notificationsCount = user.stockNotifications.filter(notification => notification.shouldBeNotified).length.toString();
           
           this.items[userItemIndex].badge = notificationsCount;
           this.items[userItemIndex].items![notificationItemIndex].badge = notificationsCount;

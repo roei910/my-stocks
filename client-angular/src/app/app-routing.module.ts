@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { connectedUserGuard } from 'src/routeGuards/connected-user.guard';
 import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
 import { NotificationCenterComponent } from './partial-views/notification-center/notification-center.component';
-import { MarketTrendsComponent } from './partial-views/market-trends/market-trends.component';
+import { InsightsComponent } from './partial-views/insights/insights.component';
 import { NotFoundComponent } from './partial-views/not-found/not-found.component';
 import { LoginComponent } from './partial-views/login/login.component';
 import { RegisterComponent } from './partial-views/register/register.component';
@@ -26,7 +26,7 @@ const routes: Routes = [
       { path: 'all', component: StocksFilterPaginationTableComponent }
     ],
   },
-  { path: 'marketTrends', component: MarketTrendsComponent, canActivate: [connectedUserGuard] },
+  { path: 'insights', component: InsightsComponent, canActivate: [connectedUserGuard] },
   {
     path: 'user',
     children: [

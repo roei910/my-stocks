@@ -9,8 +9,8 @@ import { Stock } from 'src/models/stocks/stock';
   providedIn: 'root'
 })
 export class StockService {
+  private allStocks: BehaviorSubject<Stock[]> = new BehaviorSubject<Stock[]>([]);
   lastUpdateTime: Date | undefined;
-  allStocks: BehaviorSubject<Stock[]> = new BehaviorSubject<Stock[]>([]);
   stockEndPointUrl: string = `${environment.server_url}/Stock`;
 
   constructor(private httpClient: HttpClient) {

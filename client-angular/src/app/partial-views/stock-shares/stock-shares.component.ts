@@ -24,6 +24,7 @@ export class StockSharesComponent {
   purchaseDate: Date | undefined;
   numberOfShares: number | undefined;
   stockPrice: number | undefined;
+  shares: Share[] = [];
 
   constructor(private activatedRoute: ActivatedRoute,
     private userService: UserService,
@@ -43,6 +44,7 @@ export class StockSharesComponent {
 
     this.userService.getUser().subscribe(user =>{
       this.watchingStock = user.watchingStocksByListName[this.listName][this.symbol];
+      this.updateSharesList();
     });
   }
 
@@ -68,7 +70,10 @@ export class StockSharesComponent {
     this.shareService.addUserShare(sharePurchase)
       .subscribe(res => {
         if(res)
+        {
           this.watchingStock!.purchaseGuidToShares[res.id!] = res
+          this.updateSharesList();
+        }
         else
           this.toastService.addErrorMessage("couldnt add share, something went wrong");
       });
@@ -93,7 +98,10 @@ export class StockSharesComponent {
         this.shareService.removeUserShare(shareSale)
         .subscribe(res => {
           if(res)
+          {
             delete(this.watchingStock?.purchaseGuidToShares[purchaseId]);
+            this.updateSharesList();
+          }
           else
             this.toastService.addErrorMessage("couldnt remove share, something went wrong");
         });
@@ -101,7 +109,7 @@ export class StockSharesComponent {
     });
   }
 
-  getKeys(purchaseGuidToShares: { [purchaseGuid: string ] : Share}){
-    return Object.keys(purchaseGuidToShares);
+  updateSharesList(){
+    this.shares = Object.keys(this.watchingStock!.purchaseGuidToShares).map(purchaseId => this.watchingStock!.purchaseGuidToShares[purchaseId]);
   }
 }
