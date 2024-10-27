@@ -13,7 +13,7 @@ export class SearchComponent {
   ) { }
 
   searchResults(searchTerm: string) {
-    this.stockService.findStocksByName(searchTerm)
+    this.stockService.findStocksBySearchTerm(searchTerm)
       .subscribe(stocks => this.stocksList = stocks);
   }
 }
