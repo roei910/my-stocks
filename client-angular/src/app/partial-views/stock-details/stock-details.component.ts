@@ -102,4 +102,10 @@ export class StockDetailsComponent {
 
     return email != null;
   }
+
+  get currentPosition(): number {
+    let range = this.stock?.fiftyTwoWeekHigh! - this.stock?.fiftyTwoWeekLow!;
+
+    return ((this.stock?.price! - this.stock?.fiftyTwoWeekLow!) / range) * 100;
+  }
 }
