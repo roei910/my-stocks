@@ -4,6 +4,7 @@
 @import "assets/styles/table-styling.css";
 @import "assets/styles/global-styling.css";
 @import "assets/styles/listbox-styling.css";
+@import "assets/styles/general-styling.css";
 
 body {
     font-family: 'Poppins', sans-serif;

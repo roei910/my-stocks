@@ -1,19 +1,26 @@
-<div class="stock-details-container container flex-column align-items-center">
-    <h2>Stock Details</h2>
+<div class="stock-details-container container flex-column align-items-center mt-2 gap-2">
+    <h2>Stock Details - {{stock?.name}} ({{stock?.price | currency}})</h2>
     <div class="container gap-2">
         <p-button (click)="openAddNotificationDialog()">Add Notification</p-button>
         <p-button (click)="openAddStockToListDialog()">Add Stock To List</p-button>
     </div>
-    
-    <div id="stockDetails">
-        <h3>{{stock?.name}}</h3>
-        <p>current price: {{stock?.price}}</p>
-        <h4>stock analysis</h4>
-        <p>target high price: {{stock?.analysis?.targetHighPrice}}</p>
-        <p>target low price: {{stock?.analysis?.targetLowPrice}}</p>
-        <p>target mean price: {{stock?.analysis?.targetMeanPrice}}</p>
-        <p>target median price: {{stock?.analysis?.targetMedianPrice}}</p>
-        <p-chart type="bar" [data]="data" height="400" width="400"></p-chart>
+    <div class="card">
+        <h3>stock analysis</h3>
+        <p>target high price: {{stock?.analysis?.targetHighPrice | currency}}</p>
+        <p>target low price: {{stock?.analysis?.targetLowPrice | currency}}</p>
+        <p>target mean price: {{stock?.analysis?.targetMeanPrice | currency}}</p>
+        <p>target median price: {{stock?.analysis?.targetMedianPrice | currency}}</p>
+    </div>
+    <div class="card">
+        <h3>52 week range</h3>
+        <p>52 week low: {{stock?.fiftyTwoWeekLow | currency}}</p>
+        <p>52 week high: {{stock?.fiftyTwoWeekHigh | currency}}</p>
+        <div class="stock-range-container">
+            <div class="range-bar">
+                <div class="current-price-marker" [style.left.%]="currentPosition"></div>
+            </div>
+            <span>52-Week Range</span>
+        </div>
     </div>
 </div>
 <p-dialog header="Edit Note" [modal]="true" [(visible)]="visibleAddNotificationDialog">

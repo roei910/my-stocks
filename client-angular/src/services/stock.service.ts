@@ -35,9 +35,9 @@ export class StockService {
       .get<Stock>(`${this.stockEndPointUrl}/symbol/${stockSymbol}`);
   }
 
-  findStocksByName(stockName: string): Observable<Stock[]> {
+  findStocksBySearchTerm(searchTerm: string): Observable<Stock[]> {
     return this.httpClient
-      .get<Stock[]>(`${this.stockEndPointUrl}/find/${stockName}`)
+      .get<Stock[]>(`${this.stockEndPointUrl}/find/${searchTerm}`)
   }
 
   getMarketsTrends(): Observable<MarketTrend[]>{
