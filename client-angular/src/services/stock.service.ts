@@ -10,8 +10,8 @@ import { Stock } from 'src/models/stocks/stock';
 })
 export class StockService {
   private allStocks: BehaviorSubject<Stock[]> = new BehaviorSubject<Stock[]>([]);
-  lastUpdateTime: Date | undefined;
-  stockEndPointUrl: string = `${environment.server_url}/Stock`;
+  private lastUpdateTime: Date | undefined;
+  private stockEndPointUrl: string = `${environment.server_url}/Stock`;
 
   constructor(private httpClient: HttpClient) {
     this.lastUpdateTime = new Date();

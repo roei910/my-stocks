@@ -4,6 +4,7 @@ import { environment } from '../environments/environment';
 import { sha256 } from 'js-sha256';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class AuthenticationService {
   isUserConnectedSubject: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(private cookieService: CookiesService,
-    private httpClient: HttpClient) { }
+    private httpClient: HttpClient,
+    private userService: UserService
+  ) { }
 
   getUserEmail(): string | null {
     let email = this.cookieService.getCookie("email");
@@ -43,16 +46,8 @@ export class AuthenticationService {
   tryConnect(email: string, password: string): Observable<boolean> {
     let passwordHash = sha256(password);
 
-    return this.httpClient
-      .post<boolean>(`${environment.server_url}/User/connect-user`,
-        {
-          email: email,
-          password: passwordHash
-        },
-        {
-          observe: 'response'
-        }
-      )
+    return this.userService
+      .connectUser(email, passwordHash)
       .pipe(
         map(response => response.status == 200),
         tap(res => {
@@ -64,6 +59,7 @@ export class AuthenticationService {
       );
   }
 
+  //TODO: not being used
   authenticateToken(connectionToken: string): Observable<boolean> {
     return this.httpClient.post<boolean>(`${environment.server_url}/User/authenticate-token`,
       null, {

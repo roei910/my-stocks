@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponseBase } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
 import { Observable, Subject, map, tap } from 'rxjs';
@@ -13,9 +13,11 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class UserService {
+  private userEndPointUrl: string = `${environment.server_url}/Share`;
   private userSubject: Subject<User> | undefined;
 
-  constructor(private httpClient: HttpClient, 
+  constructor(
+    private httpClient: HttpClient, 
     private authenticationService: AuthenticationService
   ) { }
 
@@ -28,28 +30,11 @@ export class UserService {
     return this.userSubject.asObservable();
   }
 
-  updateUser(): void{
-    if(this.authenticationService.isUserConnected() == false)
-      return;
-    
-    let email = this.authenticationService.getUserEmail()!;
-
-    this.httpClient
-    .get<User>(`${environment.server_url}/User`,
-      {
-        params: {
-          email
-        }
-      }
-    ).pipe(tap(res => this.userSubject?.next(res)))
-    .subscribe(user => user);
-  }
-
   createUser(user: UserCreation): Observable<boolean> {
     user.password = sha256(user.password);
     
     let res = this.httpClient
-    .post(`${environment.server_url}/User/register`, user,
+    .post(`${this.userEndPointUrl}/register`, user,
       {
         observe: 'response',
         responseType: 'text'
@@ -62,7 +47,7 @@ export class UserService {
 
   addStockNotification(stockNotification: StockNotification): Observable<ObjectIdResponse>{
     let res = this.httpClient
-      .post<ObjectIdResponse>(`${environment.server_url}/User/notification`, 
+      .post<ObjectIdResponse>(`${this.userEndPointUrl}/notification`, 
         stockNotification);
 
     return res;
@@ -71,7 +56,7 @@ export class UserService {
   removeStockNotification(email: string, notificationId: string): Observable<boolean> {
     let res = this.httpClient
       .delete<ObjectIdResponse>(
-        `${environment.server_url}/User/notification`,
+        `${this.userEndPointUrl}/notification`,
         {
           observe: 'response',
           params: {
@@ -82,5 +67,51 @@ export class UserService {
       .pipe(map(response => response.status == 200));
 
     return res;
+  }
+
+  connectUser(email: string, passwordHash: string) : Observable<HttpResponseBase>{
+    return this.httpClient
+    .post<boolean>(`${this.userEndPointUrl}/connect-user`,
+      {
+        email: email,
+        password: passwordHash
+      },
+      {
+        observe: 'response'
+      }
+    );
+  }
+
+  updatePassword(user: UserCreation): Observable<boolean> {
+    user.password = sha256(user.password);
+    
+    let res = this.httpClient
+    .post(`${this.userEndPointUrl}/update-password`, user,
+      {
+        observe: 'response',
+        responseType: 'text'
+      }
+    )
+    .pipe(map(response => response.status == 200));
+
+    return res;
+  }
+
+  private updateUser(): void{
+    if(this.authenticationService.isUserConnected() == false)
+      return;
+    
+    let email = this.authenticationService.getUserEmail()!;
+
+    this.httpClient
+      .get<User>(this.userEndPointUrl,
+        {
+          params: {
+            email
+          }
+        }
+      )
+      .pipe(tap(res => this.userSubject?.next(res)))
+      .subscribe(user => user);
   }
 }
