@@ -1,8 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/services/authentication.service';
 import { ToastService } from 'src/services/toast.service';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +14,12 @@ export class LoginComponent {
   form!: NgForm;
 
   constructor(private router: Router,
-    private authenticationService: AuthenticationService,
+    private userService: UserService,
     private toastService: ToastService
   ){ }
 
   signIn() {
-    this.authenticationService
+    this.userService
     .tryConnect(this.form.value.email, this.form.value.password)
     .subscribe(isConnected => {
       if(!isConnected)

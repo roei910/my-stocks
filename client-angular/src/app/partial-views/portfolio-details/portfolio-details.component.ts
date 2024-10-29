@@ -26,7 +26,7 @@ export class PortfolioDetailsComponent {
   note: string = '';
   symbol: string = '';
   email: string;
-  watchingStockLists!: StockDetails[];
+  watchingStockLists: StockDetails[] = [];
   visibleDialog: boolean = false;
 
   constructor(

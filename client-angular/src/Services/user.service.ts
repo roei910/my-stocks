@@ -13,7 +13,7 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class UserService {
-  private userEndPointUrl: string = `${environment.server_url}/Share`;
+  private userEndPointUrl: string = `${environment.server_url}/User`;
   private userSubject: Subject<User> | undefined;
 
   constructor(
@@ -69,16 +69,39 @@ export class UserService {
     return res;
   }
 
-  connectUser(email: string, passwordHash: string) : Observable<HttpResponseBase>{
+  tryConnect(email: string, password: string): Observable<boolean> {
+    let passwordHash = sha256(password);
+
     return this.httpClient
-    .post<boolean>(`${this.userEndPointUrl}/connect-user`,
-      {
-        email: email,
-        password: passwordHash
+      .post<boolean>(`${this.userEndPointUrl}/connect-user`,
+        {
+          email: email,
+          password: passwordHash
+        },
+        {
+          observe: 'response'
+        }
+      )
+      .pipe(
+        map(response => response.status == 200),
+        tap(res => {
+          if (res) {
+            this.authenticationService.updateConnectedUser(email);
+          }
+        })
+      );
+  }
+
+  //TODO: not being used
+  authenticateToken(connectionToken: string): Observable<boolean> {
+    return this.httpClient.post<boolean>(`${environment.server_url}/User/authenticate-token`,
+      null, {
+      params: {
+        connectionToken
       },
-      {
-        observe: 'response'
-      }
+      observe: 'response'
+    }).pipe(
+      map(response => response.status === 200)
     );
   }
 
