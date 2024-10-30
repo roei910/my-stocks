@@ -8,6 +8,7 @@ import { StockNotification } from 'src/models/users/stock-notification';
 import { User } from 'src/models/users/user';
 import { UserCreation } from 'src/models/users/user-creation';
 import { AuthenticationService } from './authentication.service';
+import { PasswordUpdateRequest } from 'src/models/users/password-update-request';
 
 @Injectable({
   providedIn: 'root'
@@ -105,11 +106,14 @@ export class UserService {
     );
   }
 
-  updatePassword(user: UserCreation): Observable<boolean> {
-    user.password = sha256(user.password);
-    
+  updatePassword(email: string, password: string): Observable<boolean> {
+    var passwordUpdateRequest: PasswordUpdateRequest = {
+      email,
+      password: sha256(password)
+    };
+
     let res = this.httpClient
-    .post(`${this.userEndPointUrl}/update-password`, user,
+    .post(`${this.userEndPointUrl}/update-password`, passwordUpdateRequest,
       {
         observe: 'response',
         responseType: 'text'
