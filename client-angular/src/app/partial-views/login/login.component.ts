@@ -14,7 +14,7 @@ export class LoginComponent {
   @ViewChild("connectionForm")
   form!: NgForm;
 
-  showRestorePassword: boolean = true;
+  showRestorePassword: boolean = false;
   visibleUpdatePasswordDialog: boolean = false;
 
   email: string = '';
