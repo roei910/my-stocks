@@ -2,20 +2,24 @@ import {
   HttpRequest,
   HttpEvent,
   HttpHandlerFn,
-  HttpErrorResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { MessageService } from 'primeng/api';
-import { catchError, Observable, throwError, timeout, TimeoutError } from 'rxjs';
+import { catchError, Observable, of, throwError, timeout } from 'rxjs';
+import { ToastService } from 'src/services/toast.service';
 
 export function interceptConnection (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
   let requestTimeoutMs = 10000;
-  let messageService = inject(MessageService);
+  let toastService = inject(ToastService);
 
   return next(req).pipe(
     timeout(requestTimeoutMs),
     catchError((error: HttpErrorResponse) => {
-      messageService.add({ severity: 'error', summary: 'Error', detail: error.message });
+      if(error.status == 0 || error.status >= 500){
+        toastService.addErrorMessage(error.message);
+
+        return of();
+      }
 
       return throwError(() => error.message);
     })

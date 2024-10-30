@@ -8,7 +8,7 @@ import { StockService } from 'src/services/stock.service';
   styleUrls: ['./insights.component.css']
 })
 export class InsightsComponent {
-  marketTrends!: MarketTrend[];
+  marketTrends: MarketTrend[] = [];
   selectedMarketTrend?: MarketTrend;
 
   constructor(private stockService: StockService) {

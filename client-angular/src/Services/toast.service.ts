@@ -6,7 +6,6 @@ import { MessageFactory } from 'src/factories/message-factory';
   providedIn: 'root'
 })
 export class ToastService {
-
   constructor(
     private messageService: MessageService,
     private messageFactory: MessageFactory
