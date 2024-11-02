@@ -10,7 +10,7 @@
             <input type="password" id="password" placeholder="Enter your password" required name="password" ngModel>
         </div>
         <button type="submit" class="btn-primary">Login</button>
-        <p *ngIf="showRestorePassword">Forgot your password? <a (click)="visibleUpdatePasswordDialog = true">Restore</a></p>
+        <p>Forgot your password? <a (click)="visibleUpdatePasswordDialog = true">Restore</a></p>
     </form>
     <p>Don't have an account? <a routerLink="/register">Sign up</a></p>
 </div>
