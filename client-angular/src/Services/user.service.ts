@@ -125,9 +125,6 @@ export class UserService {
   }
 
   private updateUser(): void{
-    if(this.authenticationService.isUserConnected() == false)
-      return;
-    
     let email = this.authenticationService.getUserEmail()!;
 
     this.httpClient

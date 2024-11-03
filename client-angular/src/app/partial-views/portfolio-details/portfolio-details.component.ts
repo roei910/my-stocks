@@ -39,6 +39,10 @@ export class PortfolioDetailsComponent {
     this.email = this.authenticationService.getUserEmail()!;
   }
 
+  ngOnInit(): void {
+    this.updateWatchingStocks();
+  }
+  
   ngOnChanges(): void {
     this.updateWatchingStocks();
   }
