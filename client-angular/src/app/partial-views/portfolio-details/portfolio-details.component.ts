@@ -38,10 +38,6 @@ export class PortfolioDetailsComponent {
   ) {
     this.email = this.authenticationService.getUserEmail()!;
   }
-
-  ngOnInit(): void {
-    this.updateWatchingStocks();
-  }
   
   ngOnChanges(): void {
     this.updateWatchingStocks();
@@ -113,6 +109,9 @@ export class PortfolioDetailsComponent {
   }
 
   updateWatchingStocks(): void {
+    if(this.watchingStocks == undefined || Object.keys(this.watchingStocks).length == 0)
+      return;
+    
     this.watchingStockLists = Object.keys(this.watchingStocks)
       .map(stockSymbol => this.mapWatchingStock(stockSymbol, this.watchingStocks[stockSymbol]));
   }
