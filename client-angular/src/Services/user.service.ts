@@ -125,7 +125,7 @@ export class UserService {
   }
 
   private updateUser(): void{
-    if(this.authenticationService.isUserConnected() == false)
+    if(!this.authenticationService.isUserConnected())
       return;
     
     let email = this.authenticationService.getUserEmail()!;

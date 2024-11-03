@@ -14,9 +14,7 @@ export class LoginComponent {
   @ViewChild("connectionForm")
   form!: NgForm;
 
-  showRestorePassword: boolean = false;
   visibleUpdatePasswordDialog: boolean = false;
-
   email: string = '';
   password: string = '';
   repeatPassword: string = '';
@@ -36,7 +34,6 @@ export class LoginComponent {
       if(!isConnected)
       {
         this.toastService.addErrorMessage("username or password was incorrect");
-        this.showRestorePassword = true;
       }
       else
         this.router.navigate(['user', 'stocks']);
