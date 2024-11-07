@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { CookiesService } from './cookies.service';
-import { sha256 } from 'js-sha256';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
