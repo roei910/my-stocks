@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponseBase } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { sha256 } from 'js-sha256';
 import { Observable, Subject, map, tap } from 'rxjs';
