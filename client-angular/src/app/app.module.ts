@@ -38,7 +38,7 @@ import { HomeComponent } from './partial-views/home/home.component';
 import { StockSharesComponent } from './partial-views/stock-shares/stock-shares.component';
 import { StockDetailsComponent } from './partial-views/stock-details/stock-details.component';
 import { PortfolioDetailsComponent } from './partial-views/portfolio-details/portfolio-details.component';
-import { StocksFilterPaginationTableComponent } from './partial-views/stocks-filter-pagination-table/stocks-filter-pagination-table.component';
+import { StocksTableComponent } from './partial-views/stocks-table/stocks-table.component';
 import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
@@ -64,7 +64,7 @@ import { InputTextModule } from 'primeng/inputtext';
     SearchComponent,
     StockDetailsComponent,
     PortfolioDetailsComponent,
-    StocksFilterPaginationTableComponent
+    StocksTableComponent
   ],
   imports: [
     BrowserModule,
