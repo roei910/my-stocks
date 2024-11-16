@@ -27,21 +27,23 @@
         </ng-template>
     </p-table>
 </div>
-<p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddShareDialog" [style]="{ width: '30rem' }">
-    <div class="flex align-items-center gap-3 mb-3">
-        <label for="numberOfShares" class="font-semibold w-6rem">Number Of Shares: </label>
-        <input pInputText type="number" id="numberOfShares" class="flex-auto" autocomplete="off"
-            [(ngModel)]="numberOfShares" required />
-        <br>
-        <label for="stockPrice" class="font-semibold w-6rem">Stock Price: </label>
-        <input pInputText type="number" id="stockPrice" class="flex-auto" autocomplete="off" [(ngModel)]="stockPrice"
-            required />
-        <br>
-        <label for="purchaseDate" class="font-semibold w-6rem">Purchase Date: </label>
-        <p-calendar [(ngModel)]="purchaseDate" [showIcon]="true" appendTo="body" />
-    </div>
-    <div class="flex justify-content-end gap-2">
-        <p-button label="Cancel" severity="secondary" (onClick)="visibleAddShareDialog = false" />
-        <p-button label="Save" (onClick)="addShare()" />
+<p-dialog header="Add Stock To List" [modal]="true" [(visible)]="visibleAddShareDialog">
+    <div class="container flex-column gap-1">
+        <div class="container flex-column align-items-center">
+            <label for="numberOfShares" class="font-semibold w-6rem">Number Of Shares: </label>
+            <input pInputText type="number" id="numberOfShares" class="flex-auto" autocomplete="off"
+                [(ngModel)]="numberOfShares" required />
+            <br>
+            <label for="stockPrice" class="font-semibold w-6rem">Stock Price: </label>
+            <input pInputText type="number" id="stockPrice" class="flex-auto" autocomplete="off" [(ngModel)]="stockPrice"
+                required />
+            <br>
+            <label for="purchaseDate" class="font-semibold w-6rem">Purchase Date: </label>
+            <p-calendar [(ngModel)]="purchaseDate" [showIcon]="true" appendTo="body" />
+        </div>
+        <div class="container justify-space-between gap-2">
+            <p-button label="Cancel" severity="secondary" (onClick)="visibleAddShareDialog = false" />
+            <p-button label="Save" (onClick)="addShare()" />
+        </div>
     </div>
 </p-dialog>
