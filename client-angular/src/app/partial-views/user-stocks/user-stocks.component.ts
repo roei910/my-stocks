@@ -43,9 +43,7 @@ export class UserStocksComponent {
       this.selectedPortfolio = this.user.watchingStocksByListName[this.selectedPortfolioName];
     });
     
-    this.stockService.getAllStocks().subscribe(stocks =>{
-      this.stocks = Object.assign({}, ...stocks.map((stock) => ({[stock.symbol]: stock})));
-    });
+    this.createStocksDictionary();
   }
 
   addUserList(listName: string): void {
@@ -115,13 +113,7 @@ export class UserStocksComponent {
     this.shareService.addWatchingStock(this.user.email!, listName, stockSymbol)
       .subscribe(res => {
         if (res) {
-          let watchingStock: WatchingStock = {
-            purchaseGuidToShares: {},
-            note: ""
-          };
-
-          this.user.watchingStocksByListName[listName][stockSymbol!] = watchingStock;
-          this.updatePortfolio();
+          this.addWatchingStock(listName, stockSymbol);
         }
         else
           this.toastService.addErrorMessage("something went wrong, couldnt add stock to list...");
@@ -142,5 +134,24 @@ export class UserStocksComponent {
   updatePortfolio(): void {
     this.visible = false;
     setTimeout(() => this.visible = true, 0);
+  }
+
+  createStocksDictionary(): void{
+    this.stockService.getAllStocks().subscribe(stocks =>{
+      this.stocks = Object.assign({}, ...stocks.map((stock) => ({[stock.symbol]: stock})));
+    });
+  }
+
+  addWatchingStock(listName: string, stockSymbol: string): void{
+    if(this.stocks != undefined && !(stockSymbol in this.stocks))
+      this.createStocksDictionary();
+
+    let watchingStock: WatchingStock = {
+      purchaseGuidToShares: {},
+      note: ""
+    };
+    
+    this.user.watchingStocksByListName[listName][stockSymbol!] = watchingStock;
+    this.updatePortfolio();
   }
 }
