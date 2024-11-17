@@ -16,7 +16,7 @@ import { UserService } from 'src/services/user.service';
 })
 export class UserStocksComponent {
   user!: User;
-  stocks: { [stockSymbol: string]: Stock } = {};
+  stocks: { [stockSymbol: string]: Stock } | undefined;
   listNames: string[] = [];
   selectedPortfolio: {
     [stockSymbol: string]: WatchingStock
@@ -42,8 +42,10 @@ export class UserStocksComponent {
       this.selectedPortfolioName = this.listNames[0];
       this.selectedPortfolio = this.user.watchingStocksByListName[this.selectedPortfolioName];
     });
-    this.stockService.getAllStocks().subscribe(stocks =>
-      stocks.map(stock => this.stocks[stock.symbol] = stock));
+    
+    this.stockService.getAllStocks().subscribe(stocks =>{
+      this.stocks = Object.assign({}, ...stocks.map((stock) => ({[stock.symbol]: stock})));
+    });
   }
 
   addUserList(listName: string): void {

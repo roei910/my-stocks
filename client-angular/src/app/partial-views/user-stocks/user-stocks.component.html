@@ -20,14 +20,16 @@
                 <p-button label="Add Stock" [text]="true" [raised]="true" severity="secondary"
                     (onClick)="visibleAddStockToListDialog = true" />
             </div>
-            <app-portfolio-details
+            <div *ngIf="stocks != undefined">
+                <app-portfolio-details
                 *ngIf="selectedPortfolioName != undefined && selectedPortfolio != undefined; else noSelection"
                 [listName]="selectedPortfolioName" [watchingStocks]="selectedPortfolio"
                 [stocksDictionary]="this.stocks">
-            </app-portfolio-details>
-            <ng-template #noSelection>
-                <p>Please choose a portfolio</p>
-            </ng-template>
+                </app-portfolio-details>
+                <ng-template #noSelection>
+                    <p>Please choose a portfolio</p>
+                </ng-template>
+            </div>
         </p-panel>
     </div>
 </div>
