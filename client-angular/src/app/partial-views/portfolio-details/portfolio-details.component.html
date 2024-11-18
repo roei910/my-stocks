@@ -1,5 +1,5 @@
-<p-table *ngIf="this.watchingStockLists" [value]="this.watchingStockLists" [paginator]="watchingStockLists.length > 10" [rows]="10"
-  [rowsPerPageOptions]="[10, 20]">
+<p-table *ngIf="this.watchingStockLists" [value]="this.watchingStockLists" [paginator]="watchingStockLists.length > 10"
+  [rows]="10" [rowsPerPageOptions]="[10, 20]">
   <ng-template pTemplate="header">
     <tr>
       <th pSortableColumn="name">
@@ -31,7 +31,11 @@
       <td>{{watchingStockList.price}}</td>
       <td>{{watchingStockList.prediction}}</td>
       <td>
-        {{watchingStockList.shares}}
+        <div class="container align-items-center">
+          <p>{{watchingStockList.shares}}</p>
+          <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"
+            (onClick)="redirectToSharesScreen(watchingStockList.symbol)" />
+        </div>
       </td>
       <td>
         <div class="container align-items-center">
@@ -44,8 +48,6 @@
       <td>
         <p-button icon="pi pi-search" [rounded]="true" [text]="true" [routerLink]="['/', 'stocks', 'information']"
           [queryParams]="{ stockSymbol: watchingStockList.symbol}" />
-        <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"
-          (onClick)="redirectToSharesScreen(watchingStockList.symbol)" />
         <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger"
           (onClick)="removeListStock(watchingStockList.symbol)" />
       </td>
@@ -56,7 +58,7 @@
   <div class="container flex-column gap-1">
     <div class="container align-items-center gap-1">
       <label for="note" class="font-semibold w-6rem">Note: </label>
-      <input [value]="note" pInputText id="note" class="flex-auto" autocomplete="off" [(ngModel)]="note"/>
+      <input [value]="note" pInputText id="note" class="flex-auto" autocomplete="off" [(ngModel)]="note" />
     </div>
     <div class="container justify-space-between gap-1">
       <p-button label="Cancel" severity="secondary" (onClick)="visibleDialog = false" />
