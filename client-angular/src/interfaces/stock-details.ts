@@ -3,7 +3,7 @@ export interface StockDetails {
     symbol: string;
     price: number;
     prediction: number;
-    shares: number;
+    shares: string;
     note: string;
     lastUpdate: Date;
 }

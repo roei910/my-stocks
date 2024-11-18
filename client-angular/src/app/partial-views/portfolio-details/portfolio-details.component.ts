@@ -76,7 +76,10 @@ export class PortfolioDetailsComponent {
     keys.forEach((purchaseGuid: string) =>
       sum += watchingStock.purchaseGuidToShares[purchaseGuid].amount);
 
-    return sum
+    if(sum == 0)
+      return "";
+
+    return sum.toString();
   }
 
   redirectToSharesScreen(stockSymbol: string) {
