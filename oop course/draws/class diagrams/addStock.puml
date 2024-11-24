@@ -1,0 +1,17 @@
+@startuml
+actor User
+participant "Frontend (UI)" as UI
+participant "Backend (API)" as API
+database Database
+
+User -> UI: Select stock and portfolio
+UI -> API: Send "Add Stock" request with stockId and portfolioId
+API -> Database: Verify stock exists
+Database --> API: Stock details verified
+API -> Database: Add stock to portfolio
+Database --> API: Update successful
+API -> Database: Recalculate portfolio value
+Database --> API: Portfolio value updated
+API -> UI: Send success confirmation
+UI --> User: Show confirmation message
+@enduml
