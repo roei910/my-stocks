@@ -1,0 +1,14 @@
+@startuml
+actor User
+participant "Frontend (UI)" as UI
+participant "Backend (API)" as API
+database Database
+
+User -> UI: Select portfolio
+UI -> API: Request portfolio details
+API -> Database: Fetch portfolio data
+Database --> API: Return portfolio and stock data
+API -> API: Calculate performance metrics
+API -> UI: Send portfolio details and metrics
+UI --> User: Display portfolio details
+@enduml
