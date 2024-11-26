@@ -1,0 +1,46 @@
+@startuml
+class App
+class Home
+class Search
+class NotFound
+class Insights
+class Login
+class NotificationCenter
+class PortfolioDetails
+class Register
+class StockDetails
+class StockShares
+class StocksTable
+class UserInformation
+class UserStocks
+class ConnectedUserGuard
+
+App <|-- Home
+App <|-- Login
+App <|-- Register
+App <|-- Search
+App <|-- StockDetails
+App <|-- StocksTable
+App <|-- Insights
+App <|-- NotificationCenter
+App <|-- UserStocks
+App <|-- StockShares
+App <|-- UserInformation
+App <|-- NotFound
+
+UserStocks <|-- PortfolioDetails
+
+Insights ..> ConnectedUserGuard : uses
+StockShares ..> ConnectedUserGuard : uses
+UserStocks ..> ConnectedUserGuard : uses
+NotificationCenter ..> ConnectedUserGuard : uses
+UserInformation ..> ConnectedUserGuard : uses
+
+Home ..> Login : redirect
+Login <..> Register : redirect
+Search ..> StockDetails : redirect
+NotificationCenter ..> StockDetails : redirect
+UserStocks ..> StockDetails : redirect
+StocksTable ..> StockDetails : redirect
+
+@enduml
