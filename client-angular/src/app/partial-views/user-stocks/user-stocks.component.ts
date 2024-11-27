@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ConfirmationService } from 'primeng/api';
+import { catchError, of } from 'rxjs';
 import { Stock } from 'src/models/stocks/stock';
 import { StockListDetails } from 'src/models/stocks/stock-list-details';
 import { WatchingStock } from 'src/models/stocks/watching-stock';
@@ -56,10 +57,15 @@ export class UserStocksComponent {
     }
 
     this.shareService.addUserList(stockListDetails)
+      .pipe(catchError(error => {
+        console.log(error);
+        return of(false);
+      }))
       .subscribe(res => {
         if (res) {
           this.user.watchingStocksByListName[listName!] = {}
           this.updateListBox();
+          this.toastService.addSuccessMessage("list created successfully");
         } else
           this.toastService.addErrorMessage("something went wrong, couldnt add list");
       });
@@ -84,6 +90,7 @@ export class UserStocksComponent {
           if (res) {
             delete (this.user.watchingStocksByListName[listName!]);
             this.updateListBox();
+            this.toastService.addSuccessMessage("list removed successfully");
 
             if (listName == this.selectedPortfolioName)
               this.selectedPortfolioName = undefined;

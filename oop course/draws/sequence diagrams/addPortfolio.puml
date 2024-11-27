@@ -4,7 +4,7 @@ participant "Frontend (UI)" as UI
 participant "Backend (API)" as API
 database Database
 
-User -> UI: Enter portfolio name
+User -> UI: Press "Add List" button and Enter portfolio name
 UI -> API: Send "Add Portfolio" request with name
 API -> Database: Check if portfolio name exists
 alt Name exists
@@ -12,7 +12,7 @@ alt Name exists
     API -> UI: Send error "Name already exists"
     UI --> User: Show error message
 else Name is invalid (e.g., empty)
-    API -> UI: Send error "Invalid name"
+    API -> UI: Send error
     UI --> User: Show error message
 else Name is valid
     Database --> API: Name is unique

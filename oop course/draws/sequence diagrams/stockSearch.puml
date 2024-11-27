@@ -10,26 +10,10 @@ API -> Database: Fetch matching stocks
 Database --> API: Return stock list
 API -> UI: Display stock list
 User -> UI: Sort stock list (e.g., by price or name)
-UI -> API: Send sort request
-API -> UI: Display sorted stock list
+UI -> UI: Display sorted stock list
 User -> UI: Select stock to view details
 UI -> API: Request stock details
 API -> Database: Fetch stock information
 Database --> API: Return stock details
 API -> UI: Display stock details
-alt Add to Portfolio
-    User -> UI: Select "Add to Portfolio"
-    UI -> API: Add stock to portfolio
-    API -> Database: Update portfolio
-    Database --> API: Portfolio updated
-    API -> UI: Confirm addition
-    UI --> User: Show success message
-else Create Notification
-    User -> UI: Select "Create Notification"
-    UI -> API: Set notification for stock
-    API -> Database: Save notification details
-    Database --> API: Notification saved
-    API -> UI: Confirm notification creation
-    UI --> User: Show success message
-end
 @enduml

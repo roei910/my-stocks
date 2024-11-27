@@ -13,7 +13,7 @@ alt Valid Credentials
     UI --> User: Show dashboard
 else Invalid Credentials
     Database --> API: Credentials invalid
-    API -> UI: Show login error with options
+    API -> UI: Show login error
     alt User selects "Register"
         User -> UI: Fill registration form
         UI -> API: Send registration request
@@ -26,8 +26,8 @@ else Invalid Credentials
         UI -> API: Send password reset request
         API -> Database: Verify email exists
         Database --> API: Email valid
-        API -> UI: Send reset link
-        UI --> User: Show reset confirmation
+        API -> UI: Password updated
+        UI --> User: Show update confirmation
     end
 end
 @enduml
