@@ -1,0 +1,34 @@
+@startuml
+start
+
+:Go to Stock Search Screen;
+:Enter Search Term;
+
+:Submit search term to backend;
+:Receive list of stocks;
+
+:User selects desired stock;
+:Redirect to Stock Information Page;
+
+if (Action: Add to List or Add Notification?) then (Add to List)
+    :Prompt user for list name;
+    :Submit list name and stock to backend;
+    if (Is the list name valid?) then (Yes)
+        :Add stock to the list;
+        :Display success toast;
+    else (No)
+        :Display error toast;
+    endif
+else (Add Notification)
+    :Prompt user for price target;
+    :Submit price target to backend;
+    if (Is the price target valid?) then (Yes)
+        :Add notification;
+        :Display success toast;
+    else (No)
+        :Display error toast;
+    endif
+endif
+
+stop
+@enduml

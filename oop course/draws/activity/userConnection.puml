@@ -1,0 +1,38 @@
+@startuml
+start
+
+:Access Website;
+
+if (Does the user have an account?) then (Yes)
+    :Try to Sign In;
+    if (Does the user remember their credentials?) then (Yes)
+        :Submit credentials to backend;
+        if (Are the credentials correct?) then (Yes)
+            :Login successful;
+        else (No)
+            :Display error message;
+        endif
+    else (No)
+        :Click on "Forgot Password";
+        :Submit email for restoration;
+        if (Is the email valid?) then (Yes)
+            :Send restoration instructions;
+            :Update password;
+            :Return to login page;
+        else (No)
+            :Display error message;
+        endif
+    endif
+else (No)
+    :Proceed to register;
+    :Fill registration form and submit;
+    if (Is the registration data valid?) then (Yes)
+        :Process registration;
+        :Redirect to login page with success message;
+    else (No)
+        :Display error message;
+    endif
+endif
+
+stop
+@enduml
