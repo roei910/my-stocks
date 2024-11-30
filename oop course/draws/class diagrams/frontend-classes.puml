@@ -6,6 +6,7 @@ class PToast
 class Loading
 class Header
 class Footer
+class PConfirmDialog
 
 class Home
 class Search
@@ -27,6 +28,7 @@ App <|-- PToast
 App <|-- Loading
 App <|-- Header
 App <|-- Footer
+App <|-- PConfirmDialog
 
 RouterOutlet <|-- Home
 RouterOutlet <|-- Login
