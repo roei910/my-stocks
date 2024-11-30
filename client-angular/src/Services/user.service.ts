@@ -93,19 +93,6 @@ export class UserService {
       );
   }
 
-  //TODO: not being used
-  authenticateToken(connectionToken: string): Observable<boolean> {
-    return this.httpClient.post<boolean>(`${environment.server_url}/User/authenticate-token`,
-      null, {
-      params: {
-        connectionToken
-      },
-      observe: 'response'
-    }).pipe(
-      map(response => response.status === 200)
-    );
-  }
-
   updatePassword(email: string, password: string): Observable<boolean> {
     var passwordUpdateRequest: PasswordUpdateRequest = {
       email,
