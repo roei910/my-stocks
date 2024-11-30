@@ -1,5 +1,12 @@
 @startuml
 class App
+
+class RouterOutlet
+class PToast
+class Loading
+class Header
+class Footer
+
 class Home
 class Search
 class NotFound
@@ -15,18 +22,24 @@ class UserInformation
 class UserStocks
 class ConnectedUserGuard
 
-App <|-- Home
-App <|-- Login
-App <|-- Register
-App <|-- Search
-App <|-- StockDetails
-App <|-- StocksTable
-App <|-- Insights
-App <|-- NotificationCenter
-App <|-- UserStocks
-App <|-- StockShares
-App <|-- UserInformation
-App <|-- NotFound
+App <|-- RouterOutlet
+App <|-- PToast
+App <|-- Loading
+App <|-- Header
+App <|-- Footer
+
+RouterOutlet <|-- Home
+RouterOutlet <|-- Login
+RouterOutlet <|-- Register
+RouterOutlet <|-- Search
+RouterOutlet <|-- StockDetails
+RouterOutlet <|-- StocksTable
+RouterOutlet <|-- Insights
+RouterOutlet <|-- NotificationCenter
+RouterOutlet <|-- UserStocks
+RouterOutlet <|-- StockShares
+RouterOutlet <|-- UserInformation
+RouterOutlet <|-- NotFound
 
 UserStocks <|-- PortfolioDetails
 

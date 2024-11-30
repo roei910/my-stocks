@@ -11,17 +11,17 @@ export class ToastService {
     private messageFactory: MessageFactory
   ) { }
 
-  addSuccessMessage(body: string){
+  addSuccessMessage(body: string): void{
     let message = this.messageFactory.createSuccessMessage(body);
     this.messageService.add(message);
   }
 
-  addErrorMessage(body: string){
+  addErrorMessage(body: string): void{
     let message = this.messageFactory.createErrorMessage(body);
     this.messageService.add(message);
   }
 
-  addInfoMessage(body: string){
+  addInfoMessage(body: string): void{
     let message = this.messageFactory.createInfoMessage(body);
     this.messageService.add(message);
   }

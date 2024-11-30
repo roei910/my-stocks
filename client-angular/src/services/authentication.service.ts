@@ -17,7 +17,7 @@ export class AuthenticationService {
     return email;
   }
 
-  disconnectUser() {
+  disconnectUser(): void {
     this.cookieService.deleteCookie("email");
     this.isUserConnectedSubject.next(false);
   }
