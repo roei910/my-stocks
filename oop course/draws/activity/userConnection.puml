@@ -1,9 +1,9 @@
 @startuml
 start
 
-:Access Website;
+:דף ההתחברות;
 
-if (Does the user have an account?) then (Yes)
+if (האם המשתמש רשום?) then (כן)
     :Try to Sign In;
     if (Does the user remember their credentials?) then (Yes)
         :Submit credentials to backend;
@@ -23,7 +23,7 @@ if (Does the user have an account?) then (Yes)
             :Display error message;
         endif
     endif
-else (No)
+else (לא)
     :Proceed to register;
     :Fill registration form and submit;
     if (Is the registration data valid?) then (Yes)
