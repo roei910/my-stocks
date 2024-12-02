@@ -1,0 +1,61 @@
+@startuml
+start
+
+:User enters a certain portfolio;
+
+partition "Portfolio Management" {
+    :User chooses an action;
+    if (What does the user choose?) then (Add new stock)
+        :Enter stock symbol;
+        :Send request to server to add stock;
+        if (Was the request successful?) then (Yes)
+            :Show success toast;
+            :Add stock to the portfolio;
+        else (No)
+            :Show error toast;
+        endif
+    else if (Update an existing stock) then (Update stock)
+        if (What to update?) then (Note)
+            :Enter new note;
+            :Send request to server to update note;
+            if (Was the request successful?) then (Yes)
+                :Update stock note;
+                :Show success toast;
+            else (No)
+                :Show error toast;
+            endif
+        else (Shares)
+            :Redirect to shares screen;
+            if (Add or remove shares?) then (Remove shares)
+                :Press remove button;
+                :Send request to server to remove shares;
+                if (Was the request successful?) then (Yes)
+                    :Remove shares from stock;
+                    :Show success toast;
+                else (No)
+                    :Show error toast;
+                endif
+            else (Add shares)
+                :Enter details to add shares;
+                :Send request to server to add shares;
+                if (Was the request successful?) then (Yes)
+                    :Add shares to stock;
+                    :Show success toast;
+                else (No)
+                    :Show error toast;
+                endif
+            endif
+        endif
+    else if (Remove a stock) then (Remove stock)
+        :Send request to server to remove stock;
+        if (Was the request successful?) then (Yes)
+            :Remove stock from portfolio;
+            :Show success toast;
+        else (No)
+            :Show error toast;
+        endif
+    endif
+}
+
+stop
+@enduml

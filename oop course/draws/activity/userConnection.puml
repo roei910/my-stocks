@@ -4,33 +4,32 @@ start
 :דף ההתחברות;
 
 if (האם המשתמש רשום?) then (כן)
-    :Try to Sign In;
-    if (Does the user remember their credentials?) then (Yes)
-        :Submit credentials to backend;
-        if (Are the credentials correct?) then (Yes)
-            :Login successful;
-        else (No)
-            :Display error message;
+    :ניסיון התחברות;
+    if (האם המשתמש זוכר את פרטי ההתחברות?) then (כן)
+        :מזין פרטי משתמש ולוחץ על התחברות;
+        if (האם פרטי ההתחברות נכונים?) then (כן)
+            :התחברות תקינה;
+        else (לא)
+            :הצגת הערת התחברות;
         endif
-    else (No)
-        :Click on "Forgot Password";
-        :Submit email for restoration;
-        if (Is the email valid?) then (Yes)
-            :Send restoration instructions;
-            :Update password;
-            :Return to login page;
-        else (No)
-            :Display error message;
+    else (לא)
+        :משתמש לוחץ על עדכון סיסמה;
+        :משתמש מזין מייל וסיסמה חדשה;
+        if (האם האימייל נכון?) then (כן)
+            :סיסמא מעודכנת בשרת;
+            :חזרה לעמוד ההתחברות;
+        else (לא)
+            :הצגת הודעת שגיאה;
         endif
     endif
 else (לא)
-    :Proceed to register;
-    :Fill registration form and submit;
-    if (Is the registration data valid?) then (Yes)
-        :Process registration;
-        :Redirect to login page with success message;
-    else (No)
-        :Display error message;
+    :לחיצה על כפתור ההרשמה;
+    :מילוי פרטים אישיים וסיסמה;
+    if (האם פרטי המשתמש תקינים?) then (כן)
+        :רישום משתמש;
+        :חזרה לעמוד ההתחברות;
+    else (לא)
+        :הצגת הודעת שגיאה;
     endif
 endif
 

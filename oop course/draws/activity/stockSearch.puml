@@ -1,32 +1,24 @@
 @startuml
 start
 
-:Go to Stock Search Screen;
-:Enter Search Term;
+:מעבר לעמוד חיפוש מניות;
+:הזנת ערך חיפוש;
 
-:Submit search term to backend;
-:Receive list of stocks;
+:שליחה של ערך החיפוש לשרת;
+:קבלת מניות לפי ערך החיפוש מהשרת;
 
-:User selects desired stock;
-:Redirect to Stock Information Page;
+:הצגת המניות בדף;
+:משתמש בוחר מניה;
 
-if (Action: Add to List or Add Notification?) then (Add to List)
-    :Prompt user for list name;
-    :Submit list name and stock to backend;
-    if (Is the list name valid?) then (Yes)
-        :Add stock to the list;
-        :Display success toast;
-    else (No)
-        :Display error toast;
-    endif
-else (Add Notification)
-    :Prompt user for price target;
-    :Submit price target to backend;
-    if (Is the price target valid?) then (Yes)
-        :Add notification;
-        :Display success toast;
-    else (No)
-        :Display error toast;
+if (האם ערך המניה קיים בשרת?) then (כן)
+else (לא)
+    :נשלחת בקשה לקבלת ערך המניה בשוק ההון;
+    if (האם המניה נמצאה?) then (כן)
+        :הוספת ערך המניה לשרת;
+        :שליחת ערך המניה למשתמש;
+        :הצגת ערך המניה על המסך;
+    else (לא)
+        :הצגת הודעת שגיאה;
     endif
 endif
 
